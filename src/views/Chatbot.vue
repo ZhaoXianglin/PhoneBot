@@ -11,13 +11,12 @@
     </van-nav-bar>
     <div class="chatbot-send">
       <van-field
-          v-model="sms"
+          v-model="message"
           rows="1"
           autosize
-          placeholder="请输入短信验证码"
       >
         <template #button>
-          <van-button size="small" type="primary">发送验证码</van-button>
+          <van-button size="small" type="primary"> Send </van-button>
         </template>
       </van-field>
     </div>
