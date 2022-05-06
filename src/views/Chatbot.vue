@@ -1,7 +1,7 @@
 <template>
   <div class="chatbot">
     <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
-                 right-text="Cart">
+                 right-text="Cart" class="chatbot-header">
       <template #left>
         <van-icon name="info-o" size="16"> Tips</van-icon>
       </template>
@@ -9,10 +9,21 @@
         <van-icon name="cart-o" size="16" badge="3"> Cart</van-icon>
       </template>
     </van-nav-bar>
+    <div class="chatbot-send">
+      <van-field
+          v-model="sms"
+          rows="1"
+          autosize
+          placeholder="请输入短信验证码"
+      >
+        <template #button>
+          <van-button size="small" type="primary">发送验证码</van-button>
+        </template>
+      </van-field>
+    </div>
     <div class="chatbot-content">
       <BotUi/>
     </div>
-
     <!--  左侧 help-->
     <van-popup
         v-model="show_help"
@@ -79,7 +90,20 @@
         :style="{ height: '100%',width:'80%' }"
     >
       <div class="cart" style="margin-top:3em">
-
+        <van-card
+            num="2"
+            price="2.00"
+            desc="描述信息"
+            title="商品标题"
+            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
+        />
+        <van-card
+            num="2"
+            price="2.00"
+            desc="描述信息"
+            title="商品标题"
+            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
+        />
       </div>
     </van-popup>
   </div>
@@ -88,7 +112,7 @@
 <script>
 import BotUi from "../components/BotUi";
 // 对象引入
-import {botui} from '../components/BotUi';
+import {botui} from '@/components/BotUi';
 //import {instance} from "@/request";
 
 export default {
@@ -98,9 +122,26 @@ export default {
   },
   data: function () {
     return {
+      //控制功能
       show_help: true,
       help_showed_count: 1,
       show_cart: false,
+      phone_buttons: [
+        {
+          text: 'Add to cart',
+          value: 'Add to cart'
+        },
+        {
+          text: 'Try another',
+          value: 'Show another phone.'
+        },
+        {
+          text: 'Let bot suggest',
+          value: 'I need some suggestions.'
+        }],
+
+      //数据部分
+      phone_in_cart:[],
       phone:{
         battery: 4000,
         brand: "alcatel",
@@ -146,7 +187,7 @@ export default {
     botPhoneCard: function (phone) {
       let template = `<div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
-      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">${phone.price}</span></div>
+      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
       <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
       <tr><td>Memory:</td><td>${phone.ram}</td></tr>
@@ -156,6 +197,7 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution1}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
+      <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
       </div>`
       botui.message.bot({
         type: 'html',
@@ -164,11 +206,16 @@ export default {
         delay: 1600,
         content: template
       }).then(() => {
-
+        botui.action.button({
+          addMessage: true,
+          action: this.phone_buttons
+        }).then((res) => {
+          console.log(res)
+        })
       })
     },
 
-    //购物车部分
+    //左上角tips部分
     clickHelp: function () {
       this.show_help = true;
       this.help_showed_count += 1;
@@ -183,6 +230,8 @@ export default {
         })
       }
     },
+
+    //购物车部分
     clickCart: function () {
       this.show_cart = true
     },
@@ -191,8 +240,32 @@ export default {
 }
 </script>
 <style>
+.chatbot-header{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  height: 46px;
+}
+.chatbot-send{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1;
+}
+.chatbot-content{
+  position: absolute;
+  top: 46px;
+  bottom: 54px;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
 .help {
-  padding: 10px 10px 30px 10px;
+  padding: 25px 10px 30px 10px;
 }
 
 .help p {
