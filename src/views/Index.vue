@@ -82,11 +82,7 @@ export default {
       loading: false,
       loading1: false,
       uuid: localStorage.getItem('uuid'),
-      st: localStorage.getItem('st'),
-      chatbot: localStorage.getItem('chatbot'),
-      experts: localStorage.getItem('st'),
-      active: localStorage.getItem('experts'),
-      finished: localStorage.getItem('finished'),
+      code: localStorage.getItem('code'),
       show: true,
       checked: false,
       device: navigator.userAgent,
@@ -94,28 +90,24 @@ export default {
   },
   methods: {
     tapAccept: function () {
-      //let nowt = new Date().getTime();
       this.loading = true;
-      if (this.uuid && this.code) {
-        if(this.finished === '1'){
+      if (this.uuid) {
+        if(this.finished === '1' && this.code){
           this.show = true;
-          this.$toast('您已经完成全部实验，感谢您的支持！');
+          this.$toast('You have completed the survey, thank you for your cooperation.');
           this.loading = false;
         }else {
           this.show = false;
           this.loading = false;
         }
       } else {
-        this.show = false;
         instance.post('/api/accept', {
           'accT': new Date().getTime(),
           'device': this.device,
         }).then((res) => {
-          if (res.data.uuid && res.data.chatbot != null &&res.data.experts != null && res.data.st != null) {
+          console.log(res);
+          if (res.data.uuid) {
             localStorage.setItem('uuid', res.data.uuid);
-            localStorage.setItem('st', res.data.st);
-            localStorage.setItem('chatbot', res.data.chatbot);
-            localStorage.setItem('experts', res.data.experts);
             localStorage.setItem('finished', '0');
             localStorage.setItem('active', new Date().getTime().toString());
             this.loading = false;
@@ -131,18 +123,17 @@ export default {
         })
       }
     },
+
     next: function () {
       this.loading1 = true;
       instance.post('/api/start', {
         'startT': new Date().getTime(),
-        'lang': this.lang,
         'uuid': localStorage.getItem("uuid"),
       }).then((res) => {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');
           localStorage.setItem("active", new Date().getTime().toString());
-          localStorage.setItem("lang", this.lang);
-          this.$router.replace('/tip1').catch((err) => {
+          this.$router.replace('/prestudy').catch((err) => {
             console.log(err.message)
           });
           this.loading1 = false;

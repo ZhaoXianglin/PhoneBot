@@ -227,6 +227,7 @@ export default {
   data: function () {
     return {
       //控制功能
+      loading:false,
       msg_btn_ctrl: false,
       show_help: true,
       show_rate: false,
@@ -301,10 +302,27 @@ export default {
       if (values.brands.length !== 3) {
         this.$toast("Please select three brands");
       } else {
-        this.show_preference = false;
-        console.log(values);
-        this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(()=>{
-          this.botPhoneCard(this.current_phone);
+        this.loading = true;
+        values['uuid'] = localStorage.getItem('uuid');
+        values['preferT'] = new Date().getTime();
+        instance.post('/api/prefer', values).then((res) => {
+          //console.log(res)
+          if (res.data.status === 1) {
+            this.loading = false;
+            this.show_preference = false;
+            this.current_phone = res.data.phone;
+            console.log(res);
+            this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(()=>{
+              this.botPhoneCard(this.current_phone);
+            })
+          } else {
+            this.loading = false;
+            this.$toast("Please read and accept the informed consent first.")
+          }
+        }).catch((err) => {
+          console.log(err.message);
+          this.loading = false;
+          this.$toast("Network error, please try again.");
         })
       }
     },
@@ -318,12 +336,20 @@ export default {
         botui.message.human({
           content: this.message,
         }).then(() => {
-          instance.post('/userMessage', {}).then((res) => {
+          instance.post('/api/userMessage', {
+            msgT: new Date().getTime(),
+            message: this.message,
+            uuid: localStorage.getItem('uuid')
+          }).then((res) => {
             console.log(res);
-            this.msg_btn_ctrl = true;
+            this.current_phone = res.data.phone;
+            this.botPhoneCard(this.current_phone);
+            this.msg_btn_ctrl = false;
+            this.message = null;
           })
         })
       } else {
+        this.msg_btn_ctrl = false;
         this.$toast('Please enter more information.');
       }
 
