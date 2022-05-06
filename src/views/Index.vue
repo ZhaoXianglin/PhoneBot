@@ -96,7 +96,7 @@ export default {
     tapAccept: function () {
       //let nowt = new Date().getTime();
       this.loading = true;
-      if (this.uuid && this.chatbot && this.experts && this.st) {
+      if (this.uuid && this.code) {
         if(this.finished === '1'){
           this.show = true;
           this.$toast('您已经完成全部实验，感谢您的支持！');
@@ -106,6 +106,7 @@ export default {
           this.loading = false;
         }
       } else {
+        this.show = false;
         instance.post('/api/accept', {
           'accT': new Date().getTime(),
           'device': this.device,
@@ -122,11 +123,11 @@ export default {
           } else {
             console.log(res.data);
             this.loading = false;
-            this.$toast('错误，请重试');
+            this.$toast('Error,Please Try again later.');
           }
         }).catch(() => {
           this.loading = false;
-          this.$toast('网络错误，请重试');
+          this.$toast('Network error,Please Try again later.');
         })
       }
     },
@@ -147,12 +148,12 @@ export default {
           this.loading1 = false;
         } else {
           this.loading1 = false;
-          this.$toast("请先阅读知情同意书并接受或刷新页面重试。")
+          this.$toast("Please refresh the page and try again.")
         }
       }).catch((err) => {
         this.loading1 = false;
         console.log(err.message);
-        this.$toast("网络错误，请重试。");
+        this.$toast("Network error,Please Try again later.");
       })
     }
   },

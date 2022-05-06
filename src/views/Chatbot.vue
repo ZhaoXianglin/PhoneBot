@@ -6,7 +6,7 @@
         <van-icon name="info-o" size="16"> Tips</van-icon>
       </template>
       <template #right>
-        <van-icon name="cart-o" size="16" badge="3"> Cart</van-icon>
+        <van-icon name="cart-o" size="16" :badge="cart_item_count"> Cart</van-icon>
       </template>
     </van-nav-bar>
     <div class="chatbot-send">
@@ -16,19 +16,76 @@
           autosize
       >
         <template #button>
-          <van-button size="small" type="primary"> Send </van-button>
+          <van-button size="small" :disabled="msg_btn_ctrl" type="primary" @click="sendMessage"> Send</van-button>
         </template>
       </van-field>
     </div>
     <div class="chatbot-content">
       <BotUi/>
     </div>
+
+    <!-- 初始化的偏好-->
+    <van-popup
+        v-model="show_preference"
+        :style="{width:'90%'}"
+        :close-on-click-overlay="false"
+        round
+    >
+      <van-nav-bar title='My Preference'/>
+      <div class="phone_preference">
+        <van-form @submit="submitPreference">
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Please select three brands you like.</p>
+          <van-field name="brands" :rules="[{ required: true, message: 'Please select' }]">
+            <template #input>
+              <van-checkbox-group v-model="user_prefer.brands" :max="3" direction="horizontal">
+                <van-checkbox name="SAMSUNG" shape="square">SAMSUNG</van-checkbox>
+                <van-checkbox name="APPLE" shape="square">APPLE</van-checkbox>
+                <van-checkbox name="HUIWEI" shape="square">HUIWEI</van-checkbox>
+                <van-checkbox name="NOKIA" shape="square">NOKIA</van-checkbox>
+                <van-checkbox name="SONY" shape="square">SONY</van-checkbox>
+                <van-checkbox name="LG" shape="square">LG</van-checkbox>
+                <van-checkbox name="HTC" shape="square">HTC</van-checkbox>
+                <van-checkbox name="MOTOROLA" shape="square">MOTOROLA</van-checkbox>
+                <van-checkbox name="LENOVO" shape="square">LENOVO</van-checkbox>
+                <van-checkbox name="XIAOMI" shape="square">XIAOMI</van-checkbox>
+                <van-checkbox name="GOOGLE" shape="square">GOOGLE</van-checkbox>
+                <van-checkbox name="HONOR" shape="square">HONOR</van-checkbox>
+                <van-checkbox name="OPPO" shape="square">OPPO</van-checkbox>
+                <van-checkbox name="REALME" shape="square">REALME</van-checkbox>
+              </van-checkbox-group>
+            </template>
+          </van-field>
+
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Your maximum budget: <span
+              style="color: #B24040">${{ user_prefer.budget }}.</span></p>
+          <van-field name="budget" :rules="[{ required: true, message: 'please select' }]">
+            <template #input>
+              <van-slider :min="100" :max="1400" :step="100" v-model="user_prefer.budget"/>
+            </template>
+          </van-field>
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Cameras:</p>
+          <van-field name="cameras" :rules="[{ required: true, message: 'Please select' }]">
+            <template #input>
+              <van-radio-group v-model="user_prefer.cameras" direction="horizontal">
+                <van-radio name="1">One</van-radio>
+                <van-radio name="2">Two</van-radio>
+                <van-radio name="3">Three</van-radio>
+                <van-radio name="4">Four or more</van-radio>
+              </van-radio-group>
+            </template>
+          </van-field>
+          <div style="margin: 16px;">
+            <van-button round block type="info" native-type="submit">Summit</van-button>
+          </div>
+        </van-form>
+      </div>
+    </van-popup>
     <!--  左侧 help-->
     <van-popup
         v-model="show_help"
         closeable
         close-icon="close"
-        :style="{ height: '80%',width:'90%' }"
+        :style="{ height: '80%'}"
         @click-close-icon="closeHelp"
         :close-on-click-overlay="false"
         round
@@ -89,20 +146,67 @@
         :style="{ height: '100%',width:'80%' }"
     >
       <div class="cart" style="margin-top:3em">
+        <van-card v-for="item in phone_in_cart" :key="item.id"
+                  :thumb="item.img">
+          <template #title>
+            <div style="font-size: 16px;font-weight: bolder;">{{ item.modelname }}</div>
+          </template>
+          <template #price>
+            <div style="font-weight:bold;font-size:16px;color: #B24040">${{ item.price }}</div>
+          </template>
+          <template #num>
+            <div>Rating:{{ item.rate }}</div>
+          </template>
+          <template #tags>
+            <div>
+              <van-tag plain type="primary" style="margin:2px">Storage:{{ item.storage }}</van-tag>
+              <van-tag plain type="primary" style="margin:2px">RAM:{{ item.ram }}</van-tag>
+              <van-tag plain type="primary" style="margin:2px">{{ item.os1 }}</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ item.cam1 }}MP</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ item.displaysize }}inches</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ item.resolution1 }}*{{ item.resolution2 }}</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ item.battery }}mAh</van-tag>
+            </div>
+          </template>
+        </van-card>
+      </div>
+    </van-popup>
+
+    <!--    评分框-->
+    <van-popup
+        v-model="show_rate"
+        :style="{ height: '281px',width:'300px' }"
+        :close-on-click-overlay="false"
+        round
+    >
+      <div class="rate">
+        <van-nav-bar title='Please rate this phone'/>
         <van-card
-            num="2"
-            price="2.00"
-            desc="描述信息"
-            title="商品标题"
-            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-        />
-        <van-card
-            num="2"
-            price="2.00"
-            desc="描述信息"
-            title="商品标题"
-            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-        />
+            :thumb="current_phone.img">
+          <template #title>
+            <div style="font-size: 16px;font-weight: bolder;">{{ current_phone.modelname }}</div>
+          </template>
+          <template #price>
+            <div style="font-weight:bold;font-size:16px;color: #B24040">${{ current_phone.price }}</div>
+          </template>
+          <template #tags>
+            <div>
+              <van-tag plain type="primary" style="margin:2px">Storage:{{ current_phone.storage }}</van-tag>
+              <van-tag plain type="primary" style="margin:2px">RAM:{{ current_phone.ram }}</van-tag>
+              <van-tag plain type="primary" style="margin:2px">{{ current_phone.os1 }}</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ current_phone.cam1 }}MP</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ current_phone.displaysize }}inches</van-tag>
+              <van-tag plain type="primary" style="margin: 2px">
+                {{ current_phone.resolution1 }}*{{ current_phone.resolution2 }}
+              </van-tag>
+              <van-tag plain type="primary" style="margin: 2px">{{ current_phone.battery }}mAh</van-tag>
+            </div>
+          </template>
+        </van-card>
+        <div style="display: flex;justify-content: center;margin: 24px 0;">
+          <van-rate v-model="current_phone.rate"/>
+        </div>
+        <van-button type="primary" block @click="submitPhoneRate">Submit</van-button>
       </div>
     </van-popup>
   </div>
@@ -112,7 +216,8 @@
 import BotUi from "../components/BotUi";
 // 对象引入
 import {botui} from '@/components/BotUi';
-//import {instance} from "@/request";
+import {instance} from "@/request";
+
 
 export default {
   name: "Chatbot",
@@ -122,7 +227,10 @@ export default {
   data: function () {
     return {
       //控制功能
+      msg_btn_ctrl: false,
       show_help: true,
+      show_rate: false,
+      show_preference: false,
       help_showed_count: 1,
       show_cart: false,
       phone_buttons: [
@@ -140,8 +248,14 @@ export default {
         }],
 
       //数据部分
-      phone_in_cart:[],
-      phone:{
+      message: "",
+      user_prefer: {
+        brands: [],
+        budget: 700,
+        cameras: ''
+      },
+      phone_in_cart: [],
+      current_phone: {
         battery: 4000,
         brand: "alcatel",
         cam1: 12,
@@ -182,6 +296,49 @@ export default {
         content: msg
       })
     },
+    //提交手机偏好
+    submitPreference(values) {
+      if (values.brands.length !== 3) {
+        this.$toast("Please select three brands");
+      } else {
+        this.show_preference = false;
+        console.log(values);
+        this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(()=>{
+          this.botPhoneCard(this.current_phone);
+        })
+      }
+    },
+
+    //发送用户消息
+    sendMessage: function () {
+      //先禁用按钮
+      if (this.message.length >= 2) {
+        //可以发送
+        this.msg_btn_ctrl = true;
+        botui.message.human({
+          content: this.message,
+        }).then(() => {
+          instance.post('/userMessage', {}).then((res) => {
+            console.log(res);
+            this.msg_btn_ctrl = true;
+          })
+        })
+      } else {
+        this.$toast('Please enter more information.');
+      }
+
+    },
+    //手机评分
+    submitPhoneRate() {
+      if (this.current_phone.rate) {
+        this.phone_in_cart.push(this.current_phone);
+        this.show_rate = false
+
+      } else {
+        this.$toast("Please rate this phone first.")
+      }
+    },
+
     //商品卡片
     botPhoneCard: function (phone) {
       let template = `<div style="min-width: 240px;">
@@ -193,7 +350,7 @@ export default {
       <tr><td>OS:</td><td>${phone.os1}</td></tr>
       <tr><td>Camera:</td><td>${phone.cam1} MP</td></tr>
       <tr><td>Screen:</td><td>${phone.displaysize}inches</td></tr>
-      <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution1}</td></tr>
+      <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
       <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
@@ -206,11 +363,30 @@ export default {
         content: template
       }).then(() => {
         botui.action.button({
-          addMessage: true,
+          addMessage: false,
+          human: false,
           action: this.phone_buttons
         }).then((res) => {
-          console.log(res)
+          //判断点了什么按钮
+          if (res.text === 'Add to cart') {
+            this.addToCart(this.current_phone);
+          }
+          if (res.text === 'Try another'){
+            this.message = "Show another phone.";
+            this.sendMessage();
+          }
+          if (res.text === 'Let bot suggest'){
+            this.message = "I need some suggections.";
+          this.sendMessage();
+        }
         })
+      })
+    },
+
+    //加入购物车
+    addToCart() {
+      this.bot("Please rate your liked phone.").then(() => {
+        this.show_rate = true
       })
     },
 
@@ -223,9 +399,16 @@ export default {
     closeHelp: function () {
       if (this.help_showed_count === 1) {
         // 初始状态
-        this.bot("Hi there. I know you want to buy a new phone. I have found some phones for you based on your preference. You can add your liked phones to the shopping cart.").then(() => {
-          this.bot("But, you could also search for other phones by using the tips shown on the left side.");
-          this.botPhoneCard(this.phone);
+        this.bot("Hi there. I know you want to buy a new phone. Can you let me know your preference for the phone purchase?").then(() => {
+          botui.action.button({
+            addMessage: true,
+            human: false,
+            action: [{text: "OK", value: "OK"}]
+          }).then((res) => {
+            if (res.text === 'OK') {
+              this.show_preference = true;
+            }
+          })
         })
       }
     },
@@ -235,11 +418,21 @@ export default {
       this.show_cart = true
     },
 
+  },
+  computed: {
+    // 计算属性的 getter
+    cart_item_count: function () {
+      return this.phone_in_cart.length;
+    }
   }
 }
 </script>
 <style>
-.chatbot-header{
+.van-checkbox--horizontal {
+  margin-bottom: 6px;
+}
+
+.chatbot-header {
   position: absolute;
   left: 0;
   right: 0;
@@ -247,7 +440,8 @@ export default {
   z-index: 1;
   height: 46px;
 }
-.chatbot-send{
+
+.chatbot-send {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -255,7 +449,8 @@ export default {
   width: 100%;
   z-index: 1;
 }
-.chatbot-content{
+
+.chatbot-content {
   position: absolute;
   top: 46px;
   bottom: 54px;
@@ -263,6 +458,7 @@ export default {
   right: 0;
   overflow: auto;
 }
+
 .help {
   padding: 25px 10px 30px 10px;
 }
