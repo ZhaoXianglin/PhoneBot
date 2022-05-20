@@ -5,13 +5,14 @@ import Chatbot from '../views/Chatbot.vue'
 import Pretest from '../views/Pretest.vue'
 import Que1 from "@/views/Que1";
 import Que2 from "@/views/Que2";
+import Success from "@/views/Success";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Index',
+    name: 'Home',
     component: Index
   },
   {
@@ -31,13 +32,18 @@ const routes = [
   },
   {
     path: '/que1',
-    name: 'PostStudy',
+    name: 'PostStudy1',
     component: Que1
   },
   {
     path: '/que2',
-    name: 'PostStudy',
+    name: 'PostStudy2',
     component: Que2
+  },
+  {
+    path: '/success',
+    name: 'Thanks',
+    component: Success
   },
 ]
 

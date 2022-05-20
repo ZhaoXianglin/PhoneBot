@@ -8,8 +8,10 @@
       <van-step>Step4</van-step>
     </van-steps>
     <van-form @submit="onSubmit" scroll-to-error @failed="onFailed" validate-trigger="onSubmit">
-      <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following statements?</p>
-      <p style="padding:0 10px;font-weight:normal; text-align: left">Strongly disagree(1), Disagree(2), Somewhat disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
+      <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
+        statements?</p>
+      <p style="padding:0 10px;font-weight:normal; text-align: left">Strongly disagree(1), Disagree(2), Somewhat
+        disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
       <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"
                  :rules="[{ required: auth, message: 'required' }]">
         <template #input>
@@ -50,7 +52,8 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q1group:[
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
+      q1group: [
 
         {q: "The chatbot gave me good suggestions.", t: "useful1"},
         {q: "The chatbot helped me find the ideal phone.", t: "useful2"},
@@ -63,7 +66,10 @@ export default {
         {q: "This chatbot can be trusted.", t: "trust1"},
         {q: "I can always rely on the chatbot whenever I need to buy a mobile phone.", t: "trust2"},
         {q: "I feel that I could count on the chatbot to help me purchase the mobile phone I need.", t: "trust3"},
-        {q: "If I need to buy a mobile phone, I would be willing to rely on the information provided by the chatbot.", t: "trust4"},
+        {
+          q: "If I need to buy a mobile phone, I would be willing to rely on the information provided by the chatbot.",
+          t: "trust4"
+        },
 
         {q: "I am convinced of the phones recommended to me.", t: "confidence1"},
         {q: "I am confident I will like the phones recommended to me.", t: "confidence2"},
@@ -77,7 +83,10 @@ export default {
         {q: "I will use this chatbot frequently.", t: "intent2"},
         {q: "I will tell my friends about this chatbot.", t: "intent3"},
 
-        {q: "Given a chance, I predict that I would consider buying the phones recommended by the chatbot in the near future.", t: "intent2purchase1"},
+        {
+          q: "Given a chance, I predict that I would consider buying the phones recommended by the chatbot in the near future.",
+          t: "intent2purchase1"
+        },
         {q: "I will likely buy the phones recommended by the chatbot in the near future.", t: "intent2purchase2"},
         {q: "Given the opportunity, I intend to buy the phones recommended by the chatbot.", t: "intent2purchase3"},
 
@@ -85,22 +94,29 @@ export default {
       q1groupans: Array(35).fill(null),
     }
   },
-
+  mounted() {
+    let rand_ques = []
+    this.q_seq.forEach((v) => {
+      rand_ques.push(this.q1group[v-1])
+      //console.log(v,i,this.q1group[v-1])
+    })
+    this.q1group = rand_ques
+  },
   methods: {
-    onFailed (){
+    onFailed() {
       this.$toast("You may have missed some items, please fill in.");
     },
     onSubmit: function (values) {
       this.loading = true;
       values['uuid'] = localStorage.getItem('uuid');
       values['page4T'] = new Date().getTime();
-      instance.post('/api/posttest2', values).then((res) => {
+      instance.post('/api/page4', values).then((res) => {
         //console.log(res)
         if (res.data.status === 1) {
-          localStorage.setItem('step', '6');
+          localStorage.setItem('step', '4');
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          this.$router.replace('/tip6').catch((err) => {
+          this.$router.replace('/success').catch((err) => {
             console.log(err.message)
           });
         } else {

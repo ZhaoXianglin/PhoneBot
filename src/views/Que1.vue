@@ -8,8 +8,10 @@
       <van-step>Step4</van-step>
     </van-steps>
     <van-form @submit="onSubmit" scroll-to-error @failed="onFailed" validate-trigger="onSubmit">
-      <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following statements?</p>
-      <p style="padding:0 10px;font-weight:normal; text-align: left">Strongly disagree(1), Disagree(2), Somewhat disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
+      <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
+        statements?</p>
+      <p style="padding:0 10px;font-weight:normal; text-align: left">Strongly disagree(1), Disagree(2), Somewhat
+        disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
       <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"
                  :rules="[{ required: auth, message: 'required' }]">
         <template #input>
@@ -50,7 +52,8 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q1group:[
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33],
+      q1group: [
         {q: "The phones recommended to me matched my interests.", t: "accuracy1"},
         {q: "The recommended phones were well-chosen.", t: "accuracy2"},
         {q: "The recommended phones were relevant.", t: "accuracy3"},
@@ -99,22 +102,29 @@ export default {
       q1groupans: Array(38).fill(null),
     }
   },
-
+  mounted() {
+    let rand_ques = []
+    this.q_seq.forEach((v) => {
+      rand_ques.push(this.q1group[v-1])
+      //console.log(v,i,this.q1group[v-1])
+    })
+    this.q1group = rand_ques
+  },
   methods: {
-    onFailed (){
+    onFailed() {
       this.$toast("You may have missed some items, please fill in.");
     },
     onSubmit: function (values) {
       this.loading = true;
       values['uuid'] = localStorage.getItem('uuid');
       values['page3T'] = new Date().getTime();
-      instance.post('/api/posttest1', values).then((res) => {
+      instance.post('/api/page3', values).then((res) => {
         //console.log(res)
         if (res.data.status === 1) {
-          localStorage.setItem('step', '6');
+          localStorage.setItem('step', '3');
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          this.$router.replace('/tip6').catch((err) => {
+          this.$router.replace('/que2').catch((err) => {
             console.log(err.message)
           });
         } else {

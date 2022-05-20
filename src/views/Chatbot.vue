@@ -175,7 +175,7 @@
     <!--    评分框-->
     <van-popup
         v-model="show_rate"
-        :style="{ height: '281px',width:'300px' }"
+        :style="{width:'300px' }"
         :close-on-click-overlay="false"
         round
     >
@@ -209,6 +209,45 @@
         <van-button type="primary" block @click="submitPhoneRate">Submit</van-button>
       </div>
     </van-popup>
+
+    <!-- 去下一页   -->
+    <van-popup
+        v-model="show_next_page"
+        :style="{width:'300px' }"
+        :close-on-click-overlay="false"
+        round
+    >
+      <div class="rate">
+        <van-nav-bar title='Next Step'/>
+        <div class="cart">
+          <van-card v-for="item in phone_in_cart" :key="item.id"
+                    :thumb="item.img">
+            <template #title>
+              <div style="font-size: 16px;font-weight: bolder;">{{ item.modelname }}</div>
+            </template>
+            <template #price>
+              <div style="font-weight:bold;font-size:16px;color: #B24040">${{ item.price }}</div>
+            </template>
+            <template #num>
+              <div>Rating:{{ item.rate }}</div>
+            </template>
+            <template #tags>
+              <div>
+                <van-tag plain type="primary" style="margin:2px">Storage:{{ item.storage }}</van-tag>
+                <van-tag plain type="primary" style="margin:2px">RAM:{{ item.ram }}</van-tag>
+                <van-tag plain type="primary" style="margin:2px">{{ item.os1 }}</van-tag>
+                <van-tag plain type="primary" style="margin: 2px">{{ item.cam1 }}MP</van-tag>
+                <van-tag plain type="primary" style="margin: 2px">{{ item.displaysize }}inches</van-tag>
+                <van-tag plain type="primary" style="margin: 2px">{{ item.resolution1 }}*{{ item.resolution2 }}</van-tag>
+                <van-tag plain type="primary" style="margin: 2px">{{ item.battery }}mAh</van-tag>
+              </div>
+            </template>
+          </van-card>
+        </div>
+        <p style="padding:0 16px;">These are your favorite phones. Let's move to the next step.</p>
+        <van-button type="primary" block @click="nextPage">Next</van-button>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -232,6 +271,7 @@ export default {
       show_help: true,
       show_rate: false,
       show_preference: false,
+      show_next_page:false,
       help_showed_count: 1,
       show_cart: false,
       phone_buttons: [
@@ -343,7 +383,9 @@ export default {
           }).then((res) => {
             console.log(res);
             this.current_phone = res.data.phone;
-            this.botPhoneCard(this.current_phone);
+            this.bot(res.data.msg).then(()=>{
+              this.botPhoneCard(this.current_phone);
+            });
             this.msg_btn_ctrl = false;
             this.message = null;
           })
@@ -358,8 +400,10 @@ export default {
     submitPhoneRate() {
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
-        this.show_rate = false
-
+        this.show_rate = false;
+        if(this.phone_in_cart.length ===3){
+          this.show_next_page = true;
+        }
       } else {
         this.$toast("Please rate this phone first.")
       }
@@ -415,7 +459,6 @@ export default {
         this.show_rate = true
       })
     },
-
     //左上角tips部分
     clickHelp: function () {
       this.show_help = true;
@@ -443,7 +486,12 @@ export default {
     clickCart: function () {
       this.show_cart = true
     },
-
+    //跳到下一页
+    nextPage: function (){
+      this.$router.replace('/que1').catch((err) => {
+        console.log(err.message)
+      });
+    }
   },
   computed: {
     // 计算属性的 getter
