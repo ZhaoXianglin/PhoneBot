@@ -61,7 +61,7 @@ export default {
       auth: true,
       gender: "",
       age:"",
-      age_items: ['19-25', '26-30', '31-35', '36-40'],
+      age_items: ['18-24', '25-34', '35-44', '45-54', '55-64', '65 and over'],
       nationality:"",
       showPicker1: false,
       showPicker2: false,
