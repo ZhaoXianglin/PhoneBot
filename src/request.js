@@ -42,7 +42,7 @@ export let user_model = {
         "user_critique_preference": [],
         "user_constraints": []
     },
-    "topRecommendedItem": 200,
+    "topRecommendedItem": 0,
     "logger": {
         "dialog": [],
         "latest_dialog": [],

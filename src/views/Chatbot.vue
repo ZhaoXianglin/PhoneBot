@@ -56,22 +56,18 @@
             </template>
           </van-field>
 
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Your maximum budget: <span
-              style="color: #B24040">${{ user_prefer.budget }}.</span></p>
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Your Maximum Budget: <span
+              style="color: #B24040">${{ user_prefer.budget }}</span></p>
           <van-field name="budget" :rules="[{ required: true, message: 'please select' }]">
             <template #input>
               <van-slider :min="100" :max="1400" :step="100" v-model="user_prefer.budget"/>
             </template>
           </van-field>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Cameras:</p>
-          <van-field name="cameras" :rules="[{ required: true, message: 'Please select' }]">
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Main Camera Maximum Resolution: <span
+              style="color: #B24040">{{ user_prefer.cameras }}MP</span></p>
+          <van-field name="cameras" :rules="[{ required: true, message: 'please select' }]">
             <template #input>
-              <van-radio-group v-model="user_prefer.cameras" direction="horizontal">
-                <van-radio name="1">One</van-radio>
-                <van-radio name="2">Two</van-radio>
-                <van-radio name="3">Three</van-radio>
-                <van-radio name="4">Four or more</van-radio>
-              </van-radio-group>
+              <van-slider :min="0" :max="108" :step="6" v-model="user_prefer.cameras"/>
             </template>
           </van-field>
           <div style="margin: 16px;">
@@ -292,42 +288,17 @@ export default {
         }],
 
       //数据部分
+      uuid: localStorage.getItem("uuid"),
       message: "",
       user_prefer: {
         brands: [],
         budget: 700,
-        cameras: ''
+        cameras: 12,
       },
       phone_in_cart: [],
-      current_phone: {
-        battery: 4000,
-        brand: "alcatel",
-        cam1: 12,
-        cam2: 8,
-        cpu: "Octa-core",
-        d1: 153.7,
-        d2: 74.5,
-        d3: 8.5,
-        displayratio: "84.5%",
-        displaysize: 6.2,
-        gps: "Yes,",
-        id: 2,
-        img: "https://fdn2.gsmarena.com/vv/bigpic/alcatel-5v.jpg",
-        modelname: "alcatel 5v",
-        nettech: "GSM / HSPA / LTE",
-        nfc: "Yes",
-        os1: "Android",
-        popularity: 247639,
-        price: 196.2,
-        ram: "3GB",
-        resolution1: 720,
-        resolution2: 1500,
-        storage: "32GB",
-        url: "https://www.gsmarena.com/alcatel_5v-9271.php",
-        weight: 158,
-        year: "2018, July",
-      },
-      user_profile: user_model
+      current_phone: {},
+      user_profile: user_model,
+      latest_dialog: [],
     }
   },
   methods: {
@@ -343,15 +314,16 @@ export default {
     },
     //提交手机偏好
     submitPreference(values) {
-      if (values.brands.length <= 1) {
+      if (values.brands.length < 1) {
         this.$toast("Please select at last one brand.");
       } else {
         this.loading = true;
         values['uuid'] = localStorage.getItem('uuid');
         values['preferT'] = new Date().getTime();
-        this.user_profile.user.preferenceData.brand = values['brands']
-        this.user_profile.user.preferenceData.camera = [1, parseInt(values['cameras'])]
-        this.user_profile.user.preferenceData.price = [50, parseInt(values['budget'])]
+        this.user_profile.user.preferenceData.brand = values['brands'];
+        this.user_profile.user.preferenceData.camera = [0, parseInt(values['cameras'])];
+        this.user_profile.user.preferenceData.price = [50, parseInt(values['budget'])];
+        this.user_profile.user._id = this.uuid;
         values['user_profile'] = this.user_profile;
         instance.post('/api/prefer', values).then((res) => {
           //console.log(res)
@@ -359,7 +331,13 @@ export default {
             this.loading = false;
             this.show_preference = false;
             this.current_phone = res.data.phone;
-            console.log(res);
+            this.user_profile = res.data.user_profile;
+            //添加操作记录
+            this.latest_dialog.push({
+              "agent": "robot",
+              "action": "Initialize",
+              "timestamp": new Date().getTime()
+            })
             this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(() => {
               this.botPhoneCard(this.current_phone);
             })
@@ -387,7 +365,8 @@ export default {
           instance.post('/api/userMessage', {
             msgT: new Date().getTime(),
             message: this.message,
-            uuid: localStorage.getItem('uuid')
+            uuid: localStorage.getItem('uuid'),
+            user_profile: this.user_profile
           }).then((res) => {
             console.log(res);
             this.current_phone = res.data.phone;
@@ -466,6 +445,13 @@ export default {
       this.bot("Please rate your liked phone.").then(() => {
         this.show_rate = true
       })
+      this.latest_dialog.push(
+          {
+            "agent": "you",
+            "action": "Accept_Item",
+            "timestamp": new Date().getTime()
+          }
+      )
     },
     //左上角tips部分
     clickHelp: function () {
