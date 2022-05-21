@@ -38,20 +38,20 @@
           <van-field name="brands" :rules="[{ required: true, message: 'Please select' }]">
             <template #input>
               <van-checkbox-group v-model="user_prefer.brands" :max="3" direction="horizontal">
-                <van-checkbox name="SAMSUNG" shape="square">SAMSUNG</van-checkbox>
-                <van-checkbox name="APPLE" shape="square">APPLE</van-checkbox>
-                <van-checkbox name="HUIWEI" shape="square">HUIWEI</van-checkbox>
-                <van-checkbox name="NOKIA" shape="square">NOKIA</van-checkbox>
-                <van-checkbox name="SONY" shape="square">SONY</van-checkbox>
+                <van-checkbox name="Samsung" shape="square">SAMSUNG</van-checkbox>
+                <van-checkbox name="Apple" shape="square">APPLE</van-checkbox>
+                <van-checkbox name="Huawei" shape="square">HUIWEI</van-checkbox>
+                <van-checkbox name="Nokia" shape="square">NOKIA</van-checkbox>
+                <van-checkbox name="Sony" shape="square">SONY</van-checkbox>
                 <van-checkbox name="LG" shape="square">LG</van-checkbox>
                 <van-checkbox name="HTC" shape="square">HTC</van-checkbox>
-                <van-checkbox name="MOTOROLA" shape="square">MOTOROLA</van-checkbox>
-                <van-checkbox name="LENOVO" shape="square">LENOVO</van-checkbox>
-                <van-checkbox name="XIAOMI" shape="square">XIAOMI</van-checkbox>
-                <van-checkbox name="GOOGLE" shape="square">GOOGLE</van-checkbox>
-                <van-checkbox name="HONOR" shape="square">HONOR</van-checkbox>
-                <van-checkbox name="OPPO" shape="square">OPPO</van-checkbox>
-                <van-checkbox name="REALME" shape="square">REALME</van-checkbox>
+                <van-checkbox name="Motorola" shape="square">MOTOROLA</van-checkbox>
+                <van-checkbox name="Lenovo" shape="square">LENOVO</van-checkbox>
+                <van-checkbox name="Xiaomi" shape="square">XIAOMI</van-checkbox>
+                <van-checkbox name="Google" shape="square">GOOGLE</van-checkbox>
+                <van-checkbox name="Honor" shape="square">HONOR</van-checkbox>
+                <van-checkbox name="Oppo" shape="square">OPPO</van-checkbox>
+                <van-checkbox name="Realme" shape="square">REALME</van-checkbox>
               </van-checkbox-group>
             </template>
           </van-field>
@@ -238,7 +238,10 @@
                 <van-tag plain type="primary" style="margin:2px">{{ item.os1 }}</van-tag>
                 <van-tag plain type="primary" style="margin: 2px">{{ item.cam1 }}MP</van-tag>
                 <van-tag plain type="primary" style="margin: 2px">{{ item.displaysize }}inches</van-tag>
-                <van-tag plain type="primary" style="margin: 2px">{{ item.resolution1 }}*{{ item.resolution2 }}</van-tag>
+                <van-tag plain type="primary" style="margin: 2px">{{ item.resolution1 }}*{{
+                    item.resolution2
+                  }}
+                </van-tag>
                 <van-tag plain type="primary" style="margin: 2px">{{ item.battery }}mAh</van-tag>
               </div>
             </template>
@@ -255,7 +258,7 @@
 import BotUi from "../components/BotUi";
 // 对象引入
 import {botui} from '@/components/BotUi';
-import {instance} from "@/request";
+import {instance, user_model} from "@/request";
 
 
 export default {
@@ -266,12 +269,12 @@ export default {
   data: function () {
     return {
       //控制功能
-      loading:false,
+      loading: false,
       msg_btn_ctrl: false,
       show_help: true,
       show_rate: false,
       show_preference: false,
-      show_next_page:false,
+      show_next_page: false,
       help_showed_count: 1,
       show_cart: false,
       phone_buttons: [
@@ -323,7 +326,8 @@ export default {
         url: "https://www.gsmarena.com/alcatel_5v-9271.php",
         weight: 158,
         year: "2018, July",
-      }
+      },
+      user_profile: user_model
     }
   },
   methods: {
@@ -339,12 +343,16 @@ export default {
     },
     //提交手机偏好
     submitPreference(values) {
-      if (values.brands.length !== 3) {
-        this.$toast("Please select three brands");
+      if (values.brands.length <= 1) {
+        this.$toast("Please select at last one brand.");
       } else {
         this.loading = true;
         values['uuid'] = localStorage.getItem('uuid');
         values['preferT'] = new Date().getTime();
+        this.user_profile.user.preferenceData.brand = values['brands']
+        this.user_profile.user.preferenceData.camera = [1, parseInt(values['cameras'])]
+        this.user_profile.user.preferenceData.price = [50, parseInt(values['budget'])]
+        values['user_profile'] = this.user_profile;
         instance.post('/api/prefer', values).then((res) => {
           //console.log(res)
           if (res.data.status === 1) {
@@ -352,7 +360,7 @@ export default {
             this.show_preference = false;
             this.current_phone = res.data.phone;
             console.log(res);
-            this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(()=>{
+            this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(() => {
               this.botPhoneCard(this.current_phone);
             })
           } else {
@@ -383,7 +391,7 @@ export default {
           }).then((res) => {
             console.log(res);
             this.current_phone = res.data.phone;
-            this.bot(res.data.msg).then(()=>{
+            this.bot(res.data.msg).then(() => {
               this.botPhoneCard(this.current_phone);
             });
             this.msg_btn_ctrl = false;
@@ -401,7 +409,7 @@ export default {
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
         this.show_rate = false;
-        if(this.phone_in_cart.length ===3){
+        if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
         }
       } else {
@@ -441,14 +449,14 @@ export default {
           if (res.text === 'Add to cart') {
             this.addToCart(this.current_phone);
           }
-          if (res.text === 'Try another'){
+          if (res.text === 'Try another') {
             this.message = "Show another phone.";
             this.sendMessage();
           }
-          if (res.text === 'Let bot suggest'){
+          if (res.text === 'Let bot suggest') {
             this.message = "I need some suggections.";
-          this.sendMessage();
-        }
+            this.sendMessage();
+          }
         })
       })
     },
@@ -487,7 +495,7 @@ export default {
       this.show_cart = true
     },
     //跳到下一页
-    nextPage: function (){
+    nextPage: function () {
       this.$router.replace('/que1').catch((err) => {
         console.log(err.message)
       });
