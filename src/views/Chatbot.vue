@@ -254,8 +254,7 @@
 import BotUi from "../components/BotUi";
 // 对象引入
 import {botui} from '@/components/BotUi';
-import {instance, user_model} from "@/request";
-
+import {instance} from "@/request";
 
 export default {
   name: "Chatbot",
@@ -297,7 +296,6 @@ export default {
       },
       phone_in_cart: [],
       current_phone: {},
-      user_profile: user_model,
       latest_dialog: [],
     }
   },
@@ -320,18 +318,12 @@ export default {
         this.loading = true;
         values['uuid'] = localStorage.getItem('uuid');
         values['preferT'] = new Date().getTime();
-        this.user_profile.user.preferenceData.brand = values['brands'];
-        this.user_profile.user.preferenceData.camera = [0, parseInt(values['cameras'])];
-        this.user_profile.user.preferenceData.price = [50, parseInt(values['budget'])];
-        this.user_profile.user._id = this.uuid;
-        values['user_profile'] = this.user_profile;
         instance.post('/api/prefer', values).then((res) => {
           //console.log(res)
           if (res.data.status === 1) {
             this.loading = false;
             this.show_preference = false;
             this.current_phone = res.data.phone;
-            this.user_profile = res.data.user_profile;
             //添加操作记录
             this.latest_dialog.push({
               "agent": "robot",
@@ -383,14 +375,18 @@ export default {
       }
 
     },
+
     //手机评分
     submitPhoneRate() {
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
+
         this.show_rate = false;
+        this.botPhoneCard(this.current_phone);
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
         }
+
       } else {
         this.$toast("Please rate this phone first.")
       }
@@ -445,19 +441,26 @@ export default {
       this.bot("Please rate your liked phone.").then(() => {
         this.show_rate = true
       })
-      this.latest_dialog.push(
-          {
-            "agent": "you",
-            "action": "Accept_Item",
-            "timestamp": new Date().getTime()
-          }
-      )
+      this.latest_dialog.push({
+        "agent": "you",
+        "action": "Accept_Item",
+        "timestamp": new Date().getTime()
+      })
+      instance.post("/api/updatemodel", {
+        uuid: this.uuid,
+        logger: this.latest_dialog,
+        lTime: new Date().getTime(),
+      }).then((res) => {
+        this.current_phone = res.data.phone
+      })
     },
+
     //左上角tips部分
     clickHelp: function () {
       this.show_help = true;
       this.help_showed_count += 1;
     },
+
     //初始化引导语的入口
     closeHelp: function () {
       if (this.help_showed_count === 1) {
