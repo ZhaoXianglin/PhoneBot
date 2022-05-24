@@ -81,7 +81,7 @@
         v-model="show_help"
         closeable
         close-icon="close"
-        :style="{ height: '80%'}"
+        :style="{ height: '80%',width:'90%'}"
         @click-close-icon="closeHelp"
         :close-on-click-overlay="false"
         round
@@ -691,8 +691,7 @@ export default {
             })
         ))
       })
-    }
-    ,
+    },
 
 //给系统推荐用
     PhoneCard_2btn: function (phone) {
@@ -738,15 +737,13 @@ export default {
           }
         })
       })
-    }
-    ,
+    },
 
 //左上角tips部分
     clickHelp: function () {
       this.show_help = true;
       this.help_showed_count += 1;
-    }
-    ,
+    },
 
 //初始化引导语的入口
     closeHelp: function () {
@@ -764,14 +761,12 @@ export default {
           })
         })
       }
-    }
-    ,
+    },
 
 //购物车部分
     clickCart: function () {
       this.show_cart = true
-    }
-    ,
+    },
 //跳到下一页
     nextPage: function () {
       this.$router.replace('/que1').catch((err) => {
