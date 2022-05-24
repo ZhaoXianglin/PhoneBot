@@ -352,7 +352,6 @@ export default {
             this.addToCart(this.current_phone);
           }
           if (res.text === 'Try another') {
-            this.message = "Show another phone.";
             this.tryAnother();
           }
           if (res.text === 'Let bot suggest') {
@@ -490,7 +489,6 @@ export default {
                     })
                   }
                   if (res.text === 'No') {
-                    this.message = "Show another phone.";
                     this.crit_phone_point[0] += 1
                     this.crit_phone_point[1] = 0
                     this.crit_text_point += 1
@@ -580,7 +578,6 @@ export default {
                 })
               }
               if (res.text === 'No') {
-                this.message = "Show another phone.";
                 this.crit_phone_point[0] += 1
                 this.crit_phone_point[1] = 0
                 this.crit_text_point += 1
@@ -685,7 +682,6 @@ export default {
                   })
                 }
                 if (res.text === 'No') {
-                  this.message = "Show another phone.";
                   this.crit_phone_point[0] += 1
                   this.crit_phone_point[1] = 0
                   this.crit_text_point += 1
@@ -738,7 +734,6 @@ export default {
             this.addToCart(this.current_phone);
           }
           if (res.text === 'Try another') {
-            this.message = "Show another phone.";
             this.tryAnother();
           }
         })
