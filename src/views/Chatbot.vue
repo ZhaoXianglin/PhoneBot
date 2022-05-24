@@ -286,6 +286,11 @@ export default {
           value: 'I need some suggestions.'
         }],
 
+      //critical的标识
+      in_crit: false,
+      crit_text_point: 0,
+      crit_phone_point: [0, 0],
+
       //数据部分
       uuid: localStorage.getItem("uuid"),
       message: "",
@@ -297,6 +302,8 @@ export default {
       phone_in_cart: [],
       current_phone: {},
       latest_dialog: [],
+      last_action: "",
+      critical_data: []
     }
   },
   methods: {
@@ -311,6 +318,51 @@ export default {
       })
     },
     //提交手机偏好
+
+    //商品卡片
+    botPhoneCard: function (phone) {
+      let template = `<div style="min-width: 240px;">
+      <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
+      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
+      <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
+      <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
+      <tr><td>Memory:</td><td>${phone.ram}</td></tr>
+      <tr><td>OS:</td><td>${phone.os1}</td></tr>
+      <tr><td>Camera:</td><td>${phone.cam1} MP</td></tr>
+      <tr><td>Screen:</td><td>${phone.displaysize}inches</td></tr>
+      <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
+      <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
+      </table>
+      <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
+      </div>`
+      botui.message.bot({
+        type: 'html',
+        photo: require("../assets/imgs/chatbot_avator.png"),
+        loading: true,
+        delay: 1600,
+        content: template
+      }).then(() => {
+        botui.action.button({
+          addMessage: false,
+          human: false,
+          action: this.phone_buttons
+        }).then((res) => {
+          //判断点了什么按钮
+          if (res.text === 'Add to cart') {
+            this.addToCart(this.current_phone);
+          }
+          if (res.text === 'Try another') {
+            this.message = "Show another phone.";
+            this.tryAnother();
+          }
+          if (res.text === 'Let bot suggest') {
+            this.letBotSuggest()
+          }
+        })
+      })
+    },
+
+    //初始化用户偏好
     submitPreference(values) {
       if (values.brands.length < 1) {
         this.$toast("Please select at last one brand.");
@@ -347,6 +399,7 @@ export default {
 
     //发送用户消息
     sendMessage: function () {
+      this.last_action = 'sendMessage';
       //先禁用按钮
       if (this.message.length >= 2) {
         //可以发送
@@ -376,24 +429,277 @@ export default {
 
     },
 
+    //加入购物车
+    addToCart() {
+      this.last_action = "addToCart";
+      this.bot("Please rate your liked phone.").then(() => {
+        this.show_rate = true
+      })
+      this.latest_dialog.push({
+        "agent": "you",
+        "action": "Accept_Item",
+        "timestamp": new Date().getTime()
+      })
+    },
+
     //手机评分
     submitPhoneRate() {
+      console.log(this.crit_phone_point);
+      this.last_action = 'submitPhoneRate';
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
-
         this.show_rate = false;
-        this.botPhoneCard(this.current_phone);
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
+        } else {
+          if (this.in_crit) {
+            if (this.crit_text_point < 3 && this.crit_phone_point[1] === 3) {
+              this.crit_phone_point[1] = 0
+              this.crit_phone_point[0] += 1
+              this.crit_text_point += 1
+            }
+            if (this.crit_text_point < 3 && this.crit_phone_point[1] === 0) {
+              //需要bot 说话
+              botui.message.bot({
+                type: 'html',
+                photo: require("../assets/imgs/chatbot_avator.png"),
+                loading: true,
+                delay: 1600,
+                content: this.critical_data['crit'][this.crit_text_point]
+              }).then(() => {
+                botui.action.button({
+                  addMessage: false,
+                  human: false,
+                  action: [{
+                    text: 'Yes',
+                    value: 'Yes'
+                  },
+                    {
+                      text: 'No',
+                      value: 'No'
+                    }]
+                }).then((res) => {
+                  //判断点了什么按钮
+                  if (res.text === 'Yes') {
+                    //查询手机是什么
+                    instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
+                      this.current_phone = res.data
+                      //展示手机卡片
+                      this.PhoneCard_2btn(this.current_phone)
+                      this.crit_phone_point[1] += 1
+                    })
+                  }
+                  if (res.text === 'No') {
+                    this.message = "Show another phone.";
+                    this.crit_phone_point[0] += 1
+                    this.crit_phone_point[1] = 0
+                    this.crit_text_point += 1
+                    this.tryAnother()
+                  }
+                })
+              })
+            } else if (this.crit_phone_point[1] < 3 && this.crit_text_point < 3) {
+              instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
+                this.current_phone = res.data;
+                this.crit_phone_point[1] += 1;
+                this.PhoneCard_2btn(this.current_phone);
+              })
+            } else {
+              //全都展示完了，给一个新的推荐
+              this.in_crit = false;
+              this.crit_text_point = 0;
+              this.crit_phone_point = [0, 0];
+              instance.post("/api/updatemodel", {
+                uuid: this.uuid,
+                logger: this.latest_dialog,
+                lTime: new Date().getTime(),
+              }).then((res) => {
+                this.latest_dialog = [];
+                this.current_phone = res.data.phone;
+                this.botPhoneCard(this.current_phone);
+              })
+            }
+          } else {
+            this.in_crit = false;
+            this.crit_text_point = 0;
+            this.crit_phone_point = [0, 0];
+            instance.post("/api/updatemodel", {
+              uuid: this.uuid,
+              logger: this.latest_dialog,
+              lTime: new Date().getTime(),
+            }).then((res) => {
+              this.latest_dialog = [];
+              this.current_phone = res.data.phone;
+              this.botPhoneCard(this.current_phone);
+            })
+          }
         }
-
       } else {
         this.$toast("Please rate this phone first.")
       }
     },
 
-    //商品卡片
-    botPhoneCard: function (phone) {
+    //再来一个推荐
+    tryAnother() {
+      console.log(this.crit_phone_point);
+      if (this.in_crit) {
+        if (this.crit_text_point < 3 && this.crit_phone_point[1] === 3) {
+          this.crit_phone_point[1] = 0
+          this.crit_phone_point[0] += 1
+          this.crit_text_point += 1
+        }
+        if (this.crit_text_point < 3 && this.crit_phone_point[1] === 0) {
+          //需要bot 说话
+          botui.message.bot({
+            type: 'html',
+            photo: require("../assets/imgs/chatbot_avator.png"),
+            loading: true,
+            delay: 1600,
+            content: this.critical_data['crit'][this.crit_text_point]
+          }).then(() => {
+            botui.action.button({
+              addMessage: false,
+              human: false,
+              action: [{
+                text: 'Yes',
+                value: 'Yes'
+              },
+                {
+                  text: 'No',
+                  value: 'No'
+                }]
+            }).then((res) => {
+              //判断点了什么按钮
+              if (res.text === 'Yes') {
+                //查询手机是什么
+                instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
+                  this.current_phone = res.data
+                  //展示手机卡片
+                  this.PhoneCard_2btn(this.current_phone)
+                  this.crit_phone_point[1] += 1
+                })
+              }
+              if (res.text === 'No') {
+                this.message = "Show another phone.";
+                this.crit_phone_point[0] += 1
+                this.crit_phone_point[1] = 0
+                this.crit_text_point += 1
+                this.tryAnother()
+              }
+            })
+          })
+        } else if (this.crit_phone_point[1] < 3 && this.crit_text_point < 3) {
+          instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
+            this.current_phone = res.data;
+            this.crit_phone_point[1] += 1;
+            this.PhoneCard_2btn(this.current_phone);
+          })
+        } else {
+          //全都展示完了，给一个新的推荐
+          this.in_crit = false;
+          this.crit_text_point = 0;
+          this.crit_phone_point = [0, 0];
+          instance.post("/api/updatemodel", {
+            uuid: this.uuid,
+            logger: this.latest_dialog,
+            lTime: new Date().getTime(),
+          }).then((res) => {
+            this.latest_dialog = [];
+            this.current_phone = res.data.phone;
+            this.botPhoneCard(this.current_phone);
+          })
+        }
+      } else {
+        if (this.last_action === "tryAnother"
+        ) {
+          //两次点击try another
+          this.last_action = "letBotSuggect";
+          this.letBotSuggest();
+        } else {
+          this.last_action = "tryAnother";
+          botui.message.human({
+            content: "Show another phone",
+          }).then(() => {
+            this.latest_dialog.push({
+              "agent": "you",
+              "action": "Next",
+              "timestamp": new Date().getTime()
+            })
+            instance.post("/api/updatemodel", {
+              uuid: this.uuid,
+              logger: this.latest_dialog,
+              lTime: new Date().getTime(),
+            }).then((res) => {
+              this.latest_dialog = [];
+              this.current_phone = res.data.phone;
+              this.botPhoneCard(this.current_phone);
+            })
+          })
+        }
+      }
+    },
+
+// let bot suggest
+    letBotSuggest: function () {
+      let that = this;
+      this.in_crit = true;
+      botui.message.bot({
+        type: 'html',
+        photo: require("../assets/imgs/chatbot_avator.png"),
+        loading: true,
+      }).then((index) => {
+        //直接发送请求获取推荐的列表
+        instance.post("/api/syscri", {
+          uuid: this.uuid,
+          logger: this.latest_dialog,
+          lTime: new Date().getTime(),
+        }).then((res) => {
+          that.critical_data = res.data['phones']
+        }).then(() => (
+            //得到推荐列表后，开始展示
+            botui.message.update(index, {
+              loading: false,
+              content: that.critical_data['crit'][this.crit_text_point]
+            }).then(() => {
+              //先问yes no
+              botui.action.button({
+                addMessage: false,
+                human: false,
+                action: [{
+                  text: 'Yes',
+                  value: 'Yes'
+                },
+                  {
+                    text: 'No',
+                    value: 'No'
+                  }]
+              }).then((res) => {
+                //判断点了什么按钮
+                if (res.text === 'Yes') {
+                  //查询手机是什么
+                  instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
+                    this.current_phone = res.data
+                    //展示手机卡片
+                    this.PhoneCard_2btn(this.current_phone)
+                    this.crit_phone_point[1] += 1
+                  })
+                }
+                if (res.text === 'No') {
+                  this.message = "Show another phone.";
+                  this.crit_phone_point[0] += 1
+                  this.crit_phone_point[1] = 0
+                  this.crit_text_point += 1
+                  this.tryAnother()
+                }
+              })
+            })
+        ))
+      })
+    }
+    ,
+
+//给系统推荐用
+    PhoneCard_2btn: function (phone) {
       let template = `<div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
       <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
@@ -418,7 +724,14 @@ export default {
         botui.action.button({
           addMessage: false,
           human: false,
-          action: this.phone_buttons
+          action: [{
+            text: 'Add to cart',
+            value: 'Add to cart'
+          },
+            {
+              text: 'Try another',
+              value: 'Show another phone.'
+            }]
         }).then((res) => {
           //判断点了什么按钮
           if (res.text === 'Add to cart') {
@@ -426,42 +739,21 @@ export default {
           }
           if (res.text === 'Try another') {
             this.message = "Show another phone.";
-            this.sendMessage();
-          }
-          if (res.text === 'Let bot suggest') {
-            this.message = "I need some suggections.";
-            this.sendMessage();
+            this.tryAnother();
           }
         })
       })
-    },
+    }
+    ,
 
-    //加入购物车
-    addToCart() {
-      this.bot("Please rate your liked phone.").then(() => {
-        this.show_rate = true
-      })
-      this.latest_dialog.push({
-        "agent": "you",
-        "action": "Accept_Item",
-        "timestamp": new Date().getTime()
-      })
-      instance.post("/api/updatemodel", {
-        uuid: this.uuid,
-        logger: this.latest_dialog,
-        lTime: new Date().getTime(),
-      }).then((res) => {
-        this.current_phone = res.data.phone
-      })
-    },
-
-    //左上角tips部分
+//左上角tips部分
     clickHelp: function () {
       this.show_help = true;
       this.help_showed_count += 1;
-    },
+    }
+    ,
 
-    //初始化引导语的入口
+//初始化引导语的入口
     closeHelp: function () {
       if (this.help_showed_count === 1) {
         // 初始状态
@@ -477,13 +769,15 @@ export default {
           })
         })
       }
-    },
+    }
+    ,
 
-    //购物车部分
+//购物车部分
     clickCart: function () {
       this.show_cart = true
-    },
-    //跳到下一页
+    }
+    ,
+//跳到下一页
     nextPage: function () {
       this.$router.replace('/que1').catch((err) => {
         console.log(err.message)
