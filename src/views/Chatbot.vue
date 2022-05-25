@@ -406,14 +406,24 @@ export default {
         botui.message.human({
           content: this.message,
         }).then(() => {
+          this.latest_dialog.push({
+            "agent": "you",
+            "text": this.message,
+            "modality": "typing",
+            "action": "User_Critique",
+            "critique": [],
+            "critiqued_item": this.current_phone.id,
+            "timestamp": new Date().getTime()
+          })
           instance.post('/api/userMessage', {
             msgT: new Date().getTime(),
             message: this.message,
+            logger: this.latest_dialog,
             uuid: localStorage.getItem('uuid'),
-            user_profile: this.user_profile
           }).then((res) => {
             console.log(res);
             this.current_phone = res.data.phone;
+            this.latest_dialog = [];
             this.bot(res.data.msg).then(() => {
               this.botPhoneCard(this.current_phone);
             });
