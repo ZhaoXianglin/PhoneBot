@@ -265,7 +265,7 @@ export default {
     return {
       //控制功能
       loading: false,
-      msg_btn_ctrl: false,
+      msg_btn_ctrl: true,
       show_help: true,
       show_rate: false,
       show_preference: false,
@@ -383,6 +383,7 @@ export default {
             })
             this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(() => {
               this.botPhoneCard(this.current_phone);
+              this.msg_btn_ctrl = false;
             })
           } else {
             this.loading = false;
@@ -399,6 +400,12 @@ export default {
     //发送用户消息
     sendMessage: function () {
       this.last_action = 'sendMessage';
+      botui.action.hide();
+      if(this.in_crit){
+        this.in_crit = false;
+        this.crit_text_point = 0;
+        this.crit_phone_point = [0,0];
+      }
       //先禁用按钮
       if (this.message.length >= 2) {
         //可以发送
@@ -429,6 +436,9 @@ export default {
             });
             this.msg_btn_ctrl = false;
             this.message = null;
+          }).catch(()=>{
+            this.msg_btn_ctrl = false;
+            this.$toast('Please try again.');
           })
         })
       } else {
@@ -617,8 +627,7 @@ export default {
           })
         }
       } else {
-        if (this.last_action === "tryAnother"
-        ) {
+        if (this.last_action === "tryAnother") {
           //两次点击try another
           this.last_action = "letBotSuggect";
           this.letBotSuggest();
