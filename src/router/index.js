@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
 import Chatbot from '../views/Chatbot.vue'
+import ChatbotwithExp from '@/views/ChatbotwithExp.vue'
+import ChatbotwithExpAva from '@/views/ChatbotwithExpAva.vue'
 import Pretest from '../views/Pretest.vue'
 import Que1 from "@/views/Que1";
 import Que2 from "@/views/Que2";
@@ -24,6 +26,16 @@ const routes = [
     path: '/chatbot',
     name: 'Chatbot',
     component: Chatbot
+  },
+  {
+    path: '/chatbotexp',
+    name: 'chatbot with exp',
+    component: ChatbotwithExp
+  },
+  {
+    path: '/chatbotexpava',
+    name: 'chatbot with exp',
+    component: ChatbotwithExpAva
   },
   {
     path: '/prestudy',

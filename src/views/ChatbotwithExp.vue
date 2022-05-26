@@ -257,7 +257,7 @@ import {botui} from '@/components/BotUi';
 import {instance} from "@/request";
 
 export default {
-  name: "Chatbot",
+  name: "ChatbotwithExp",
   components: {
     BotUi,
   },
@@ -281,7 +281,7 @@ export default {
           text: 'Try another',
           value: 'Show another phone.'
         },
-      ],
+        ],
 
       //critical的标识
       in_crit: false,
@@ -300,8 +300,7 @@ export default {
       current_phone: {},
       latest_dialog: [],
       last_action: "",
-      critical_data: [],
-      bot_msg: ['I find this phone for you.', 'You may like this phone.', 'Please check this phone.']
+      critical_data: []
     }
   },
   methods: {
@@ -350,9 +349,6 @@ export default {
           if (res.text === 'Try another') {
             this.tryAnother();
           }
-          if (res.text === 'Let bot suggest') {
-            this.letBotSuggest()
-          }
         })
       })
     },
@@ -397,10 +393,10 @@ export default {
     sendMessage: function () {
       this.last_action = 'sendMessage';
       botui.action.hide();
-      if (this.in_crit) {
+      if(this.in_crit){
         this.in_crit = false;
         this.crit_text_point = 0;
-        this.crit_phone_point = [0, 0];
+        this.crit_phone_point = [0,0];
       }
       //先禁用按钮
       if (this.message.length >= 2) {
@@ -427,13 +423,12 @@ export default {
             console.log(res);
             this.current_phone = res.data.phone;
             this.latest_dialog = [];
-            let msg = this.bot_msg[this.randomNum(0,2)]
-            this.bot(msg).then(() => {
+            this.bot(res.data.msg).then(() => {
               this.botPhoneCard(this.current_phone);
             });
             this.msg_btn_ctrl = false;
             this.message = null;
-          }).catch(() => {
+          }).catch(()=>{
             this.msg_btn_ctrl = false;
             this.$toast('Please try again.');
           })
@@ -530,7 +525,9 @@ export default {
               }).then((res) => {
                 this.latest_dialog = [];
                 this.current_phone = res.data.phone;
-                this.botPhoneCard(this.current_phone);
+                this.bot(res.data.msg).then(() => {
+                  this.botPhoneCard(this.current_phone);
+                });
               })
             }
           } else {
@@ -544,8 +541,7 @@ export default {
             }).then((res) => {
               this.latest_dialog = [];
               this.current_phone = res.data.phone;
-              let msg = this.bot_msg[this.randomNum(0,2)]
-              this.bot(msg).then(() => {
+              this.bot(res.data.msg).then(() => {
                 this.botPhoneCard(this.current_phone);
               });
             })
@@ -621,7 +617,9 @@ export default {
           }).then((res) => {
             this.latest_dialog = [];
             this.current_phone = res.data.phone;
-            this.botPhoneCard(this.current_phone);
+            this.bot(res.data.msg).then(() => {
+              this.botPhoneCard(this.current_phone);
+            });
           })
         }
       } else {
@@ -646,8 +644,7 @@ export default {
             }).then((res) => {
               this.latest_dialog = [];
               this.current_phone = res.data.phone;
-              let msg = this.bot_msg[this.randomNum(0,2)]
-              this.bot(msg).then(() => {
+              this.bot(res.data.msg).then(() => {
                 this.botPhoneCard(this.current_phone);
               });
             })
@@ -790,16 +787,6 @@ export default {
       this.$router.replace('/que1').catch((err) => {
         console.log(err.message)
       });
-    },
-    randomNum: function (minNum, maxNum) {
-      switch (arguments.length) {
-        case 1:
-          return parseInt(Math.random() * minNum + 1, 10);
-        case 2:
-          return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-        default:
-          return 0;
-      }
     }
   },
   computed: {
@@ -810,156 +797,4 @@ export default {
   }
 }
 </script>
-<style>
-.van-checkbox--horizontal {
-  margin-bottom: 6px;
-}
 
-.chatbot-header {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 1;
-  height: 46px;
-}
-
-.chatbot-send {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-.chatbot-content {
-  position: absolute;
-  top: 46px;
-  bottom: 54px;
-  left: 0;
-  right: 0;
-  overflow: auto;
-}
-
-.help {
-  padding: 25px 10px 30px 10px;
-}
-
-.help p {
-  font-size: 18px;
-  text-align: justify;
-}
-
-.botui-container {
-  background: #F1F1F1;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', miui, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
-}
-
-.botui-messages-container {
-  padding: 10px;
-}
-
-.botui-message-content {
-  background-color: #fff;
-  color: #000;
-  width: auto;
-  max-width: 80%;
-  display: inline-block;
-  padding: 13px 13px;
-}
-
-.botui-message-content.loading {
-  background-color: #fff;
-}
-
-.botui-message-content.text {
-  line-height: 1.4
-}
-
-.botui-message-content.human {
-  background-color: #1989fa;
-  color: white;
-}
-
-.error-card .botui-message-content.html {
-  box-sizing: border-box;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .1);
-  font-weight: 500;
-  max-width: 87.5%;
-}
-
-.error-card .botui-message-content.html span {
-  display: flex;
-  align-items: center;
-}
-
-.summary-card .botui-message-content.html {
-  box-sizing: border-box;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .1);
-  max-width: 87.5%;
-}
-
-.botui-message-content.html span div.icon {
-  flex: 0 0 32px;
-  height: 32px;
-  margin-right: 6px;
-}
-
-button.botui-actions-buttons-button {
-  margin-top: 6px;
-  margin-bottom: 6px;
-  border-radius: 4px;
-  border: 1px solid #1989fa;
-  font-weight: normal;
-  text-align: left;
-  background-color: transparent;
-  transition-duration: .28s;
-  transition-property: box-shadow, transform, opacity;
-  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-  color: #1989fa;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', miui, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 25%)
-}
-
-.botui-actions-container {
-  margin-top: -20px;
-}
-
-.v-bottom-sheet.v-dialog {
-  overflow: auto !important;
-}
-
-
-.profil.agent {
-  float: left;
-  margin-right: 4px;
-}
-
-.profil {
-  position: relative;
-  border-radius: 50%;
-}
-
-.profil > img.agent {
-  border-radius: 0;
-}
-
-.profil > img {
-  width: 26px;
-  height: 26px;
-  /*border: 2px solid #e8e8e8;*/
-}
-
-
-.html span p {
-  margin-top: 0;
-  margin-bottom: 0.5em;
-}
-
-.html span p:last-child {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-</style>

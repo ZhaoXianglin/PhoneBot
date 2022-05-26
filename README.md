@@ -1,4 +1,8 @@
 # phonebot
+### Condition
+- condition1: https://phone.chatbot.fans/#/chatbot
+- condition1: https://phone.chatbot.fans/#/chatbotexp
+- condition1: https://phone.chatbot.fans/#/chatbotexpava
 
 ## Project setup
 ```
