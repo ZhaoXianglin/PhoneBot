@@ -63,7 +63,7 @@
               <van-slider :min="100" :max="1400" :step="100" v-model="user_prefer.budget"/>
             </template>
           </van-field>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Main Camera Maximum Resolution: <span
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Main Camera Minimum Resolution: <span
               style="color: #B24040">{{ user_prefer.cameras }}MP</span></p>
           <van-field name="cameras" :rules="[{ required: true, message: 'please select' }]">
             <template #input>
@@ -317,7 +317,7 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
-      let template = `<div style="min-width: 240px;">
+      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
       <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
@@ -329,8 +329,8 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
-      <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
-      </div>`
+      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
+      </div></a>`
       botui.message.bot({
         type: 'html',
         loading: true,
@@ -711,7 +711,7 @@ export default {
 
 //给系统推荐用
     PhoneCard_2btn: function (phone) {
-      let template = `<div style="min-width: 240px;">
+      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
       <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
@@ -723,8 +723,8 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
-      <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
-      </div>`
+      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
+      </div></a>`
       botui.message.bot({
         type: 'html',
         loading: true,

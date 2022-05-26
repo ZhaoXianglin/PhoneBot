@@ -1,7 +1,6 @@
 <template>
   <div class="chatbot">
-    <van-image :src="require('../assets/imgs/avatar.gif')" width="36px" height="38px"
-               style="position: absolute;z-index: 500;left: 14px;top:34px;padding:4px;border: 1px solid #c8c9cc;background-color: #dcdee0; border-radius: 46px"/>
+    <div class="avatar_back"> <div class="avatar"></div></div>
     <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
@@ -65,7 +64,7 @@
               <van-slider :min="100" :max="1400" :step="100" v-model="user_prefer.budget"/>
             </template>
           </van-field>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Main Camera Maximum Resolution: <span
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Main Camera Minimum Resolution: <span
               style="color: #B24040">{{ user_prefer.cameras }}MP</span></p>
           <van-field name="cameras" :rules="[{ required: true, message: 'please select' }]">
             <template #input>
@@ -254,6 +253,7 @@
 
 <script>
 import BotUi from "../components/BotUi";
+import avatar from "../assets/imgs/blink.png";
 // 对象引入
 import {botui} from '@/components/BotUi';
 import {instance} from "@/request";
@@ -291,6 +291,7 @@ export default {
       crit_phone_point: [0, 0],
 
       //数据部分
+      avatar: avatar,
       uuid: localStorage.getItem("uuid"),
       message: "",
       user_prefer: {
@@ -319,7 +320,7 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
-      let template = `<div style="min-width: 240px;">
+      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
       <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
@@ -331,8 +332,8 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
-      <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
-      </div>`
+      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
+      </div></a>`
       botui.message.bot({
         type: 'html',
         loading: true,
@@ -713,7 +714,7 @@ export default {
 
 //给系统推荐用
     PhoneCard_2btn: function (phone) {
-      let template = `<div style="min-width: 240px;">
+      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
       <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
@@ -725,8 +726,8 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
-      <div style="display: flex;justify-content: end"><a href="${phone.url}" target="view_window" style="display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
-      </div>`
+      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
+      </div></a>`
       botui.message.bot({
         type: 'html',
         loading: true,
@@ -800,3 +801,36 @@ export default {
 }
 </script>
 
+<style scoped>
+.avatar_back{
+  position: absolute;
+  top: 32px;
+  left: 16px;
+  z-index: 499;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #c8c9cc;
+  border-radius: 46px;
+  background-color: #dcdee0;
+}
+.avatar {
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  z-index: 500;
+  width: 36px;
+  height: 43px;
+  background-repeat: no-repeat;
+  background-image: url('../assets/imgs/avatar.png');
+  animation: avatar 1s steps(15) infinite;
+}
+@keyframes avatar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -540px, 0;
+  }
+}
+
+</style>
