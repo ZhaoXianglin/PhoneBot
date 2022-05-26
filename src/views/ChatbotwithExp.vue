@@ -16,7 +16,7 @@
           autosize
       >
         <template #button>
-          <van-button size="small" :disabled="msg_btn_ctrl" type="primary" @click="sendMessage"> Send</van-button>
+          <van-button size="small" :disabled="msg_btn_ctrl" type="info" @click="sendMessage"> Send</van-button>
         </template>
       </van-field>
     </div>
