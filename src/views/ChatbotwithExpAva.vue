@@ -1,6 +1,8 @@
 <template>
   <div class="chatbot">
-    <div class="avatar_back"> <div class="avatar"></div></div>
+    <div class="avatar_back">
+      <div class="avatar" v-bind:class="{avatar_ani:ava_css}"></div>
+    </div>
     <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
@@ -274,6 +276,9 @@ export default {
       show_next_page: false,
       help_showed_count: 1,
       show_cart: false,
+      ava_css: false,
+      ava_counter: 0,
+      timer: "",
       phone_buttons: [
         {
           text: 'Add to cart',
@@ -790,7 +795,28 @@ export default {
       this.$router.replace('/que1').catch((err) => {
         console.log(err.message)
       });
+    },
+    ctrlAva: function () {
+      // this.ava_counter += 1;
+      // if (this.ava_counter % 2 === 0) {
+      //   this.ava_css = true
+      //   console.log(this.ava_counter)
+      // } else {
+      //   this.ava_css = false
+      // }
+      this.ava_css = true
+      setTimeout(() => {
+        this.ava_css = false
+      }, 1000);
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
+  mounted() {
+    this.timer = setInterval(() => {
+      setTimeout(this.ctrlAva, 0)
+    }, 4000)
   },
   computed: {
     // 计算属性的 getter
@@ -802,7 +828,7 @@ export default {
 </script>
 
 <style scoped>
-.avatar_back{
+.avatar_back {
   position: absolute;
   top: 32px;
   left: 16px;
@@ -813,6 +839,7 @@ export default {
   border-radius: 46px;
   background-color: #dcdee0;
 }
+
 .avatar {
   position: absolute;
   top: 2px;
@@ -822,8 +849,12 @@ export default {
   height: 43px;
   background-repeat: no-repeat;
   background-image: url('../assets/imgs/avatar.png');
+}
+
+.avatar_ani {
   animation: avatar 1s steps(15) infinite;
 }
+
 @keyframes avatar {
   0% {
     background-position: 0 0;
