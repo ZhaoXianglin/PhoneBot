@@ -322,7 +322,7 @@ export default {
     botPhoneCard: function (phone) {
       let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
-      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
+      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
       <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
       <tr><td>Memory:</td><td>${phone.ram}</td></tr>
@@ -332,6 +332,7 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
+      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span>
       <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
       </div></a>`
       botui.message.bot({
@@ -716,7 +717,7 @@ export default {
     PhoneCard_2btn: function (phone) {
       let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
-      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span> <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span></div>
+      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
       <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
       <tr><td>Memory:</td><td>${phone.ram}</td></tr>
@@ -726,6 +727,7 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
+      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span>
       <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
       </div></a>`
       botui.message.bot({
