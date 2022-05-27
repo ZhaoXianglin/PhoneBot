@@ -115,7 +115,7 @@
         <h4>By computing performance:</h4>
         <ul>
           <li>"I want to buy a phone having larger RAM."</li>
-          <li>"I want to buy a phone having better GPU."</li>
+          <li>"I want to buy a phone having better CPU."</li>
           <li>"I want to buy a phone running applications faster."</li>
         </ul>
 
