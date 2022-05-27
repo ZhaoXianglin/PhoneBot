@@ -281,7 +281,7 @@ export default {
           text: 'Try another',
           value: 'Show another phone.'
         },
-        ],
+      ],
 
       //critical的标识
       in_crit: false,
@@ -289,7 +289,7 @@ export default {
       crit_phone_point: [0, 0],
 
       //数据部分
-      uuid: localStorage.getItem("uuid"),
+      uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
       message: "",
       user_prefer: {
         brands: [],
@@ -302,6 +302,9 @@ export default {
       last_action: "",
       critical_data: []
     }
+  },
+  mounted() {
+    localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
   },
   methods: {
     //默认对话
@@ -393,10 +396,10 @@ export default {
     sendMessage: function () {
       this.last_action = 'sendMessage';
       botui.action.hide();
-      if(this.in_crit){
+      if (this.in_crit) {
         this.in_crit = false;
         this.crit_text_point = 0;
-        this.crit_phone_point = [0,0];
+        this.crit_phone_point = [0, 0];
       }
       //先禁用按钮
       if (this.message.length >= 2) {
@@ -428,7 +431,7 @@ export default {
             });
             this.msg_btn_ctrl = false;
             this.message = null;
-          }).catch(()=>{
+          }).catch(() => {
             this.msg_btn_ctrl = false;
             this.$toast('Please try again.');
           })

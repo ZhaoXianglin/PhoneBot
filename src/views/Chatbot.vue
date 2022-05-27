@@ -289,7 +289,8 @@ export default {
       crit_phone_point: [0, 0],
 
       //数据部分
-      uuid: localStorage.getItem("uuid"),
+      //uuid: localStorage.getItem("uuid"),
+      uuid:'e34cddc4a7ae47bb9f7badf9e44cf41e',
       message: "",
       user_prefer: {
         brands: [],
@@ -303,6 +304,9 @@ export default {
       critical_data: [],
       bot_msg: ['I find this phone for you.', 'You may like this phone.', 'Please check this phone.']
     }
+  },
+  mounted() {
+    localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
   },
   methods: {
     //默认对话

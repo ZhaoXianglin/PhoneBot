@@ -297,7 +297,7 @@ export default {
 
       //数据部分
       avatar: avatar,
-      uuid: localStorage.getItem("uuid"),
+      uuid: "e34cddc4a7ae47bb9f7badf9e44cf41e",
       message: "",
       user_prefer: {
         brands: [],
@@ -814,6 +814,7 @@ export default {
     clearInterval(this.timer);
   },
   mounted() {
+    localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
     this.timer = setInterval(() => {
       setTimeout(this.ctrlAva, 0)
     }, 4000)
