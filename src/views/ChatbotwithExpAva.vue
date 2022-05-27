@@ -3,7 +3,7 @@
     <div class="avatar_back">
       <div class="avatar" v-bind:class="{avatar_ani:ava_css}"></div>
     </div>
-    <van-nav-bar title='Alice' @click-left="clickHelp" @click-right="clickCart" left-text=""
+    <van-nav-bar title='' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
         <van-icon name="info-o" size="16"> Tips</van-icon>
@@ -833,8 +833,9 @@ export default {
 <style scoped>
 .avatar_back {
   position: absolute;
-  top: 32px;
-  left: 16px;
+  top: 3px;
+  left: 50%;
+  margin-left: -26px;
   z-index: 499;
   width: 50px;
   height: 50px;
