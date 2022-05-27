@@ -3,7 +3,7 @@
     <div class="avatar_back">
       <div class="avatar" v-bind:class="{avatar_ani:ava_css}"></div>
     </div>
-    <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
+    <van-nav-bar title='Alice' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
         <van-icon name="info-o" size="16"> Tips</van-icon>
@@ -118,7 +118,7 @@
         <h4>By computing performance:</h4>
         <ul>
           <li>"I want to buy a phone having larger RAM."</li>
-          <li>"I want to buy a phone having better GPU."</li>
+          <li>"I want to buy a phone having better CPU."</li>
           <li>"I want to buy a phone running applications faster."</li>
         </ul>
 

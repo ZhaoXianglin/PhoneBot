@@ -9,25 +9,23 @@
           </h4>
         </header>
         <h5>PURPOSE OF RESEARCH STUDY:</h5>
-        <p>The purpose of this study is to design an effective tool that will assist you in better obtaining fact-checking results about health-related news.</p>
+        <p>The purpose of this study is to evaluate a web app that recommends mobile phones to you.</p>
         <h5>PROCEDURE:</h5>
-        <p>Your task is to read a health-related news story and view the fact-checking results via our tool. Then, you will provide your evaluation feedback by completing an online questionnaire.</p>
+        <p>Your task is to find three phones of your interests. After that you will provide your evaluation feedback by completing an online questionnaire.</p>
         <h5>DURATION:</h5>
-        <p>This study will take you approximately half an hour to complete (including time for filling out questionnaires).</p>
+        <p>This study will take you approximately 20 minutes to complete (including time for filling out questionnaires).</p>
         <h5>BENEFITS:</h5>
-        <p>By attending this study, you will understand news fact-checking services and gain some knowledge about health. In addition, we believe your feedback will help us design an effective tool to present the fact-checking results.</p>
+        <p>By attending this study, you will expereince a web app for mobile phone recommendations. In addition, we believe your feedback will help us improve our.</p>
         <h5>RISKS & CONFIDENTIALITY:</h5>
         <p>There is no risk of taking this study. We will try to keep all of the data collected in confidential places (in HKBU server with encryption), and only use them for research purposes.</p>
         <h5>VOLUNTARY PARTICIPATION AND RIGHT TO WITHDRAW:</h5>
         <p>Your participation in this study is voluntary; you may decline to participate without penalty. If you decide to participate, you may withdraw from the study at any time without penalty. If you withdraw from the study before data collection is completed, your data will be destroyed.</p>
         <h5>CIRCUMSTANCES THAT COULD LEAD US TO END YOUR PARTICIPATION:</h5>
         <p>We may decide to end your participation if we identify that you are not following the instructions closely enough.</p>
-        <h5>COMPENSATION:</h5>
-        <p>To compensate for your support of our research, we will draw xxx lucky participants who satisfactorily complete the study to win a supermarket or coffee shop coupon.</p>
         <h5>CONTACT INFORMATION:</h5>
-        <p>If you have any questions about this research, you may contact: Xianglin ZHAO at csxlzhao@hkbu.edu.hk.</p>
+        <p>If you have any questions about this research, you may contact: Yucheng Jin at yuchengjin@hkbu.edu.hk</p>
 
-        <p>If you feel that you have not been treated according to the description in this form, or your rights as a participant in this research have been violated during the course of this project, you may contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk or by mail to Graduate School, Hong Kong Baptist University, Kowloon Tong, Hong Kong.</p>
+        <p>If you feel that you have not been treated according to the description in this form, or your rights as a participant in this research have been violated during the course of this project, you may contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk.</p>
 
         <h5>CLICKING “ACCEPT”:</h5>
         <p>By clicking on the “Accept” button, you indicate that you are 18 years of age or older, that you voluntarily agree to participate in this study, and that you understand the information in this consent form.</p>
@@ -38,27 +36,24 @@
       </div>
     </van-popup>
     <div class="content">
-      <h3>Welcome to Evaluate Our Music Bot!</h3>
+      <h3>Welcome to Evaluate Our Web App!</h3>
       <p><b>Dear participants,</b></p>
-      <p>Thank you very much for taking part in this experiment, which aims at studying how users communicate with a music chatbot for exploring diverse songs.</p>
+      <p>Thank you very much for taking part in this experiment, which aims at studying how users interact with a web app for mobile phone recommendations.</p>
       <h4>Tasks:</h4>
-      <p>Please use the provided chatbot to find 5 pieces of songs that suit your preferences. The initial recommendations may not fit your taste, you need to tune recommendations by chatting with the bot. All music information used in this experiment was from Spotify.</p>
+      <p>Please use the provided web app to find 3 phones that suit your preferences. If the initial recommendations may not fit your taste, we encourage you to tune recommendations by chatting with the web app. All mobile phone information used in this experiment was from gsmarena.com.</p>
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out two questionnaires).</p>
       <h4>Task steps:</h4>
       <ul>
-        <li><b>Step 1:</b> You will then fill out your personal background (including a personality test);</li>
-        <li><b>Step 2:</b> You can get familiar with the music bot by trying two ways of tuning recommendations before starting the study; Try textual input to tell bot what kind of music you are looking for (Some examples of tuning recommendations are shown on the right side panel).</li>
-        <li><b>Step 3:</b> After clicking on the button “Start study”, you will be asked to try to find 5 good songs that fit your taste using the music bot. You can give feedback on recommended music by clicking “(like, next)” when you like/dislike the songs.</li>
-        <li><b>Step 4:</b> You will give us your overall preference over the used music chatbot.</li>
+        <li><b>Step 1:</b> You will fill out your personal background;</li>
+        <li><b>Step 2:</b> You can get familiar with the web app by trying before starting the study; Try textual input to specify what kinds of phones you are looking for (Some examples of tuning recommendations are on the page of Tips (Top left corner)).</li>
+        <li><b>Step 3:</b> In the formal study, you will be asked to try to find 3 good phones that fit your taste using our web app. You can give feedback on recommended phones by clicking “(Add to cart, Try another)” when you like/dislike the songs.</li>
+        <li><b>Step 4:</b> You will give us your overall preference over the web app.</li>
       </ul>
-      <h4>Tips:</h4>
+      <h4>Notes:</h4>
       <ul>
-        <li>You should use Chrome browser (version > 33.0) on your PC.</li>
-        <li>You can send text by pressing "Enter"</li>
-        <li>First submit the questionnaire and then click "X" to close the popup window.</li>
-        <li>Do not change User ID prefilled in the questionnaire.</li>
-        <li>All of your data will be kept confidentially and be only used for our research analysis.</li>
+        <li>You should test this web app on your mobile phone.</li>
+        <li>You are recommended to use Chrome browser (version > 33.0) or Safari on iPhone.</li>
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
