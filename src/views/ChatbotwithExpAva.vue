@@ -340,7 +340,7 @@ export default {
   methods: {
     //从卡片组件里面获得点击事件的url
     clicked_url: function (childValue){
-      this.clicked_trans_url = "http://8.218.8.108:3000/?url="+childValue
+      this.clicked_trans_url = "https://www.chatbot.fans:3000/?url="+childValue
       console.log(this.clicked_trans_url)
       this.show_phone_page = true;
     },
