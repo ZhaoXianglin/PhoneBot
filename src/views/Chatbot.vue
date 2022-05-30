@@ -21,7 +21,7 @@
       </van-field>
     </div>
     <div class="chatbot-content">
-      <BotUi/>
+      <BotUi v-on:clicked_url="clicked_url"></BotUi>
     </div>
 
     <!-- 初始化的偏好-->
@@ -177,7 +177,7 @@
         :style="{ height: '100%',width:'100%' }"
     >
       <div class="cart" style="margin-top:3em;height: 100%">
-        <iframe style="width: 100%;height: 100%" :src="'http://127.0.0.1:8888/?url='+current_phone.url"/>
+        <iframe style="width: 100%;height: 100%" :src="clicked_trans_url"/>
       </div>
     </van-popup>
 
@@ -285,7 +285,7 @@ export default {
       show_next_page: false,
       help_showed_count: 1,
       show_cart: false,
-      show_phone_page:true,
+      show_phone_page:false,
       phone_buttons: [
         {
           text: 'Add to cart',
@@ -305,6 +305,7 @@ export default {
       //数据部分
       //uuid: localStorage.getItem("uuid"),
       uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
+      clicked_trans_url:"",
       message: "",
       user_prefer: {
         brands: [],
@@ -323,6 +324,12 @@ export default {
     localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
   },
   methods: {
+    //从卡片组件里面获得点击事件的url
+    clicked_url: function (childValue){
+      this.clicked_trans_url = "http://8.218.8.108:3000/?url="+childValue
+      console.log(this.clicked_trans_url)
+      this.show_phone_page = true;
+    },
     //默认对话
     bot: function (msg) {
       return botui.message.bot({
@@ -336,27 +343,13 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
-      let template = `<div style="min-width: 240px;">
-      <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
-      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span></div>
-      <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
-      <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
-      <tr><td>Memory:</td><td>${phone.ram}</td></tr>
-      <tr><td>OS:</td><td>${phone.os1}</td></tr>
-      <tr><td>Camera:</td><td>${phone.cam1} MP</td></tr>
-      <tr><td>Screen:</td><td>${phone.displaysize}inches</td></tr>
-      <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
-      <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
-      </table>
-      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span><br/>
-      <div style="display: flex;justify-content: end"><a target="view_window" style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
-      </div>`
       botui.message.bot({
-        type: 'html',
+        type: 'phone',
         loading: true,
         delay: 1600,
-        content: template
+        content: phone,
       }).then(() => {
+        console.log(botui)
         botui.action.button({
           addMessage: false,
           human: false,
