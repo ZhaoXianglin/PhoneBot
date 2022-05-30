@@ -57,7 +57,15 @@
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
-        <van-button round block type="info" native-type="submit" :loading="loading1" @click="next">Start Study</van-button>
+        <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1" @click="next">Start Study (<van-count-down
+            ref="countDown"
+            millisecond
+            :time="15000"
+            :auto-start="false"
+            format="sss"
+            @finish="finish"
+        />)
+        </van-button>
       </div>
     </div>
 
@@ -74,6 +82,7 @@ export default {
   data: function () {
     return {
       lang: "s_cn",
+      startStatus:true,
       loading: false,
       loading1: false,
       uuid: localStorage.getItem('uuid'),
@@ -94,6 +103,7 @@ export default {
         }else {
           this.show = false;
           this.loading = false;
+          this.$refs.countDown.start();
         }
       } else {
         instance.post('/api/accept', {
@@ -107,6 +117,7 @@ export default {
             localStorage.setItem('active', new Date().getTime().toString());
             this.loading = false;
             this.show = false;
+            this.$refs.countDown.start();
           } else {
             console.log(res.data);
             this.loading = false;
@@ -118,7 +129,9 @@ export default {
         })
       }
     },
-
+    finish: function (){
+      this.startStatus = false;
+    },
     next: function () {
       this.loading1 = true;
       instance.post('/api/start', {
@@ -208,5 +221,9 @@ export default {
   padding-bottom: 0.5em;
   list-style-position: inside;
   list-style-type: upper-roman;
+}
+.van-count-down{
+  display: inline;
+  color: white;
 }
 </style>

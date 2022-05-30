@@ -34,7 +34,7 @@ const routes = [
   },
   {
     path: '/chatbotexpava',
-    name: 'chatbot with exp',
+    name: 'chatbot with exp and ava',
     component: ChatbotwithExpAva
   },
   {

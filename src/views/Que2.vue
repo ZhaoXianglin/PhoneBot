@@ -114,9 +114,11 @@ export default {
         //console.log(res)
         if (res.data.status === 1) {
           localStorage.setItem('step', '4');
+          localStorage.setItem('code',res.data.msg);
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
           this.$router.replace('/success').catch((err) => {
+
             console.log(err.message)
           });
         } else {

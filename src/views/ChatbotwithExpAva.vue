@@ -1,8 +1,8 @@
 <template>
   <div class="chatbot">
-    <div class="avatar_back">
-      <div class="avatar" v-bind:class="{avatar_ani:ava_css}"></div>
-    </div>
+<!--    <div class="avatar_back">-->
+<!--      <div class="avatar" v-bind:class="{avatar_ani:ava_css}"></div>-->
+<!--    </div>-->
     <van-nav-bar title='' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
@@ -255,7 +255,6 @@
 
 <script>
 import BotUi from "../components/BotUi";
-import avatar from "../assets/imgs/blink.png";
 // 对象引入
 import {botui} from '@/components/BotUi';
 import {instance} from "@/request";
@@ -296,7 +295,6 @@ export default {
       crit_phone_point: [0, 0],
 
       //数据部分
-      avatar: avatar,
       uuid: "e34cddc4a7ae47bb9f7badf9e44cf41e",
       message: "",
       user_prefer: {
@@ -317,6 +315,7 @@ export default {
       return botui.message.bot({
         type: 'html',
         loading: true,
+        photo: require("../assets/imgs/bg.png"),
         delay: 1600,
         content: msg
       })
@@ -343,6 +342,7 @@ export default {
       botui.message.bot({
         type: 'html',
         loading: true,
+        photo: require("../assets/imgs/bg.png"),
         delay: 1600,
         content: template
       }).then(() => {
@@ -798,28 +798,21 @@ export default {
         console.log(err.message)
       });
     },
-    ctrlAva: function () {
-      // this.ava_counter += 1;
-      // if (this.ava_counter % 2 === 0) {
-      //   this.ava_css = true
-      //   console.log(this.ava_counter)
-      // } else {
-      //   this.ava_css = false
-      // }
-      this.ava_css = true
-      setTimeout(() => {
-        this.ava_css = false
-      }, 1000);
-    }
+    // ctrlAva: function () {
+    //   this.ava_css = true
+    //   setTimeout(() => {
+    //     this.ava_css = false
+    //   }, 1000);
+    // }
   },
   beforeDestroy() {
     clearInterval(this.timer);
   },
   mounted() {
     localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
-    this.timer = setInterval(() => {
-      setTimeout(this.ctrlAva, 0)
-    }, 4000)
+    // this.timer = setInterval(() => {
+    //   setTimeout(this.ctrlAva, 0)
+    // }, 4000)
   },
   computed: {
     // 计算属性的 getter
@@ -846,17 +839,15 @@ export default {
 
 .avatar {
   position: absolute;
-  top: 2px;
-  left: 7px;
   z-index: 500;
-  width: 36px;
+  width: 43px;
   height: 43px;
   background-repeat: no-repeat;
   background-image: url('../assets/imgs/avatar.png');
 }
 
 .avatar_ani {
-  animation: avatar 1s steps(15) infinite;
+  animation: avatar 1s steps(16) infinite;
 }
 
 @keyframes avatar {
@@ -864,7 +855,7 @@ export default {
     background-position: 0 0;
   }
   100% {
-    background-position: -540px, 0;
+    background-position: -688px, 0;
   }
 }
 

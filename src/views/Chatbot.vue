@@ -168,6 +168,19 @@
       </div>
     </van-popup>
 
+    <van-popup
+        v-model="show_phone_page"
+        closeable
+        close-icon="close"
+        position="left"
+        round
+        :style="{ height: '100%',width:'100%' }"
+    >
+      <div class="cart" style="margin-top:3em;height: 100%">
+        <iframe style="width: 100%;height: 100%" :src="'http://127.0.0.1:8888/?url='+current_phone.url"/>
+      </div>
+    </van-popup>
+
     <!--    评分框-->
     <van-popup
         v-model="show_rate"
@@ -272,6 +285,7 @@ export default {
       show_next_page: false,
       help_showed_count: 1,
       show_cart: false,
+      show_phone_page:true,
       phone_buttons: [
         {
           text: 'Add to cart',
@@ -322,7 +336,7 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
-      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
+      let template = `<div style="min-width: 240px;">
       <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
       <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span></div>
       <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
@@ -334,9 +348,9 @@ export default {
       <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
       <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
       </table>
-      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span>
-      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
-      </div></a>`
+      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span><br/>
+      <div style="display: flex;justify-content: end"><a target="view_window" style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
+      </div>`
       botui.message.bot({
         type: 'html',
         loading: true,
@@ -871,9 +885,9 @@ export default {
   background-color: #fff;
   color: #000;
   width: auto;
-  max-width: 80%;
+  max-width: 77%;
   display: inline-block;
-  padding: 13px 13px;
+  padding: 13px 10px;
 }
 
 .botui-message-content.loading {
@@ -931,12 +945,12 @@ button.botui-actions-buttons-button {
 
 .botui-actions-container {
   margin-top: -20px;
+  padding: 9px 10px 9px 19px;
 }
 
 .v-bottom-sheet.v-dialog {
   overflow: auto !important;
 }
-
 
 .profil.agent {
   float: left;
@@ -944,8 +958,12 @@ button.botui-actions-buttons-button {
 }
 
 .profil {
+  width: 43px;
+  height: 43px;
   position: relative;
-  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-image: url('../assets/imgs/avatar.png');
+  animation: avatar 1s steps(16) 1 2s;
 }
 
 .profil > img.agent {
@@ -953,10 +971,11 @@ button.botui-actions-buttons-button {
 }
 
 .profil > img {
-  width: 26px;
-  height: 26px;
+  width: 43px;
+  height: 43px;
   /*border: 2px solid #e8e8e8;*/
 }
+
 
 
 .html span p {
@@ -967,5 +986,14 @@ button.botui-actions-buttons-button {
 .html span p:last-child {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+@keyframes avatar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -688px, 0;
+  }
 }
 </style>
