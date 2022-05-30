@@ -1,5 +1,5 @@
 <template>
-  <div class="consent">
+  <div class="index">
     <van-nav-bar title="Study Introduction"/>
     <van-popup v-model="show" round :close-on-click-overlay="false" :style="{ height: '90%', width:'90%' }">
       <div class="consent">
@@ -57,14 +57,15 @@
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
-        <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1" @click="next">Start Study (<van-count-down
+        <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1" @click="next">Start Study <van-count-down
             ref="countDown"
             millisecond
+            v-show="startStatus"
             :time="15000"
             :auto-start="false"
-            format="sss"
+            format="(sss)"
             @finish="finish"
-        />)
+        />
         </van-button>
       </div>
     </div>
@@ -87,6 +88,7 @@ export default {
       loading1: false,
       uuid: localStorage.getItem('uuid'),
       code: localStorage.getItem('code'),
+      finished: localStorage.getItem('finished'),
       show: true,
       checked: false,
       device: navigator.userAgent,
@@ -110,10 +112,11 @@ export default {
           'accT': new Date().getTime(),
           'device': this.device,
         }).then((res) => {
-          console.log(res);
+          //console.log(res);
           if (res.data.uuid) {
             localStorage.setItem('uuid', res.data.uuid);
             localStorage.setItem('finished', '0');
+            localStorage.setItem('condition', res.data.condition);
             localStorage.setItem('active', new Date().getTime().toString());
             this.loading = false;
             this.show = false;
@@ -137,6 +140,7 @@ export default {
       instance.post('/api/start', {
         'startT': new Date().getTime(),
         'uuid': localStorage.getItem("uuid"),
+        'condition': localStorage.getItem("condition")
       }).then((res) => {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');

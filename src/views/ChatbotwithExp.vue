@@ -21,7 +21,7 @@
       </van-field>
     </div>
     <div class="chatbot-content">
-      <BotUi/>
+      <BotUi v-on:clicked_url="clicked_url"></BotUi>
     </div>
 
     <!-- 初始化的偏好-->
@@ -38,20 +38,33 @@
           <van-field name="brands" :rules="[{ required: true, message: 'Please select' }]">
             <template #input>
               <van-checkbox-group v-model="user_prefer.brands" :max="3" direction="horizontal">
-                <van-checkbox name="Samsung" shape="square">SAMSUNG</van-checkbox>
-                <van-checkbox name="Apple" shape="square">APPLE</van-checkbox>
-                <van-checkbox name="Huawei" shape="square">HUIWEI</van-checkbox>
-                <van-checkbox name="Nokia" shape="square">NOKIA</van-checkbox>
-                <van-checkbox name="Sony" shape="square">SONY</van-checkbox>
+                <van-checkbox name="Xiaomi" shape="square">Xiaomi</van-checkbox>
+                <van-checkbox name="vivo" shape="square">vivo</van-checkbox>
+                <van-checkbox name="Oppo" shape="square">Oppo</van-checkbox>
+                <van-checkbox name="Samsung" shape="square">Samsung</van-checkbox>
+                <van-checkbox name="Realme" shape="square">Realme</van-checkbox>
+                <van-checkbox name="Motorola" shape="square">Motorola</van-checkbox>
+                <van-checkbox name="Honor" shape="square">Honor</van-checkbox>
+                <van-checkbox name="Huawei" shape="square">Huawei</van-checkbox>
+                <van-checkbox name="ZTE" shape="square">ZTE</van-checkbox>
+                <van-checkbox name="BLU" shape="square">BLU</van-checkbox>
+                <van-checkbox name="Nokia" shape="square">Nokia</van-checkbox>
                 <van-checkbox name="LG" shape="square">LG</van-checkbox>
+                <van-checkbox name="Ulefone" shape="square">Ulefone</van-checkbox>
+                <van-checkbox name="TCL" shape="square">TCL</van-checkbox>
+                <van-checkbox name="OnePlus" shape="square">OnePlus</van-checkbox>
+                <van-checkbox name="alcatel" shape="square">alcatel</van-checkbox>
+                <van-checkbox name="Asus" shape="square">Asus</van-checkbox>
+                <van-checkbox name="Lenovo" shape="square">Lenovo</van-checkbox>
+                <van-checkbox name="Sony" shape="square">Sony</van-checkbox>
                 <van-checkbox name="HTC" shape="square">HTC</van-checkbox>
-                <van-checkbox name="Motorola" shape="square">MOTOROLA</van-checkbox>
-                <van-checkbox name="Lenovo" shape="square">LENOVO</van-checkbox>
-                <van-checkbox name="Xiaomi" shape="square">XIAOMI</van-checkbox>
-                <van-checkbox name="Google" shape="square">GOOGLE</van-checkbox>
-                <van-checkbox name="Honor" shape="square">HONOR</van-checkbox>
-                <van-checkbox name="Oppo" shape="square">OPPO</van-checkbox>
-                <van-checkbox name="Realme" shape="square">REALME</van-checkbox>
+                <van-checkbox name="Meizu" shape="square">Meizu</van-checkbox>
+                <van-checkbox name="Wiko" shape="square">Wiko</van-checkbox>
+                <van-checkbox name="Tecno" shape="square">Tecno</van-checkbox>
+                <van-checkbox name="Lava" shape="square">Lava</van-checkbox>
+                <van-checkbox name="Infinix" shape="square">Infinix</van-checkbox>
+                <van-checkbox name="Google" shape="square">Google</van-checkbox>
+                <van-checkbox name="Apple" shape="square">Apple</van-checkbox>
               </van-checkbox-group>
             </template>
           </van-field>
@@ -168,6 +181,19 @@
       </div>
     </van-popup>
 
+    <van-popup
+        v-model="show_phone_page"
+        closeable
+        close-icon="close"
+        position="left"
+        round
+        :style="{ height: '100%',width:'100%' }"
+    >
+      <div class="cart" style="margin-top:3em;height: 100%">
+        <iframe style="width: 100%;height: 100%" :src="clicked_trans_url"/>
+      </div>
+    </van-popup>
+
     <!--    评分框-->
     <van-popup
         v-model="show_rate"
@@ -272,6 +298,7 @@ export default {
       show_next_page: false,
       help_showed_count: 1,
       show_cart: false,
+      show_phone_page:false,
       phone_buttons: [
         {
           text: 'Add to cart',
@@ -291,6 +318,7 @@ export default {
       //数据部分
       uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
       message: "",
+      clicked_trans_url:"",
       user_prefer: {
         brands: [],
         budget: 700,
@@ -307,6 +335,12 @@ export default {
     localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
   },
   methods: {
+    //从卡片组件里面获得点击事件的url
+    clicked_url: function (childValue){
+      this.clicked_trans_url = "http://8.218.8.108:3000/?url="+childValue
+      console.log(this.clicked_trans_url)
+      this.show_phone_page = true;
+    },
     //默认对话
     bot: function (msg) {
       return botui.message.bot({
@@ -320,26 +354,11 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
-      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
-      <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
-      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span></div>
-      <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
-      <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
-      <tr><td>Memory:</td><td>${phone.ram}</td></tr>
-      <tr><td>OS:</td><td>${phone.os1}</td></tr>
-      <tr><td>Camera:</td><td>${phone.cam1} MP</td></tr>
-      <tr><td>Screen:</td><td>${phone.displaysize}inches</td></tr>
-      <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
-      <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
-      </table>
-      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span>
-      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
-      </div></a>`
       botui.message.bot({
-        type: 'html',
+        type: 'phone',
         loading: true,
         delay: 1600,
-        content: template
+        content: phone,
       }).then(() => {
         botui.action.button({
           addMessage: false,
@@ -715,26 +734,11 @@ export default {
 
 //给系统推荐用
     PhoneCard_2btn: function (phone) {
-      let template = `<a href="${phone.url}" target="view_window" style="color: black"><div style="min-width: 240px;">
-      <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" src="${phone.img}" alt=""/></div>
-      <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span style="display:block;font-size: 20px;font-weight: bold">${phone.modelname}</span></div>
-      <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
-      <tr><td style="width: 96px"> Storage:</td><td>${phone.storage}</td></tr>
-      <tr><td>Memory:</td><td>${phone.ram}</td></tr>
-      <tr><td>OS:</td><td>${phone.os1}</td></tr>
-      <tr><td>Camera:</td><td>${phone.cam1} MP</td></tr>
-      <tr><td>Screen:</td><td>${phone.displaysize}inches</td></tr>
-      <tr><td>Resolution:</td><td>${phone.resolution1}*${phone.resolution2}</td></tr>
-      <tr><td>Battery:</td><td>${phone.battery}mAh</td></tr>
-      </table>
-      <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">$${phone.price}</span>
-      <div style="display: flex;justify-content: end;color: #1989fa;"> <span style="font-size: smaller">MORE ></span></div>
-      </div></a>`
       botui.message.bot({
-        type: 'html',
+        type: 'phone',
         loading: true,
         delay: 1600,
-        content: template
+        content: phone,
       }).then(() => {
         botui.action.button({
           addMessage: false,

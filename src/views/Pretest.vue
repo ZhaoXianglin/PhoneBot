@@ -80,9 +80,18 @@ export default {
           localStorage.setItem('step', '1');
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          this.$router.replace('/chatbot').catch((err) => {
-            console.log(err.message)
-          });
+          if(localStorage.getItem('condition')==='1'){
+            this.$router.replace('/chatbot').catch((err) => {
+              console.log(err.message)
+            });}
+          if(localStorage.getItem('condition')==='2'){
+            this.$router.replace('/chatbotexp').catch((err) => {
+              console.log(err.message)
+            });}
+          if(localStorage.getItem('condition')==='3'){
+            this.$router.replace('/chatbotexpava').catch((err) => {
+              console.log(err.message)
+            });}
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")
