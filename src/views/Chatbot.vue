@@ -321,8 +321,8 @@ export default {
       crit_phone_point: [0, 0],
 
       //数据部分
-      //uuid: localStorage.getItem("uuid"),
-      uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
+      uuid: localStorage.getItem("uuid"),
+      //uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
       clicked_trans_url: "",
       message: "",
       user_prefer: {
@@ -339,9 +339,9 @@ export default {
       bot_msg: ['I find this phone for you.', 'You may like this phone.', 'Please check this phone.']
     }
   },
-  mounted() {
-    localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
-  },
+  // mounted() {
+  //   localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
+  // },
   methods: {
     //从卡片组件里面获得点击事件的url
     clicked_url: function (childValue) {

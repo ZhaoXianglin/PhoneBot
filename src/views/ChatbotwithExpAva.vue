@@ -326,7 +326,7 @@ export default {
       crit_phone_point: [0, 0],
 
       //数据部分
-      uuid: "e34cddc4a7ae47bb9f7badf9e44cf41e",
+      uuid: localStorage.getItem("uuid"),
       message: "",
       clicked_trans_url:"",
       user_prefer: {
@@ -826,12 +826,12 @@ export default {
   beforeDestroy() {
     clearInterval(this.timer);
   },
-  mounted() {
-    localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
-    // this.timer = setInterval(() => {
-    //   setTimeout(this.ctrlAva, 0)
-    // }, 4000)
-  },
+  // mounted() {
+  //   localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
+  //   // this.timer = setInterval(() => {
+  //   //   setTimeout(this.ctrlAva, 0)
+  //   // }, 4000)
+  // },
   computed: {
     // 计算属性的 getter
     cart_item_count: function () {
