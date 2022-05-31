@@ -3,10 +3,14 @@
     <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
-        <van-icon name="info-o" size="16"> Tips</van-icon>
+        <van-icon name="info-o" size="16"><span
+            style="color: #1989fa;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC',miui,'Hiragino Sans GB','Microsoft Yahei',sans-serif ">Tips</span>
+        </van-icon>
       </template>
       <template #right>
-        <van-icon name="cart-o" size="16" :badge="cart_item_count"> Cart</van-icon>
+        <van-icon name="cart-o" size="16" :badge="cart_item_count"><span
+            style="color: #1989fa;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC',miui,'Hiragino Sans GB','Microsoft Yahei',sans-serif ">Cart</span>
+        </van-icon>
       </template>
     </van-nav-bar>
     <div class="chatbot-send">

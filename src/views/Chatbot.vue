@@ -3,10 +3,15 @@
     <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
-        <van-icon name="info-o" size="16"> Tips</van-icon>
+        <van-icon name="info-o" size="16"><span
+            style="color: #1989fa;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC',miui,'Hiragino Sans GB','Microsoft Yahei',sans-serif ">Tips</span>
+        </van-icon>
+
       </template>
       <template #right>
-        <van-icon name="cart-o" size="16" :badge="cart_item_count"> Cart</van-icon>
+        <van-icon name="cart-o" size="16" :badge="cart_item_count"><span
+            style="color: #1989fa;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC',miui,'Hiragino Sans GB','Microsoft Yahei',sans-serif ">Cart</span>
+        </van-icon>
       </template>
     </van-nav-bar>
     <div class="chatbot-send">
@@ -298,7 +303,7 @@ export default {
       show_next_page: false,
       help_showed_count: 1,
       show_cart: false,
-      show_phone_page:false,
+      show_phone_page: false,
       phone_buttons: [
         {
           text: 'Add to cart',
@@ -318,7 +323,7 @@ export default {
       //数据部分
       //uuid: localStorage.getItem("uuid"),
       uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
-      clicked_trans_url:"",
+      clicked_trans_url: "",
       message: "",
       user_prefer: {
         brands: [],
@@ -338,8 +343,8 @@ export default {
   },
   methods: {
     //从卡片组件里面获得点击事件的url
-    clicked_url: function (childValue){
-      this.clicked_trans_url = "https://www.chatbot.fans:3000/?url="+childValue
+    clicked_url: function (childValue) {
+      this.clicked_trans_url = "https://www.chatbot.fans:3000/?url=" + childValue
       console.log(this.clicked_trans_url)
       this.show_phone_page = true;
     },
@@ -966,7 +971,6 @@ button.botui-actions-buttons-button {
   height: 43px;
   /*border: 2px solid #e8e8e8;*/
 }
-
 
 
 .html span p {
