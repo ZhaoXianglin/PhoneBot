@@ -338,7 +338,8 @@ export default {
       current_phone: {},
       latest_dialog: [],
       last_action: "",
-      critical_data: []
+      critical_data: [],
+      try_another_count:0,
     }
   },
   methods: {
@@ -506,6 +507,7 @@ export default {
                 type: 'html',
                 loading: true,
                 delay: 1600,
+                photo: require("../assets/imgs/bg.png"),
                 content: this.critical_data['crit'][this.crit_text_point]
               }).then(() => {
                 botui.action.button({
@@ -598,6 +600,7 @@ export default {
             type: 'html',
             loading: true,
             delay: 1600,
+            photo: require("../assets/imgs/bg.png"),
             content: this.critical_data['crit'][this.crit_text_point]
           }).then(() => {
             botui.action.button({
@@ -654,9 +657,15 @@ export default {
           })
         }
       } else {
-        if (this.last_action === "tryAnother") {
-          //两次点击try another
+        if (this.try_another_count === 0) {
+          this.try_another_count += 1;
+        }
+        if (this.last_action === 'tryAnother') {
+          this.try_another_count += 1
+        }
+        if (this.try_another_count === 3) {
           this.last_action = "letBotSuggect";
+          this.try_another_count = 0;
           this.letBotSuggest();
         } else {
           this.last_action = "tryAnother";
@@ -690,6 +699,7 @@ export default {
       this.in_crit = true;
       botui.message.bot({
         type: 'html',
+        photo: require("../assets/imgs/bg.png"),
         loading: true,
       }).then((index) => {
         //直接发送请求获取推荐的列表
@@ -703,6 +713,7 @@ export default {
             //得到推荐列表后，开始展示
             botui.message.update(index, {
               loading: false,
+              photo: require("../assets/imgs/bg.png"),
               content: that.critical_data['crit'][this.crit_text_point]
             }).then(() => {
               //先问yes no

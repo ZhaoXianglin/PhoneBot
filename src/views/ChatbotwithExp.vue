@@ -332,7 +332,8 @@ export default {
       current_phone: {},
       latest_dialog: [],
       last_action: "",
-      critical_data: []
+      critical_data: [],
+      try_another_count:0,
     }
   },
   mounted() {
@@ -650,9 +651,15 @@ export default {
           })
         }
       } else {
-        if (this.last_action === "tryAnother") {
-          //两次点击try another
+        if (this.try_another_count === 0) {
+          this.try_another_count += 1;
+        }
+        if (this.last_action === 'tryAnother') {
+          this.try_another_count += 1
+        }
+        if (this.try_another_count === 3) {
           this.last_action = "letBotSuggect";
+          this.try_another_count = 0;
           this.letBotSuggest();
         } else {
           this.last_action = "tryAnother";

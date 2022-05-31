@@ -334,6 +334,7 @@ export default {
       current_phone: {},
       latest_dialog: [],
       last_action: "",
+      try_another_count: 0,
       critical_data: [],
       bot_msg: ['I find this phone for you.', 'You may like this phone.', 'Please check this phone.']
     }
@@ -655,9 +656,15 @@ export default {
           })
         }
       } else {
-        if (this.last_action === "tryAnother") {
-          //两次点击try another
+        if (this.try_another_count === 0) {
+          this.try_another_count += 1;
+        }
+        if (this.last_action === 'tryAnother') {
+          this.try_another_count += 1
+        }
+        if (this.try_another_count === 3) {
           this.last_action = "letBotSuggect";
+          this.try_another_count = 0;
           this.letBotSuggest();
         } else {
           this.last_action = "tryAnother";
