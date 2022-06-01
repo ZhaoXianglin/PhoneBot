@@ -52,7 +52,7 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33],
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 35, 17, 20, 23, 26, 29, 32, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33],
       q1group: [
         {q: "The phones recommended to me matched my interests.", t: "accuracy1"},
         {q: "The recommended phones were well-chosen.", t: "accuracy2"},
@@ -98,6 +98,7 @@ export default {
         {q: "I feel like to converse with a real human when I interact with this chatbot.", t: "cui_human2"},
         {q: "This chatbot system has human properties.", t: "cui_human3"},
 
+        {q: "To monitor quality, please respond with a 2 for this item.", t: "chk1"}
       ],
       q1groupans: Array(38).fill(null),
     }
@@ -105,7 +106,7 @@ export default {
   mounted() {
     let rand_ques = []
     this.q_seq.forEach((v) => {
-      rand_ques.push(this.q1group[v-1])
+      rand_ques.push(this.q1group[v - 1])
       //console.log(v,i,this.q1group[v-1])
     })
     this.q1group = rand_ques

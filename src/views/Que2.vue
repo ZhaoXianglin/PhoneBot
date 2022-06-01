@@ -52,7 +52,7 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 3, 23, 6, 9, 12, 15, 18, 21],
       q1group: [
 
         {q: "The chatbot gave me good suggestions.", t: "useful1"},
@@ -90,6 +90,7 @@ export default {
         {q: "I will likely buy the phones recommended by the chatbot in the near future.", t: "intent2purchase2"},
         {q: "Given the opportunity, I intend to buy the phones recommended by the chatbot.", t: "intent2purchase3"},
 
+        {q: "Please indicate option 7(Strongly agree) for this question.", t: "chk2"}
       ],
       q1groupans: Array(35).fill(null),
     }
@@ -97,7 +98,7 @@ export default {
   mounted() {
     let rand_ques = []
     this.q_seq.forEach((v) => {
-      rand_ques.push(this.q1group[v-1])
+      rand_ques.push(this.q1group[v - 1])
       //console.log(v,i,this.q1group[v-1])
     })
     this.q1group = rand_ques
@@ -114,7 +115,7 @@ export default {
         //console.log(res)
         if (res.data.status === 1) {
           localStorage.setItem('step', '4');
-          localStorage.setItem('code',res.data.msg);
+          localStorage.setItem('code', res.data.msg);
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
           this.$router.replace('/success').catch((err) => {

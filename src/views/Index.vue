@@ -37,6 +37,7 @@
     </van-popup>
     <div class="content">
       <h3>Welcome to Evaluate Our Web App!</h3>
+
       <p><b>Dear participants,</b></p>
       <p>Thank you very much for taking part in this experiment, which aims at studying how users interact with a web app for mobile phone recommendations.</p>
       <h4>Tasks:</h4>
@@ -82,6 +83,7 @@ export default {
 
   data: function () {
     return {
+      videoId: "60GyFWSTk_A",
       lang: "s_cn",
       startStatus:true,
       loading: false,
@@ -145,7 +147,7 @@ export default {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');
           localStorage.setItem("active", new Date().getTime().toString());
-          this.$router.replace('/prestudy').catch((err) => {
+          this.$router.replace('/tutorial').catch((err) => {
             console.log(err.message)
           });
           this.loading1 = false;

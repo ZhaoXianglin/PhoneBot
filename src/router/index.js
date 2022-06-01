@@ -5,6 +5,7 @@ import Chatbot from '../views/Chatbot.vue'
 import ChatbotwithExp from '@/views/ChatbotwithExp.vue'
 import ChatbotwithExpAva from '@/views/ChatbotwithExpAva.vue'
 import Pretest from '../views/Pretest.vue'
+import Tutorial from '../views/Tutorial.vue'
 import Que1 from "@/views/Que1";
 import Que2 from "@/views/Que2";
 import Success from "@/views/Success";
@@ -21,6 +22,11 @@ const routes = [
     path: '/index',
     name: 'Index',
     component: Index
+  },
+  {
+    path: '/tutorial',
+    name: 'Tutorial',
+    component: Tutorial
   },
   {
     path: '/chatbot',
