@@ -89,7 +89,7 @@
             </template>
           </van-field>
           <div style="margin: 16px;">
-            <van-button round block type="info" native-type="submit">Summit</van-button>
+            <van-button round block type="info" native-type="submit">Continue</van-button>
           </div>
         </van-form>
       </div>
@@ -233,7 +233,7 @@
         <div style="display: flex;justify-content: center;margin: 24px 0;">
           <van-rate v-model="current_phone.rate"/>
         </div>
-        <van-button type="primary" block @click="submitPhoneRate">Submit</van-button>
+        <van-button type="info" block @click="submitPhoneRate">Submit</van-button>
       </div>
     </van-popup>
 
@@ -310,8 +310,8 @@ export default {
           value: 'Add to cart'
         },
         {
-          text: 'Try another',
-          value: 'Show another phone.'
+          text: 'Next item',
+          value: 'Next item'
         },
       ],
 
@@ -378,7 +378,7 @@ export default {
           if (res.text === 'Add to cart') {
             this.addToCart(this.current_phone);
           }
-          if (res.text === 'Try another') {
+          if (res.text === 'Next item') {
             this.tryAnother();
           }
           if (res.text === 'Let bot suggest') {
@@ -765,15 +765,15 @@ export default {
             value: 'Add to cart'
           },
             {
-              text: 'Try another',
-              value: 'Show another phone.'
+              text: 'Next item',
+              value: 'Next item'
             }]
         }).then((res) => {
           //判断点了什么按钮
           if (res.text === 'Add to cart') {
             this.addToCart(this.current_phone);
           }
-          if (res.text === 'Try another') {
+          if (res.text === 'Next item') {
             this.tryAnother();
           }
         })
@@ -810,10 +810,18 @@ export default {
     },
 //跳到下一页
     nextPage: function () {
-      this.$router.replace('/que1').catch((err) => {
-        console.log(err.message)
-      });
+      instance.post('/api/page2', {
+        'page2T': new Date().getTime(),
+        'phonelist': this.phone_in_cart,
+        'uuid': localStorage.getItem('uuid')
+      }).then((res) => {
+        console.log(res)
+        this.$router.replace('/que1').catch((err) => {
+          console.log(err.message)
+        });
+      })
     },
+
     randomNum: function (minNum, maxNum) {
       switch (arguments.length) {
         case 1:
@@ -997,5 +1005,9 @@ button.botui-actions-buttons-button {
   100% {
     background-position: -688px, 0;
   }
+}
+
+.van-popup__close-icon{
+  color: #1989fa!important;
 }
 </style>

@@ -73,8 +73,8 @@ export default {
     onSubmit(values) {
       this.loading = true;
       values['uuid'] = localStorage.getItem('uuid');
-      values['page2T'] = new Date().getTime();
-      instance.post('/api/page2', values).then((res) => {
+      values['page1T'] = new Date().getTime();
+      instance.post('/api/page1', values).then((res) => {
         //console.log(res)
         if (res.data.status === 1) {
           localStorage.setItem('step', '1');

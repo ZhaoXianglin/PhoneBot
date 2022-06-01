@@ -232,7 +232,7 @@
         <div style="display: flex;justify-content: center;margin: 24px 0;">
           <van-rate v-model="current_phone.rate"/>
         </div>
-        <van-button type="primary" block @click="submitPhoneRate">Submit</van-button>
+        <van-button type="info" block @click="submitPhoneRate">Submit</van-button>
       </div>
     </van-popup>
 
@@ -309,7 +309,7 @@ export default {
           value: 'Add to cart'
         },
         {
-          text: 'Try another',
+          text: 'Next item',
           value: 'Show another phone.'
         },
       ],
@@ -374,7 +374,7 @@ export default {
           if (res.text === 'Add to cart') {
             this.addToCart(this.current_phone);
           }
-          if (res.text === 'Try another') {
+          if (res.text === 'Next item') {
             this.tryAnother();
           }
         })
@@ -804,10 +804,17 @@ export default {
     },
 //跳到下一页
     nextPage: function () {
-      this.$router.replace('/que1').catch((err) => {
-        console.log(err.message)
-      });
-    }
+      instance.post('/api/page2', {
+        'page2T': new Date().getTime(),
+        'phonelist': this.phone_in_cart,
+        'uuid': localStorage.getItem('uuid')
+      }).then((res) => {
+        console.log(res)
+        this.$router.replace('/que1').catch((err) => {
+          console.log(err.message)
+        });
+      })
+    },
   },
   computed: {
     // 计算属性的 getter

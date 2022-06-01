@@ -30,7 +30,7 @@
                     </table>
                     <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">${{msg.content.price}}</span><br/>
                     <div style="display: flex;justify-content: end"><a target="view_window" @click="click_detail(msg.content.url)"
-                                                                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">detail</a></div>
+                                                                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a></div>
                     </div>
               </span>
               <iframe v-if="msg.type=='embed'" :src="msg.content" frameborder="0" allowfullscreen></iframe>
