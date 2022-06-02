@@ -41,18 +41,72 @@
       <p><b>Dear participants,</b></p>
       <p>Thank you very much for taking part in this experiment, which aims at studying how users interact with a web app for mobile phone recommendations.</p>
       <h4>Tasks:</h4>
-      <p>Please use the provided web app to find three phones that suit your preferences. If the initial recommendations may not fit your taste, we encourage you to tune recommendations by chatting with the web app. All mobile phone information used in this experiment was from gsmarena.com.</p>
+      <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web app. All mobile phone information used in this experiment was from gsmarena.com.</p>
+
+      <van-image
+          width="100%"
+          fit="contain"
+          src="../assets/imgs/typing.png"
+      />
+
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
       <ul>
         <li><b>Step 1:</b> Watch a tutorial video to understand how to interact with the web app to finish the task.</li>
         <li><b>Step 2:</b> Fill out your personal background.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/background.png"
+        />
         <li><b>Step 3:</b> Read some tips for tuning recommendations, and the tips can be accessed by clicking the "Tips" icon at the top left corner during the study.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/chatintro-base.png"
+        />
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/tips.png"
+        />
+
         <li><b>Step 4:</b> Specify what kinds of phones you are looking for in a pop-up window.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/preference-base.png"
+        />
+
         <li><b>Step 5:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when you like or dislike the phone.</li>
-        <li><b>Step 6:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the shopping cart.</li>
-        <li><b>Step 7:</b> Copy the code to the platform to verify the finished task and get a reward.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/card.png"
+        />
+
+        <li><b>Step 6:</b> You need to rate the phone after adding it to the shopping cart.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/rate-base.png"
+        />
+
+        <li><b>Step 7:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the shopping cart.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/question.png"
+        />
+
+        <li><b>Step 8:</b> Copy the code to the platform to verify the finished task and get a reward.</li>
+        <van-image
+            width="100%"
+            fit="contain"
+            src="../assets/imgs/code.png"
+        />
+
       </ul>
       <h4>Notes:</h4>
       <ul>

@@ -58,7 +58,7 @@ export default {
         {q: "The recommended phones were well-chosen.", t: "accuracy2"},
         {q: "The recommended phones were relevant.", t: "accuracy3"},
 
-        {q: "The chatbot explains why the products are recommended to me.", t: "explain1"},
+        {q: "The chatbot explains why the phones are recommended to me.", t: "explain1"},
         {q: "The system helps me understand why the phones were recommended to me.", t: "explain2"},
         {q: "The system does not show any information for explaining the recommended phones.", t: "explain3"},
 
