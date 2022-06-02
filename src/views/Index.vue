@@ -64,7 +64,7 @@
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
       <ul>
-        <li><b>Step 1:</b> Watch a tutorial video to understand how to interact with the web app to finish the task.
+        <li><b>Step 1:</b> Watch a tutorial video to understand how to interact with the web app to finish the task. The "Start Study" button will be activated after playing the video.
         </li>
         <li><b>Step 2:</b> Fill out your personal background.</li>
         <van-image

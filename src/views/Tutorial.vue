@@ -8,7 +8,7 @@
 <!--        :src="imgSrc"-->
 <!--    />-->
     <div style="margin: 24px 16px;padding-bottom:48px">
-      <van-button round block type="info" native-type="submit" :disabled="startStatus" @click="next">Continue
+      <van-button round block type="info" native-type="submit" :disabled="startStatus" @click="next">Start Study
       </van-button>
     </div>
   </div>
