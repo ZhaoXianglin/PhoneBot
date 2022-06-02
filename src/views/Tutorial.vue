@@ -1,12 +1,12 @@
 <template>
   <div class="tutorial">
     <van-nav-bar title="Tutorial"/>
-    <youtube :video-id="videoId" @ended="ended" player-width="100%" :player-vars=options :mute="true"></youtube>
-    <van-image
-        width="100%"
-        fit="contain"
-        :src="imgSrc"
-    />
+    <youtube :video-id="videoId" @ended="ended" player-width="100%" player-height="600px" :player-vars=options :mute="true"></youtube>
+<!--    <van-image-->
+<!--        width="100%"-->
+<!--        fit="contain"-->
+<!--        :src="imgSrc"-->
+<!--    />-->
     <div style="margin: 24px 16px;padding-bottom:48px">
       <van-button round block type="info" native-type="submit" :disabled="startStatus" @click="next">Continue
       </van-button>

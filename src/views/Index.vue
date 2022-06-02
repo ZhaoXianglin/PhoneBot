@@ -11,27 +11,37 @@
         <h5>PURPOSE OF RESEARCH STUDY:</h5>
         <p>This study aims to evaluate a web app that recommends mobile phones to you.</p>
         <h5>PROCEDURE:</h5>
-        <p>Your task is to find three phones of your interest. After that, you will provide your evaluation feedback by completing an online questionnaire.</p>
+        <p>Your task is to find three phones of your interest. After that, you will provide your evaluation feedback by
+          completing an online questionnaire.</p>
         <h5>DURATION:</h5>
-        <p>This study will take approximately 20 minutes to complete (including time for filling out questionnaires).</p>
+        <p>This study will take approximately 20 minutes to complete (including time for filling out
+          questionnaires).</p>
         <h5>BENEFITS:</h5>
-        <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we believe your feedback will help us improve our web app for mobile phone recommendations.</p>
+        <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we
+          believe your feedback will help us improve our web app for mobile phone recommendations.</p>
         <h5>RISKS & CONFIDENTIALITY:</h5>
-        <p>There is no risk in taking this study. We will try to keep all of the data collected in confidential places (in HKBU server with encryption), and only use them for research purposes.</p>
+        <p>There is no risk in taking this study. We will try to keep all of the data collected in confidential places
+          (in HKBU server with encryption), and only use them for research purposes.</p>
         <h5>VOLUNTARY PARTICIPATION AND RIGHT TO WITHDRAW:</h5>
-        <p>Your participation in this study is voluntary; you may decline to participate without penalty. If you decide to participate, you may withdraw from the study without penalty. However, your data will be destroyed if you withdraw from the study before data collection is completed.</p>
+        <p>Your participation in this study is voluntary; you may decline to participate without penalty. If you decide
+          to participate, you may withdraw from the study without penalty. However, your data will be destroyed if you
+          withdraw from the study before data collection is completed.</p>
         <h5>CIRCUMSTANCES THAT COULD LEAD US TO END YOUR PARTICIPATION:</h5>
-        <p>We may decide to end your participation if we identify that you are not following the instructions closely enough.</p>
+        <p>We may decide to end your participation if we identify that you are not following the instructions closely
+          enough.</p>
         <h5>CONTACT INFORMATION:</h5>
         <p>If you have any questions about this research, you may contact: Yucheng Jin at yuchengjin@hkbu.edu.hk</p>
 
-        <p>You can contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk if you feel that you have not been treated according to the description in this form.</p>
+        <p>You can contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk if you feel that you have not
+          been treated according to the description in this form.</p>
 
         <h5>CLICKING “ACCEPT”:</h5>
-        <p>By clicking on the “Accept” button, you indicate that you are 18 years of age or older, that you voluntarily agree to participate in this study, and that you understand the information in this consent form.</p>
+        <p>By clicking on the “Accept” button, you indicate that you are 18 years of age or older, that you voluntarily
+          agree to participate in this study, and that you understand the information in this consent form.</p>
 
         <div style="margin: 24px 16px;padding-bottom:2px">
-          <van-button round block type="info" native-type="submit" :loading="loading" @click="tapAccept">Accept</van-button>
+          <van-button round block type="info" native-type="submit" :loading="loading" @click="tapAccept">Accept
+          </van-button>
         </div>
       </div>
     </van-popup>
@@ -39,72 +49,100 @@
       <h3>Welcome to participate in our study!</h3>
 
       <p><b>Dear participants,</b></p>
-      <p>Thank you very much for taking part in this experiment, which aims at studying how users interact with a web app for mobile phone recommendations.</p>
+      <p>Thank you very much for taking part in this experiment, which aims at studying how users interact with a web
+        app for mobile phone recommendations.</p>
       <h4>Tasks:</h4>
-      <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web app. All mobile phone information used in this experiment was from gsmarena.com.</p>
-
+      <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial
+        recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web
+        app. All mobile phone information used in this experiment was from gsmarena.com.</p>
       <van-image
           width="100%"
           fit="contain"
-          src="../assets/imgs/typing.png"
+          :src="require('../assets/imgs/typing.png')"
       />
-
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
       <ul>
-        <li><b>Step 1:</b> Watch a tutorial video to understand how to interact with the web app to finish the task.</li>
+        <li><b>Step 1:</b> Watch a tutorial video to understand how to interact with the web app to finish the task.
+        </li>
         <li><b>Step 2:</b> Fill out your personal background.</li>
         <van-image
             width="100%"
             fit="contain"
-            src="../assets/imgs/background.png"
+            :src="require('../assets/imgs/background.png')"
         />
-        <li><b>Step 3:</b> Read some tips for tuning recommendations, and the tips can be accessed by clicking the "Tips" icon at the top left corner during the study.</li>
+        <li><b>Step 3:</b> Read some tips for tuning recommendations, and the tips can be accessed by clicking the
+          "Tips" icon at the top left corner during the study.
+        </li>
+
+        <van-image
+            v-if="condition<3"
+            width="100%"
+            fit="contain"
+            :src="require('../assets/imgs/chatintro-base.png')"
+        />
+        <van-image
+            v-else
+            width="100%"
+            fit="contain"
+            :src="require('../assets/imgs/chatintro-avatar.png')"
+        />
         <van-image
             width="100%"
             fit="contain"
-            src="../assets/imgs/chatintro-base.png"
-        />
-        <van-image
-            width="100%"
-            fit="contain"
-            src="../assets/imgs/tips.png"
+            :src="require('../assets/imgs/tips.png')"
         />
 
         <li><b>Step 4:</b> Specify what kinds of phones you are looking for in a pop-up window.</li>
         <van-image
+            v-if="condition<3"
             width="100%"
             fit="contain"
-            src="../assets/imgs/preference-base.png"
+            :src="require('../assets/imgs/preference-base.png')"
         />
-
-        <li><b>Step 5:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when you like or dislike the phone.</li>
+        <van-image
+            v-else
+            width="100%"
+            fit="contain"
+            :src="require('../assets/imgs/preference-avatar.png')"
+        />
+        <li><b>Step 5:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when
+          you like or dislike the phone.
+        </li>
         <van-image
             width="100%"
             fit="contain"
-            src="../assets/imgs/card.png"
+            :src="require('../assets/imgs/card.png')"
         />
 
         <li><b>Step 6:</b> You need to rate the phone after adding it to the shopping cart.</li>
         <van-image
+            v-if="condition<3"
             width="100%"
             fit="contain"
-            src="../assets/imgs/rate-base.png"
+            :src="require('../assets/imgs/rate-base.png')"
         />
-
-        <li><b>Step 7:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the shopping cart.</li>
+        <van-image
+            v-else
+            width="100%"
+            fit="contain"
+            :src="require('../assets/imgs/rate-avatar.png')"
+        />
+        <li><b>Step 7:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the
+          shopping cart.
+        </li>
         <van-image
             width="100%"
             fit="contain"
-            src="../assets/imgs/question.png"
+            :src="require('../assets/imgs/question.png')"
         />
 
         <li><b>Step 8:</b> Copy the code to the platform to verify the finished task and get a reward.</li>
         <van-image
             width="100%"
             fit="contain"
-            src="../assets/imgs/code.png"
+            :src="require('../assets/imgs/code.png')"
         />
 
       </ul>
@@ -116,15 +154,17 @@
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
-        <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1" @click="next">Start Study <van-count-down
-            ref="countDown"
-            millisecond
-            v-show="startStatus"
-            :time="15000"
-            :auto-start="false"
-            format="(sss)"
-            @finish="finish"
-        />
+        <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1"
+                    @click="next">Start Study
+          <van-count-down
+              ref="countDown"
+              millisecond
+              v-show="startStatus"
+              :time="15000"
+              :auto-start="false"
+              format="(sss)"
+              @finish="finish"
+          />
         </van-button>
       </div>
     </div>
@@ -141,9 +181,7 @@ export default {
 
   data: function () {
     return {
-      videoId: "60GyFWSTk_A",
-      lang: "s_cn",
-      startStatus:true,
+      startStatus: true,
       loading: false,
       loading1: false,
       uuid: localStorage.getItem('uuid'),
@@ -152,17 +190,18 @@ export default {
       show: true,
       checked: false,
       device: navigator.userAgent,
+      condition: localStorage.getItem('condition')
     }
   },
   methods: {
     tapAccept: function () {
       this.loading = true;
       if (this.uuid) {
-        if(this.finished === '1' && this.code){
+        if (this.finished === '1' && this.code) {
           this.show = true;
           this.$toast('You have completed the survey, thank you for your cooperation.');
           this.loading = false;
-        }else {
+        } else {
           this.show = false;
           this.loading = false;
           this.$refs.countDown.start();
@@ -180,6 +219,7 @@ export default {
             localStorage.setItem('active', new Date().getTime().toString());
             this.loading = false;
             this.show = false;
+            this.condition = res.data.condition;
             this.$refs.countDown.start();
           } else {
             console.log(res.data);
@@ -192,7 +232,7 @@ export default {
         })
       }
     },
-    finish: function (){
+    finish: function () {
       this.startStatus = false;
     },
     next: function () {
@@ -231,7 +271,8 @@ export default {
   background-color: #fff;
   color: #323233;
 }
-.consent{
+
+.consent {
   margin: 5px;
   padding: 6px 10px 36px 10px;
   border-radius: 6px;
@@ -239,7 +280,8 @@ export default {
   color: #323233;
   font-size: 18px;
 }
-.consent p{
+
+.consent p {
   text-align: justify;
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
@@ -253,6 +295,7 @@ export default {
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
 }
+
 .content h4 {
   text-decoration: underline;
   margin-block-start: 0.5em;
@@ -271,7 +314,11 @@ export default {
   list-style-type: disc;
   list-style-position: inside;
   padding-bottom: 0.5em;
-  text-align: justify;
+  text-align: left;
+}
+
+.van-image {
+  margin: 10px 0;
 }
 
 /*li b {*/
@@ -286,7 +333,8 @@ export default {
   list-style-position: inside;
   list-style-type: upper-roman;
 }
-.van-count-down{
+
+.van-count-down {
   display: inline;
   color: white;
 }
