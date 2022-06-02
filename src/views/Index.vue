@@ -56,7 +56,7 @@
         recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web
         app. All mobile phone information used in this experiment was from gsmarena.com.</p>
       <van-image
-          width="100%"
+          width="90%"
           fit="contain"
           :src="require('../assets/imgs/typing.png')"
       />
@@ -68,7 +68,7 @@
         </li>
         <li><b>Step 2:</b> Fill out your personal background.</li>
         <van-image
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/background.png')"
         />
@@ -78,18 +78,18 @@
 
         <van-image
             v-if="condition<3"
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/chatintro-base.png')"
         />
         <van-image
             v-else
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/chatintro-avatar.png')"
         />
         <van-image
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/tips.png')"
         />
@@ -97,13 +97,13 @@
         <li><b>Step 4:</b> Specify what kinds of phones you are looking for in a pop-up window.</li>
         <van-image
             v-if="condition<3"
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/preference-base.png')"
         />
         <van-image
             v-else
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/preference-avatar.png')"
         />
@@ -111,7 +111,7 @@
           you like or dislike the phone.
         </li>
         <van-image
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/card.png')"
         />
@@ -119,13 +119,13 @@
         <li><b>Step 6:</b> You need to rate the phone after adding it to the shopping cart.</li>
         <van-image
             v-if="condition<3"
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/rate-base.png')"
         />
         <van-image
             v-else
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/rate-avatar.png')"
         />
@@ -133,14 +133,14 @@
           shopping cart.
         </li>
         <van-image
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/question.png')"
         />
 
         <li><b>Step 8:</b> Copy the code to the platform to verify the finished task and get a reward.</li>
         <van-image
-            width="100%"
+            width="90%"
             fit="contain"
             :src="require('../assets/imgs/code.png')"
         />
@@ -155,7 +155,7 @@
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
         <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1"
-                    @click="next">Start Study
+                    @click="next">Tutorial Video
           <van-count-down
               ref="countDown"
               millisecond
