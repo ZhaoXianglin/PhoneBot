@@ -315,8 +315,8 @@ export default {
           value: 'Add to cart'
         },
         {
-          text: 'Try another',
-          value: 'Show another phone.'
+          text: 'Next item',
+          value: 'Next item'
         },
       ],
 
@@ -378,7 +378,7 @@ export default {
           if (res.text === 'Add to cart') {
             this.addToCart(this.current_phone);
           }
-          if (res.text === 'Try another') {
+          if (res.text === 'Next item') {
             this.tryAnother();
           }
         })
@@ -767,15 +767,15 @@ export default {
             value: 'Add to cart'
           },
             {
-              text: 'Try another',
-              value: 'Show another phone.'
+              text: 'Next item',
+              value: 'Next item'
             }]
         }).then((res) => {
           //判断点了什么按钮
           if (res.text === 'Add to cart') {
             this.addToCart(this.current_phone);
           }
-          if (res.text === 'Try another') {
+          if (res.text === 'Next item') {
             this.tryAnother();
           }
         })
