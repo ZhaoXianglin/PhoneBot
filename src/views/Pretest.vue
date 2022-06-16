@@ -136,9 +136,7 @@ export default {
   .score_left {
     width: 70px !important;
   }
-  .score_left_s {
-    width: 114px !important;
-  }
+
   .score_left_ss {
     width: 39px !important;
   }

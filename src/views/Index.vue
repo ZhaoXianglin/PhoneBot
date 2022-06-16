@@ -164,10 +164,10 @@
       </van-swipe>
       <van-row justify="space-around" type="flex">
         <van-col span="6">
-          <van-button @click="stepPrev"  type="info" round style="width: 80%">  &lt; </van-button>
+          <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>
         </van-col>
         <van-col span="6">
-          <van-button @click="stepNext"  type="info" round style="width: 80%"> &gt; </van-button>
+          <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>
         </van-col>
       </van-row>
       <h4>Notes:</h4>
@@ -212,7 +212,7 @@ export default {
   methods: {
     imgChange: function (index) {
       this.current_img = index;
-      if(this.current_img === 7){
+      if (this.current_img === 7) {
         this.startStatus = false;
       }
     },
@@ -222,7 +222,7 @@ export default {
       }
     },
     stepNext: function () {
-      if (this.current_img <7){
+      if (this.current_img < 7) {
         this.$refs.tutorial_img.next()
       }
     },
@@ -236,7 +236,6 @@ export default {
         } else {
           this.show = false;
           this.loading = false;
-          this.$refs.countDown.start();
         }
       } else {
         instance.post('/api/accept', {
@@ -252,7 +251,6 @@ export default {
             this.loading = false;
             this.show = false;
             this.condition = res.data.condition;
-            this.$refs.countDown.start();
           } else {
             console.log(res.data);
             this.loading = false;
@@ -264,9 +262,7 @@ export default {
         })
       }
     },
-    finish: function () {
-      this.startStatus = false;
-    },
+
     next: function () {
       this.loading1 = true;
       instance.post('/api/start', {
@@ -277,7 +273,7 @@ export default {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');
           localStorage.setItem("active", new Date().getTime().toString());
-          this.$router.replace('/tutorial').catch((err) => {
+          this.$router.replace('/prestudy').catch((err) => {
             console.log(err.message)
           });
           this.loading1 = false;
