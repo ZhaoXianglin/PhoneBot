@@ -63,7 +63,7 @@
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
-      <van-swipe style="width: 100%" ref="tutorial_img" @change="imgChange">
+      <van-swipe style="width: 100%" ref="tutorial_img" @change="imgChange" :touchable="false">
         <van-swipe-item>
           <van-image
               width="100%"
@@ -162,10 +162,13 @@
           <div class="custom-indicator"></div>
         </template>
       </van-swipe>
-      <van-row>
-        <van-col span="8"><van-button @click="stepPrev" block type="info">Previous Step</van-button></van-col>
-        <van-col span="8"><span style="font-size: 18px; line-height: 42px; text-align: center;display: block">Step{{current_img+1}}</span></van-col>
-        <van-col span="8"><van-button @click="stepNext" block type="info">Next Step</van-button></van-col>
+      <van-row justify="space-around" type="flex">
+        <van-col span="6">
+          <van-button @click="stepPrev"  type="info" round style="width: 80%">  &lt; </van-button>
+        </van-col>
+        <van-col span="6">
+          <van-button @click="stepNext"  type="info" round style="width: 80%"> &gt; </van-button>
+        </van-col>
       </van-row>
       <h4>Notes:</h4>
       <ul>
@@ -177,15 +180,6 @@
       <div style="margin: 24px 16px;padding-bottom:48px">
         <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1"
                     @click="next">Tutorial Video
-          <van-count-down
-              ref="countDown"
-              millisecond
-              v-show="startStatus"
-              :time="15000"
-              :auto-start="false"
-              format="(sss)"
-              @finish="finish"
-          />
         </van-button>
       </div>
     </div>
@@ -202,7 +196,7 @@ export default {
 
   data: function () {
     return {
-      current_img:1,
+      current_img: 0,
       startStatus: true,
       loading: false,
       loading1: false,
@@ -216,14 +210,21 @@ export default {
     }
   },
   methods: {
-    imgChange: function (index){
+    imgChange: function (index) {
       this.current_img = index;
+      if(this.current_img === 7){
+        this.startStatus = false;
+      }
     },
-    stepPrev: function (){
-      this.$refs.tutorial_img.prev()
+    stepPrev: function () {
+      if (this.current_img > 0) {
+        this.$refs.tutorial_img.prev()
+      }
     },
-    stepNext: function (){
-      this.$refs.tutorial_img.next()
+    stepNext: function () {
+      if (this.current_img <7){
+        this.$refs.tutorial_img.next()
+      }
     },
     tapAccept: function () {
       this.loading = true;
