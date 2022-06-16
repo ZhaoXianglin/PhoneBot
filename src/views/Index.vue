@@ -282,7 +282,7 @@ export default {
 }
 
 .consent p {
-  text-align: justify;
+  text-align: left;
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
 
@@ -291,7 +291,7 @@ export default {
 .content p {
   padding: 0 1px;
   text-indent: 0;
-  text-align: justify;
+  text-align: left;
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
 }

@@ -491,7 +491,7 @@ export default {
 
     //手机评分
     submitPhoneRate() {
-      console.log(this.crit_phone_point);
+      //console.log(this.crit_phone_point);
       this.last_action = 'submitPhoneRate';
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
