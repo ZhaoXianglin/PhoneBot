@@ -10,7 +10,7 @@
     <van-form @submit="onSubmit" scroll-to-error @failed="onFailed" validate-trigger="onSubmit">
       <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
         statements?</p>
-      <p style="padding:0 10px;font-weight:normal; text-align: left">Strongly disagree(1), Disagree(2), Somewhat
+      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2), Somewhat
         disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
       <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"
                  :rules="[{ required: auth, message: 'required' }]">
@@ -98,7 +98,7 @@ export default {
         {q: "I feel like to converse with a real human when I interact with this chatbot.", t: "cui_human2"},
         {q: "This chatbot system has human properties.", t: "cui_human3"},
 
-        {q: "To monitor quality, please respond with a 2 for this item.", t: "chk1"}
+        {q: 'Please respond to this question with "2".', t: "chk1"}
       ],
       q1groupans: Array(38).fill(null),
     }

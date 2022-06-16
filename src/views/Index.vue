@@ -56,96 +56,117 @@
         recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web
         app. All mobile phone information used in this experiment was from gsmarena.com.</p>
       <van-image
-          width="90%"
+          width="100%"
           fit="contain"
           :src="require('../assets/imgs/typing.png')"
       />
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
-      <ul>
-        <li><b>Step 1:</b> Watch a tutorial video to understand how to interact with the web app to finish the task. The "Start Study" button will be activated after playing the video.
-        </li>
-        <li><b>Step 2:</b> Fill out your personal background.</li>
-        <van-image
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/background.png')"
-        />
-        <li><b>Step 3:</b> Read some tips for tuning recommendations, and the tips can be accessed by clicking the
-          "Tips" icon at the top left corner during the study.
-        </li>
+      <van-swipe style="width: 100%" ref="tutorial_img" @change="imgChange">
+        <van-swipe-item>
+          <van-image
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/background.png')"
+          />
+          <p><b>Step 1:</b> Fill out your personal background.</p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/tips.png')"
+          />
 
-        <van-image
-            v-if="condition<3"
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/chatintro-base.png')"
-        />
-        <van-image
-            v-else
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/chatintro-avatar.png')"
-        />
-        <van-image
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/tips.png')"
-        />
+          <p><b>Step 2-1:</b> Read some tips for tuning recommendations.
+          </p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              v-if="condition<3"
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/chatintro-base.png')"
+          />
+          <van-image
+              v-else
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/chatintro-avatar.png')"
+          />
 
-        <li><b>Step 4:</b> Specify what kinds of phones you are looking for in a pop-up window.</li>
-        <van-image
-            v-if="condition<3"
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/preference-base.png')"
-        />
-        <van-image
-            v-else
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/preference-avatar.png')"
-        />
-        <li><b>Step 5:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when
-          you like or dislike the phone.
-        </li>
-        <van-image
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/card.png')"
-        />
-
-        <li><b>Step 6:</b> You need to rate the phone after adding it to the shopping cart.</li>
-        <van-image
-            v-if="condition<3"
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/rate-base.png')"
-        />
-        <van-image
-            v-else
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/rate-avatar.png')"
-        />
-        <li><b>Step 7:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the
-          shopping cart.
-        </li>
-        <van-image
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/question.png')"
-        />
-
-        <li><b>Step 8:</b> Copy the code to the platform to verify the finished task and get a reward.</li>
-        <van-image
-            width="90%"
-            fit="contain"
-            :src="require('../assets/imgs/code.png')"
-        />
-
-      </ul>
+          <p><b>Step 2-2:</b> The tips can be accessed by clicking the
+            "Tips" icon at the top left corner during the study.
+          </p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/card.png')"
+          />
+          <p><b>Step 3:</b> Specify what kinds of phones you are looking for in a pop-up window.</p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              v-if="condition<3"
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/preference-base.png')"
+          />
+          <van-image
+              v-else
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/preference-avatar.png')"
+          />
+          <p><b>Step 4:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when
+            you like or dislike the phone.
+          </p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              v-if="condition<3"
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/rate-base.png')"
+          />
+          <van-image
+              v-else
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/rate-avatar.png')"
+          />
+          <p><b>Step 5:</b> You need to rate the phone after adding it to the shopping cart.</p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/question.png')"
+          />
+          <p><b>Step 6:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the
+            shopping cart.
+          </p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/code.png')"
+          />
+          <p><b>Step 7:</b> Copy the code to the platform to verify the finished task and get a reward.</p>
+        </van-swipe-item>
+        <template #indicator>
+          <div class="custom-indicator"></div>
+        </template>
+      </van-swipe>
+      <van-row>
+        <van-col span="8"><van-button @click="stepPrev" block type="info">Previous Step</van-button></van-col>
+        <van-col span="8"><span style="font-size: 18px; line-height: 42px; text-align: center;display: block">Step{{current_img+1}}</span></van-col>
+        <van-col span="8"><van-button @click="stepNext" block type="info">Next Step</van-button></van-col>
+      </van-row>
       <h4>Notes:</h4>
       <ul>
         <li>You should test this web app on your mobile phone.</li>
@@ -181,6 +202,7 @@ export default {
 
   data: function () {
     return {
+      current_img:1,
       startStatus: true,
       loading: false,
       loading1: false,
@@ -194,6 +216,15 @@ export default {
     }
   },
   methods: {
+    imgChange: function (index){
+      this.current_img = index;
+    },
+    stepPrev: function (){
+      this.$refs.tutorial_img.prev()
+    },
+    stepNext: function (){
+      this.$refs.tutorial_img.next()
+    },
     tapAccept: function () {
       this.loading = true;
       if (this.uuid) {
