@@ -179,7 +179,7 @@
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
         <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1"
-                    @click="next">Tutorial Video
+                    @click="next">Continue
         </van-button>
       </div>
     </div>
