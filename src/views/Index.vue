@@ -124,7 +124,7 @@
               v-else
               width="100%"
               fit="contain"
-              :src="require('../assets/imgs/preference-avatar.png')"
+              :src="require('../assets/imgs/card.png')"
           />
           <p><b>Step 6:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when
             you like or dislike the phone.
