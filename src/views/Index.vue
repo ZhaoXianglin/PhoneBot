@@ -55,11 +55,7 @@
       <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial
         recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web
         app. All mobile phone information used in this experiment was from gsmarena.com.</p>
-      <van-image
-          width="100%"
-          fit="contain"
-          :src="require('../assets/imgs/typing.png')"
-      />
+
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
@@ -79,12 +75,12 @@
               :src="require('../assets/imgs/tips.png')"
           />
 
-          <p><b>Step 2-1:</b> Read some tips for tuning recommendations.
+          <p><b>Step 2:</b> Read some tips for tuning recommendations.
           </p>
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              v-if="condition<3"
+              v-if="condition < 3"
               width="100%"
               fit="contain"
               :src="require('../assets/imgs/chatintro-base.png')"
@@ -96,7 +92,7 @@
               :src="require('../assets/imgs/chatintro-avatar.png')"
           />
 
-          <p><b>Step 2-2:</b> The tips can be accessed by clicking the
+          <p><b>Step 3:</b> The tips can be accessed by clicking the
             "Tips" icon at the top left corner during the study.
           </p>
         </van-swipe-item>
@@ -104,16 +100,25 @@
           <van-image
               width="100%"
               fit="contain"
-              :src="require('../assets/imgs/card.png')"
+              :src="require('../assets/imgs/preference-base.png')"
           />
-          <p><b>Step 3:</b> Specify what kinds of phones you are looking for in a pop-up window.</p>
+          <p><b>Step 4:</b> Specify what kinds of phones you are looking for in a pop-up window.</p>
+        </van-swipe-item>
+        <van-swipe-item>
+          <van-image
+              width="100%"
+              fit="contain"
+              :src="require('../assets/imgs/typing.png')"
+          />
+          <p><b>Step 5:</b> You can tune recommendations by chatting with the web app.
+          </p>
         </van-swipe-item>
         <van-swipe-item>
           <van-image
               v-if="condition<3"
               width="100%"
               fit="contain"
-              :src="require('../assets/imgs/preference-base.png')"
+              :src="require('../assets/imgs/card.png')"
           />
           <van-image
               v-else
@@ -121,7 +126,7 @@
               fit="contain"
               :src="require('../assets/imgs/preference-avatar.png')"
           />
-          <p><b>Step 4:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when
+          <p><b>Step 6:</b> You can give feedback on a recommended phone by clicking "Add to cart" or "Next item" when
             you like or dislike the phone.
           </p>
         </van-swipe-item>
@@ -138,7 +143,7 @@
               fit="contain"
               :src="require('../assets/imgs/rate-avatar.png')"
           />
-          <p><b>Step 5:</b> You need to rate the phone after adding it to the shopping cart.</p>
+          <p><b>Step 7:</b> You need to rate the phone after adding it to the shopping cart.</p>
         </van-swipe-item>
         <van-swipe-item>
           <van-image
@@ -146,7 +151,7 @@
               fit="contain"
               :src="require('../assets/imgs/question.png')"
           />
-          <p><b>Step 6:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the
+          <p><b>Step 8:</b> You will be asked to fill out a post-study questionnaire after adding three phones to the
             shopping cart.
           </p>
         </van-swipe-item>
@@ -156,7 +161,7 @@
               fit="contain"
               :src="require('../assets/imgs/code.png')"
           />
-          <p><b>Step 7:</b> Copy the code to the platform to verify the finished task and get a reward.</p>
+          <p><b>Step 9:</b> Copy the code to the platform to verify the finished task and get a reward.</p>
         </van-swipe-item>
         <template #indicator>
           <div class="custom-indicator"></div>
@@ -165,6 +170,9 @@
       <van-row justify="space-around" type="flex">
         <van-col span="6">
           <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>
+        </van-col>
+        <van-col span="6">
+          <span style="font-weight: bold;line-height: 36px">Step {{current_img+1}} / 9</span>
         </van-col>
         <van-col span="6">
           <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>
@@ -212,7 +220,7 @@ export default {
   methods: {
     imgChange: function (index) {
       this.current_img = index;
-      if (this.current_img === 7) {
+      if (this.current_img === 8) {
         this.startStatus = false;
       }
     },
@@ -222,7 +230,7 @@ export default {
       }
     },
     stepNext: function () {
-      if (this.current_img < 7) {
+      if (this.current_img < 8) {
         this.$refs.tutorial_img.next()
       }
     },

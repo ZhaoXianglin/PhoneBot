@@ -99,11 +99,9 @@
     <!--  左侧 help-->
     <van-popup
         v-model="show_help"
-        closeable
-        close-icon="close"
         :style="{ height: '80%',width:'90%'}"
-        @click-close-icon="closeHelp"
-        :close-on-click-overlay="false"
+        @close="closeHelp"
+        :close-on-click-overlay="true"
         round
     >
       <div class="help">
@@ -149,6 +147,8 @@
           <li>"I like a light weight phone."</li>
           <li>"I want to buy a phone with a slim body."</li>
         </ul>
+        <br/>
+        <van-button type="info" block @click="show_help=!show_help" round> Close</van-button>
       </div>
     </van-popup>
 
@@ -405,7 +405,7 @@ export default {
               "action": "Initialize",
               "timestamp": new Date().getTime()
             })
-            this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(() => {
+            this.bot(res.data.msg).then(() => {
               this.botPhoneCard(this.current_phone);
               this.msg_btn_ctrl = false;
             })
