@@ -99,57 +99,66 @@
     <!--  左侧 help-->
     <van-popup
         v-model="show_help"
-        :style="{ height: '80%',width:'90%'}"
+        :style="{ height: '520px',width:'90%',overflow:'hidden'}"
         @close="closeHelp"
         :close-on-click-overlay="true"
         round
     >
       <div class="help">
-        <h3>Tips for tuning the recommendations by phone features</h3>
+        <van-nav-bar
+            right-text="Close"
+            :fixed="true"
+            @click-right="show_help=!show_help"
+        />
+        <!--        <div style="position: fixed;top: 0">-->
+        <!--          <van-button type="info" block @click="show_help=!show_help" round > Close</van-button>-->
+        <!--        </div>-->
+        <div style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
+          <h3>Tips for tuning the recommendations by phone features</h3>
+          <h4>By brand:</h4>
+          <ul>
+            <li>"I like the iPhone."</li>
+            <li>"I want to buy a Huawei mobile phone."</li>
+          </ul>
 
-        <h4>By brand:</h4>
-        <ul>
-          <li>"I like the iPhone."</li>
-          <li>"I want to buy a Huawei mobile phone."</li>
-        </ul>
+          <h4>By price:</h4>
+          <ul>
+            <li>"I want to buy a cheaper price phone."</li>
+            <li>"The price can be higher."</li>
+          </ul>
 
-        <h4>By price:</h4>
-        <ul>
-          <li>"I want to buy a cheaper price phone."</li>
-          <li>"The price can be higher."</li>
-        </ul>
+          <h4>By resolution:</h4>
+          <ul>
+            <li>"I need a phone having better display."</li>
+            <li>"I want a phone having higher resolution."</li>
+          </ul>
 
-        <h4>By resolution:</h4>
-        <ul>
-          <li>"I need a phone having better display."</li>
-          <li>"I want a phone having higher resolution."</li>
-        </ul>
+          <h4> By storage:</h4>
+          <ul>
+            <li>"I need a phone with a large storage."</li>
+            <li>"I need a phone having more space for saving my photos."</li>
+          </ul>
+          <h4>By computing performance:</h4>
+          <ul>
+            <li>"I want to buy a phone having larger RAM."</li>
+            <li>"I want to buy a phone having better CPU."</li>
+            <li>"I want to buy a phone running applications faster."</li>
+          </ul>
 
-        <h4> By storage:</h4>
-        <ul>
-          <li>"I need a phone with a large storage."</li>
-          <li>"I need a phone having more space for saving my photos."</li>
-        </ul>
-        <h4>By computing performance:</h4>
-        <ul>
-          <li>"I want to buy a phone having larger RAM."</li>
-          <li>"I want to buy a phone having better CPU."</li>
-          <li>"I want to buy a phone running applications faster."</li>
-        </ul>
-
-        <h4>By operating system:</h4>
-        <ul>
-          <li>"I want to buy an Android phone."</li>
-          <li>"I like the ios system."</li>
-        </ul>
-        <h4>By size:</h4>
-        <ul>
-          <li>"I like a light weight phone."</li>
-          <li>"I want to buy a phone with a slim body."</li>
-        </ul>
-        <br/>
-        <van-button type="info" block @click="show_help=!show_help" round> Close</van-button>
+          <h4>By operating system:</h4>
+          <ul>
+            <li>"I want to buy an Android phone."</li>
+            <li>"I like the ios system."</li>
+          </ul>
+          <h4>By size:</h4>
+          <ul>
+            <li>"I like a light weight phone."</li>
+            <li>"I want to buy a phone with a slim body."</li>
+          </ul>
+          <br>
+        </div>
       </div>
+
     </van-popup>
 
     <!--右侧购物车-->

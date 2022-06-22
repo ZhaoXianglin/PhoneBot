@@ -60,7 +60,7 @@
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
       <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the task steps below. (using the arrow buttons to view the previous or next step)</p>
-      <van-swipe style="width: 90%;margin: 0 auto" ref="tutorial_img" @change="imgChange" :touchable="false">
+      <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange" :touchable="false">
         <van-swipe-item>
           <van-image
               width="100%"
@@ -172,8 +172,8 @@
         <van-col span="6">
           <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>
         </van-col>
-        <van-col span="6">
-          <span style="font-weight: bold;line-height: 36px">Step {{current_img+1}} / 9</span>
+        <van-col span="6" style="text-align: center">
+          <span style="font-weight: bold;line-height: 36px;">Step {{current_img+1}} / 9</span>
         </van-col>
         <van-col span="6">
           <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>
