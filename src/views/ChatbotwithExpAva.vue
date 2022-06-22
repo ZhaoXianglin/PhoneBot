@@ -792,7 +792,7 @@ export default {
     closeHelp: function () {
       if (this.help_showed_count === 1) {
         // 初始状态
-        this.bot("Hi there. I know you want to buy a new phone. Can you let me know your preference for the phone purchase?").then(() => {
+        this.bot("Hey, I am Alice, your assistant for buying mobile phones. Could you tell me what kinds of phones you like?").then(() => {
           botui.action.button({
             addMessage: true,
             human: false,
