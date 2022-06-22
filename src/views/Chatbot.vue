@@ -39,7 +39,7 @@
       <van-nav-bar title='My Preference'/>
       <div class="phone_preference">
         <van-form @submit="submitPreference">
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Please select three brands you like.</p>
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">Please select no more than three brands you like.</p>
           <van-field name="brands" :rules="[{ required: true, message: 'Please select' }]">
             <template #input>
               <van-checkbox-group v-model="user_prefer.brands" :max="3" direction="horizontal">
@@ -799,7 +799,7 @@ export default {
     closeHelp: function () {
       if (this.help_showed_count === 1) {
         // 初始状态
-        this.bot("Hi there. I know you want to buy a new phone. Can you let me know your preference for the phone purchase?").then(() => {
+        this.bot("Hi, I am a chatbot for recommending mobile phones. Can you tell me your preference? If yes, click OK.").then(() => {
           botui.action.button({
             addMessage: true,
             human: false,
