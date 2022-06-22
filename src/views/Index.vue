@@ -59,7 +59,8 @@
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
-      <van-swipe style="width: 100%" ref="tutorial_img" @change="imgChange" :touchable="false">
+      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the task steps below. (using the arrow buttons to view the previous or next step)</p>
+      <van-swipe style="width: 90%;margin: 0 auto" ref="tutorial_img" @change="imgChange" :touchable="false">
         <van-swipe-item>
           <van-image
               width="100%"
@@ -70,7 +71,7 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/tips.png')"
           />
@@ -81,13 +82,13 @@
         <van-swipe-item>
           <van-image
               v-if="condition < 3"
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/chatintro-base.png')"
           />
           <van-image
               v-else
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/chatintro-avatar.png')"
           />
@@ -98,7 +99,7 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/preference-base.png')"
           />
@@ -106,7 +107,7 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/typing.png')"
           />
@@ -116,13 +117,13 @@
         <van-swipe-item>
           <van-image
               v-if="condition<3"
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/card.png')"
           />
           <van-image
               v-else
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/card.png')"
           />
@@ -133,13 +134,13 @@
         <van-swipe-item>
           <van-image
               v-if="condition<3"
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/rate-base.png')"
           />
           <van-image
               v-else
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/rate-avatar.png')"
           />
@@ -147,7 +148,7 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/question.png')"
           />
@@ -157,7 +158,7 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              width="100%"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/code.png')"
           />
