@@ -14,7 +14,7 @@
         <p>Your task is to find three phones of your interest. After that, you will provide your evaluation feedback by
           completing an online questionnaire.</p>
         <h5>Duration:</h5>
-        <p>This study will take approximately 20 minutes to complete (including time for filling out
+        <p>This study will take about 20 minutes to complete (including time for filling out
           questionnaires).</p>
         <h5>Benefits:</h5>
         <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we
