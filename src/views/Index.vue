@@ -63,7 +63,8 @@
       <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange" :touchable="false">
         <van-swipe-item>
           <van-image
-              width="100%"
+              style="margin: 10px"
+              width="90%"
               fit="contain"
               :src="require('../assets/imgs/step1.png')"
           />
@@ -84,7 +85,7 @@
               v-if="condition < 3"
               width="90%"
               fit="contain"
-              :src="require('../assets/imgs/step3.png')"
+              :src="require('../assets/imgs/step3_base.png')"
           />
           <van-image
               v-else
@@ -98,6 +99,13 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
+              v-if="condition<3"
+              width="90%"
+              fit="contain"
+              :src="require('../assets/imgs/step4_base.png')"
+          />
+          <van-image
+              v-else
               width="90%"
               fit="contain"
               :src="require('../assets/imgs/step4.png')"
@@ -115,13 +123,6 @@
         </van-swipe-item>
         <van-swipe-item>
           <van-image
-              v-if="condition<3"
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step6.png')"
-          />
-          <van-image
-              v-else
               width="90%"
               fit="contain"
               :src="require('../assets/imgs/step6.png')"
@@ -134,7 +135,7 @@
               v-if="condition<3"
               width="90%"
               fit="contain"
-              :src="require('../assets/imgs/step7.png')"
+              :src="require('../assets/imgs/step7_base.png')"
           />
           <van-image
               v-else

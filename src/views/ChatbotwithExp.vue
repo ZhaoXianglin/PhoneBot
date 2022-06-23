@@ -460,9 +460,17 @@ export default {
             console.log(res);
             this.current_phone = res.data.phone;
             this.latest_dialog = [];
-            this.bot(res.data.msg).then(() => {
-              this.botPhoneCard(this.current_phone);
-            });
+            if (res.data['msg'].length === 2){
+              this.bot(res.data.msg[0]).then(() => {
+                this.bot(res.data.msg[1]).then(()=>{
+                  this.botPhoneCard(this.current_phone);
+                })
+              });
+            }else {
+              this.bot(res.data.msg[0]).then(() => {
+                this.botPhoneCard(this.current_phone);
+              })
+            }
             this.msg_btn_ctrl = false;
             this.message = null;
           }).catch(() => {
