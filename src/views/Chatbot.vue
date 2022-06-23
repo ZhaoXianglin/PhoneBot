@@ -417,7 +417,7 @@ export default {
               "action": "Initialize",
               "timestamp": new Date().getTime()
             })
-            this.bot("Great! Now I have found some phones based on your preference. You can add the phone of your interest to the shopping cart.").then(() => {
+            this.bot("Great! Now I have found some phones for you. You can add the phone of your interest to the shopping cart.").then(() => {
               this.botPhoneCard(this.current_phone);
               this.msg_btn_ctrl = false;
             })

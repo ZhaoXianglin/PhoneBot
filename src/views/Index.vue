@@ -4,38 +4,38 @@
     <van-popup v-model="show" round :close-on-click-overlay="false" :style="{ height: '90%', width:'90%' }">
       <div class="consent">
         <header style="text-align:center;">
-          <h4>HONG KONG BAPTIST UNIVERSITY<br/>
-            INFORMED CONSENT STATEMENT
+          <h4>Hong Kong Baptist University<br/>
+            Informed Consent Statement
           </h4>
         </header>
-        <h5>PURPOSE OF RESEARCH STUDY:</h5>
+        <h5>Purpose of Research Study:</h5>
         <p>This study aims to evaluate a web app that recommends mobile phones to you.</p>
-        <h5>PROCEDURE:</h5>
+        <h5>Procedure:</h5>
         <p>Your task is to find three phones of your interest. After that, you will provide your evaluation feedback by
           completing an online questionnaire.</p>
-        <h5>DURATION:</h5>
-        <p>This study will take approximately 20 minutes to complete (including time for filling out
+        <h5>Duration:</h5>
+        <p>This study will take about 20 minutes to complete (including time for filling out
           questionnaires).</p>
-        <h5>BENEFITS:</h5>
+        <h5>Benefits:</h5>
         <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we
           believe your feedback will help us improve our web app for mobile phone recommendations.</p>
-        <h5>RISKS & CONFIDENTIALITY:</h5>
+        <h5>Risk & Confidentiality:</h5>
         <p>There is no risk in taking this study. We will try to keep all of the data collected in confidential places
           (in HKBU server with encryption), and only use them for research purposes.</p>
-        <h5>VOLUNTARY PARTICIPATION AND RIGHT TO WITHDRAW:</h5>
+        <h5>Voluntary Participation and Right to Withdraw:</h5>
         <p>Your participation in this study is voluntary; you may decline to participate without penalty. If you decide
           to participate, you may withdraw from the study without penalty. However, your data will be destroyed if you
           withdraw from the study before data collection is completed.</p>
-        <h5>CIRCUMSTANCES THAT COULD LEAD US TO END YOUR PARTICIPATION:</h5>
+        <h5>Circumstances That Could Lead Us to End Your Participation:</h5>
         <p>We may decide to end your participation if we identify that you are not following the instructions closely
           enough.</p>
-        <h5>CONTACT INFORMATION:</h5>
+        <h5>Contact Information:</h5>
         <p>If you have any questions about this research, you may contact: Yucheng Jin at yuchengjin@hkbu.edu.hk</p>
 
         <p>You can contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk if you feel that you have not
           been treated according to the description in this form.</p>
 
-        <h5>CLICKING “ACCEPT”:</h5>
+        <h5>Agreement:</h5>
         <p>By clicking on the “Accept” button, you indicate that you are 18 years of age or older, that you voluntarily
           agree to participate in this study, and that you understand the information in this consent form.</p>
 
@@ -49,12 +49,11 @@
       <h3>Welcome to participate in our study!</h3>
 
       <p><b>Dear participants,</b></p>
-      <p>Thank you very much for taking part in this experiment, which aims at studying how users interact with a web
-        app for mobile phone recommendations.</p>
+      <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that helps users select mobile phones.</p>
       <h4>Tasks:</h4>
       <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial
-        recommendations may not fit your taste, we encourage you to <b>tune recommendations by chatting</b> with the web
-        app. All mobile phone information used in this experiment was from gsmarena.com.</p>
+        recommendations do not fit your taste, we suggest that you <b>modify recommendations by chatting with the web
+        app</b>. All mobile phone information used in this experiment is from gsmarena.com.</p>
 
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
@@ -77,7 +76,7 @@
               :src="require('../assets/imgs/step2.png')"
           />
 
-          <p><b>Step 2:</b> Read some tips for tuning recommendations through conversation.
+          <p><b>Step 2:</b> Read some tips for modifying recommendations through conversation.
           </p>
         </van-swipe-item>
         <van-swipe-item>
@@ -143,7 +142,7 @@
               fit="contain"
               :src="require('../assets/imgs/step7.png')"
           />
-          <p><b>Step 7:</b>  Rate the phone you add to the shopping cart.</p>
+          <p><b>Step 7:</b> Rate the phone you add to the shopping cart.</p>
         </van-swipe-item>
         <van-swipe-item>
           <van-image
@@ -179,9 +178,8 @@
       </van-row>
       <h4>Notes:</h4>
       <ul>
-        <li>You should test this web app on your mobile phone.</li>
-        <li>You can set the video quality to 720P and turn on the subtitle while watching the tutorial video.</li>
-        <li>You are recommended to use Chrome browser (version > 33.0) or Safari on iPhone.</li>
+        <li>You are highly recommended to test this web app on a <b>mobile phone</b>.</li>
+        <li>You are recommended to use Chrome browser (version > 33.0) or Safari on iPhones.</li>
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
