@@ -9,6 +9,7 @@ import Tutorial from '../views/Tutorial.vue'
 import Que1 from "@/views/Que1";
 import Que2 from "@/views/Que2";
 import Success from "@/views/Success";
+import ChatbotwithAva from "@/views/ChatbotwithAva";
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,11 @@ const routes = [
     path: '/chatbotexp',
     name: 'chatbot with exp',
     component: ChatbotwithExp
+  },
+  {
+    path: '/chatbotava',
+    name: 'chatbot with ava',
+    component: ChatbotwithAva
   },
   {
     path: '/chatbotexpava',

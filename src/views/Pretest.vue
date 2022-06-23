@@ -92,6 +92,10 @@ export default {
             this.$router.replace('/chatbotexpava').catch((err) => {
               console.log(err.message)
             });}
+          if(localStorage.getItem('condition')==='4'){
+            this.$router.replace('/chatbotava').catch((err) => {
+              console.log(err.message)
+            });}
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")
