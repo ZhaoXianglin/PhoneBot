@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
 import Chatbot from '../views/Chatbot.vue'
 import ChatbotwithExp from '@/views/ChatbotwithExp.vue'
-import ChatbotwithExpAva from '@/views/ChatbotwithExpAva.vue'
 import Pretest from '../views/Pretest.vue'
 import Tutorial from '../views/Tutorial.vue'
 import Que1 from "@/views/Que1";
 import Que2 from "@/views/Que2";
 import Success from "@/views/Success";
 import ChatbotwithAva from "@/views/ChatbotwithAva";
+import Tips from "@/views/Tips";
+import ChatHumanHigh from "@/views/ChatHumanHigh";
 
 Vue.use(VueRouter)
 
@@ -30,24 +31,29 @@ const routes = [
     component: Tutorial
   },
   {
-    path: '/chatbot',
+    path: '/chatbl',
     name: 'Chatbot',
     component: Chatbot
   },
   {
-    path: '/chatbotexp',
+    path: '/chatbh',
     name: 'chatbot with exp',
     component: ChatbotwithExp
   },
   {
-    path: '/chatbotava',
+    path: '/chathl',
     name: 'chatbot with ava',
     component: ChatbotwithAva
   },
   {
-    path: '/chatbotexpava',
-    name: 'chatbot with exp and ava',
-    component: ChatbotwithExpAva
+    path: '/chathh',
+    name: 'human high high message interactivity',
+    component: ChatHumanHigh
+  },
+  {
+    path: '/tips',
+    name: 'tips',
+    component: Tips
   },
   {
     path: '/prestudy',
