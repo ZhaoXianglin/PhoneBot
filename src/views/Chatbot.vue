@@ -108,10 +108,11 @@
             :fixed="true"
             @click-right="show_help=!show_help"
         />
-<!--        <div style="position: fixed;top: 0">-->
-<!--          <van-button type="info" block @click="show_help=!show_help" round > Close</van-button>-->
-<!--        </div>-->
-        <div style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
+        <!--        <div style="position: fixed;top: 0">-->
+        <!--          <van-button type="info" block @click="show_help=!show_help" round > Close</van-button>-->
+        <!--        </div>-->
+        <div
+            style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
           <h3>Tips for tuning the recommendations by phone features</h3>
           <h4>By brand:</h4>
           <ul>
@@ -982,8 +983,6 @@ button.botui-actions-buttons-button {
   height: 43px;
   position: relative;
   background-repeat: no-repeat;
-  background-image: url('../assets/imgs/avatar.png');
-  animation: avatar 1s steps(16) 1 2s;
 }
 
 .profil > img.agent {
@@ -1016,7 +1015,7 @@ button.botui-actions-buttons-button {
   }
 }
 
-.van-popup__close-icon{
-  color: #1989fa!important;
+.van-popup__close-icon {
+  color: #1989fa !important;
 }
 </style>

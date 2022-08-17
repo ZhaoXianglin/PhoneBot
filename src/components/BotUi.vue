@@ -12,27 +12,50 @@
             <div :class="[{human: msg.human, 'botui-message-content': true}, msg.type]">
               <span v-if="msg.type=='text'" v-text="msg.content" v-botui-markdown></span>
               <span v-if="msg.type=='html'" v-html="msg.content"></span>
-              <span v-if="msg.type=='phone'">
+              <div v-if="msg.type=='phone'">
                 <div style="min-width: 240px;">
-                    <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px"
-                                                                                              :src="msg.content.img"
-                                                                                              alt=""/></div>
-                    <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span
-                        style="display:block;font-size: 20px;font-weight: bold">{{msg.content.modelname}}</span></div>
-                    <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
-                    <tr><td style="width: 96px"> Storage:</td><td>{{msg.content.storage}}</td></tr>
-                    <tr><td>Memory:</td><td>{{msg.content.ram}}</td></tr>
-                    <tr><td>OS:</td><td>{{msg.content.os1}}</td></tr>
-                    <tr><td>Camera:</td><td>{{msg.content.cam1}} MP</td></tr>
-                    <tr><td>Screen:</td><td>{{msg.content.displaysize}}inches</td></tr>
-                    <tr><td>Resolution:</td><td>{{msg.content.resolution1}}*{{msg.content.resolution2}}</td></tr>
-                    <tr><td>Battery:</td><td>{{msg.content.battery}}mAh</td></tr>
-                    </table>
-                    <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">${{msg.content.price}}</span><br/>
-                    <div style="display: flex;justify-content: end"><a target="view_window" @click="click_detail(msg.content.url)"
-                                                                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a></div>
-                    </div>
-              </span>
+                  <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" :src="msg.content.img" alt=""/></div>
+                  <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span
+                      style="display:block;font-size: 20px;font-weight: bold">{{ msg.content.modelname }}</span></div>
+                  <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
+                    <tr>
+                      <td style="width: 96px"> Storage:</td>
+                      <td>{{ msg.content.storage }}</td>
+                    </tr>
+                    <tr>
+                      <td>Memory:</td>
+                      <td>{{ msg.content.ram }}</td>
+                    </tr>
+                    <tr>
+                      <td>OS:</td>
+                      <td>{{ msg.content.os1 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Weight:</td>
+                      <td>{{ msg.content.weight }} g</td>
+                    </tr>
+                    <tr>
+                      <td>Screen:</td>
+                      <td>{{ msg.content.displaysize }}inches</td>
+                    </tr>
+                    <tr>
+                      <td>Resolution:</td>
+                      <td>{{ msg.content.resolution1 }}*{{ msg.content.resolution2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Battery:</td>
+                      <td>{{ msg.content.battery }}mAh</td>
+                    </tr>
+                  </table>
+                  <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">${{
+                      msg.content.price
+                    }}</span><br/>
+                  <div style="display: flex;justify-content: end"><a target="view_window"
+                                                                     @click="click_detail(msg.content.url)"
+                                                                     style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a>
+                  </div>
+                </div>
+              </div>
               <iframe v-if="msg.type=='embed'" :src="msg.content" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
@@ -205,7 +228,7 @@ export default {
         addMessage: true
       },
       messages: [],
-      clicked_url:"hello",
+      clicked_url: "hello",
     };
   },
   computed: {
@@ -214,7 +237,7 @@ export default {
     }
   },
   methods: {
-    click_detail: function (url){
+    click_detail: function (url) {
       this.clicked_url = url;
       this.$emit('clicked_url', url);
     },

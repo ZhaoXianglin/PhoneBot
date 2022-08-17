@@ -49,17 +49,20 @@
       <h3>Welcome to participate in our study!</h3>
 
       <p><b>Dear participants,</b></p>
-      <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that helps users select mobile phones.</p>
+      <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that helps users
+        select mobile phones.</p>
       <h4>Tasks:</h4>
       <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial
         recommendations do not fit your taste, we suggest that you <b>modify recommendations by chatting with the web
-        app</b>. All mobile phone information used in this experiment is from gsmarena.com.</p>
+          app</b>. All mobile phone information used in this experiment is from gsmarena.com.</p>
 
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
       <h4>Task steps:</h4>
-      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the task steps below. (using the arrow buttons to view the previous or next step)</p>
-      <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange" :touchable="false">
+      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the
+        task steps below. (using the arrow buttons to view the previous or next step)</p>
+      <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange"
+                 :touchable="false">
         <van-swipe-item>
           <van-image
               style="margin: 10px"
@@ -93,7 +96,8 @@
               :src="require('../assets/imgs/step3.png')"
           />
 
-          <p><b>Step 3:</b> Click OK to specify your preference for mobile phones. Please select at most three brands you like
+          <p><b>Step 3:</b> Click OK to specify your preference for mobile phones. Please select at most three brands
+            you like
           </p>
         </van-swipe-item>
         <van-swipe-item>
@@ -126,7 +130,8 @@
               fit="contain"
               :src="require('../assets/imgs/step6.png')"
           />
-          <p><b>Step 6:</b> View the detail of a recommended phone if you wish. Accept or decline a recommended phone by clicking the “Add to cart” or “Try another” button.
+          <p><b>Step 6:</b> View the detail of a recommended phone if you wish. Accept or decline a recommended phone by
+            clicking the “Add to cart” or “Try another” button.
           </p>
         </van-swipe-item>
         <van-swipe-item>
@@ -170,7 +175,7 @@
           <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>
         </van-col>
         <van-col span="6" style="text-align: center">
-          <span style="font-weight: bold;line-height: 36px;">Step {{current_img+1}} / 9</span>
+          <span style="font-weight: bold;line-height: 36px;">Step {{ current_img + 1 }} / 9</span>
         </van-col>
         <van-col span="6">
           <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>
@@ -251,7 +256,8 @@ export default {
           if (res.data.uuid) {
             localStorage.setItem('uuid', res.data.uuid);
             localStorage.setItem('finished', '0');
-            localStorage.setItem('condition', res.data.condition);
+            localStorage.setItem('identity_cue', res.data.identity_cue);
+            localStorage.setItem('explanation_style', res.data.explanation_style);
             localStorage.setItem('active', new Date().getTime().toString());
             this.loading = false;
             this.show = false;
@@ -273,7 +279,6 @@ export default {
       instance.post('/api/start', {
         'startT': new Date().getTime(),
         'uuid': localStorage.getItem("uuid"),
-        'condition': localStorage.getItem("condition")
       }).then((res) => {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');

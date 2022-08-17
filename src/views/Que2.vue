@@ -1,7 +1,7 @@
 <template>
   <div class="posttest">
-    <van-nav-bar title="Additional Post-Study Survey"/>
-    <van-steps :active="3">
+    <van-nav-bar title="Post-Study Survey(part2)"/>
+    <van-steps :active="2">
       <van-step>Step1</van-step>
       <van-step>Step2</van-step>
       <van-step>Step3</van-step>
@@ -10,7 +10,8 @@
     <van-form @submit="onSubmit" scroll-to-error @failed="onFailed" validate-trigger="onSubmit">
       <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
         statements?</p>
-      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2), Somewhat
+      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2),
+        Somewhat
         disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
       <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"
                  :rules="[{ required: auth, message: 'required' }]">
@@ -36,7 +37,7 @@
 
 
       <div style="margin: 36px;">
-        <van-button round block type="info" native-type="submit" :loading="loading">Submit</van-button>
+        <van-button round block type="info" native-type="submit" :loading="loading">Continue</van-button>
       </div>
     </van-form>
   </div>
@@ -52,36 +53,31 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 3, 23, 6, 9, 12, 15, 18, 21],
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15, 18],
       q1group: [
+        {q: "The chatbot was interested in what I was saying.", t: "cui_attentive2"},
+        {q: "The chatbot tried to know more about my needs.", t: "cui_attentive5"},
+        {q: "The chatbot paid attention to what I was saying.", t: "cui_attentive6"},
+        {q: "The chatbot was respectful to me and considered my needs.", t: "cui_attentive7"},
 
-        {q: "The chatbot gave me good suggestions.", t: "useful1"},
-        {q: "The chatbot helped me find the ideal phone.", t: "useful2"},
-        {q: "Using the chatbot to find what I like is easy.", t: "useful3"},
+        {q: "This chatbot is like a real expert in assessing mobile phones.", t: "trust_compe1"},
+        {q: "This chatbot considers my needs and all important attributes of mobile phones.", t: "trust_compe3"},
+        {q: "This chatbot has good knowledge about mobile phones.", t: "trust_compe4"},
 
-        {q: "I easily found the phones I was looking for.", t: "ease1"},
-        {q: "Using the recommender to find what I like is easy.", t: "ease4"},
-        {q: "Finding a phone to buy with the help of the recommender is easy.", t: "ease5"},
+        {q: "This chatbot provides unbiased product recommendations.", t: "trust_integity1"},
+        {q: "This chatbot is honest.", t: "trust_integity2"},
+        {q: "This chatbot is truthful when conversing with me.", t: "trust_integity3"},
 
-        {q: "This chatbot can be trusted.", t: "trust1"},
-        {q: "I can always rely on the chatbot whenever I need to buy a mobile phone.", t: "trust2"},
-        {q: "I feel that I could count on the chatbot to help me purchase the mobile phone I need.", t: "trust3"},
         {
-          q: "If I need to buy a mobile phone, I would be willing to rely on the information provided by the chatbot.",
-          t: "trust4"
+          q: "When I need to buy a mobile phone, I would feel comfortable depending on the information provided by this chatbot.",
+          t: "intent2depend1"
         },
+        {q: "I can always rely on this chatbot for selecting a mobile phone.", t: "intent2depend2"},
+        {q: "I feel that I could count on this chatbot to help with picking out a mobile phone.", t: "intent2depend3"},
 
-        {q: "I am convinced of the phones recommended to me.", t: "confidence1"},
-        {q: "I am confident I will like the phones recommended to me.", t: "confidence2"},
-        {q: "I have confidence in accepting the phones recommended to me.", t: "confidence4"},
-
-        {q: "Overall, I am satisfied with this chatbot.", t: "satis1"},
-        {q: "This chatbot is satisfying.", t: "satis2"},
-        {q: "This chatbot makes me satisfied.", t: "satis3"},
-
-        {q: "I will use this chatbot again.", t: "intent1"},
-        {q: "I will use this chatbot frequently.", t: "intent2"},
-        {q: "I will tell my friends about this chatbot.", t: "intent3"},
+        {q: "If I need to choose a mobile phone, I would want to use this chatbot again.", t: "intent2follow1"},
+        {q: "I would not hesitate to use the recommendations this chatbot supplied me.", t: "intent2follow2"},
+        {q: "I would confidently follow the recommendations provided by this chatbot.", t: "intent2follow3"},
 
         {
           q: "Given a chance, I predict that I would consider buying the phones recommended by the chatbot in the near future.",
@@ -89,10 +85,8 @@ export default {
         },
         {q: "I will likely buy the phones recommended by the chatbot in the near future.", t: "intent2purchase2"},
         {q: "Given the opportunity, I intend to buy the phones recommended by the chatbot.", t: "intent2purchase3"},
-
-        {q: "Please select \"7\" for this question.", t: "chk2"}
       ],
-      q1groupans: Array(35).fill(null),
+      q1groupans: Array(19).fill(null),
     }
   },
   mounted() {
@@ -110,18 +104,34 @@ export default {
     onSubmit: function (values) {
       this.loading = true;
       values['uuid'] = localStorage.getItem('uuid');
-      values['page4T'] = new Date().getTime();
-      instance.post('/api/page4', values).then((res) => {
+      values['que2T'] = new Date().getTime();
+      instance.post('/que/que2', values).then((res) => {
         //console.log(res)
         if (res.data.status === 1) {
           localStorage.setItem('step', '4');
           localStorage.setItem('code', res.data.msg);
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          this.$router.replace('/success').catch((err) => {
+          this.$dialog.confirm({
+            confirmButtonText: "Yes, continue",
+            cancelButtonText: "No",
+            title: 'Additional Survey',
+            message: 'We still have 21 bonus question items (take about 2-3 minutes). You will get a bonus of 0.5 US dollars for answering these extra questions  :)',
+          })
+              .then(() => {
+                // on confirm
+                this.$router.replace('/que3').catch((err) => {
+                  console.log(err.message)
+                  localStorage.setItem('code', "");
+                });
+              })
+              .catch(() => {
+                this.$router.replace('/success').catch((err) => {
+                  console.log(err.message)
+                });
+              });
 
-            console.log(err.message)
-          });
+
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")

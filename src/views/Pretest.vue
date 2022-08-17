@@ -9,7 +9,8 @@
     </van-steps>
     <p style="padding-left: 10px;font-weight:bolder">Personal Information：</p>
     <van-form @submit="onSubmit" @failed="onFailed" scroll-to-error validate-trigger="onSubmit">
-      <van-field name="gender" label="Gender" required :rules="[{ required: auth, message: 'Please select this item.' }]">
+      <van-field name="gender" label="Gender" required
+                 :rules="[{ required: auth, message: 'Please select this item.' }]">
         <template #input>
           <van-radio-group v-model="gender" direction="horizontal">
             <van-radio checked-color="#ee0a24" name="Male"> Male</van-radio>
@@ -39,7 +40,8 @@
             @cancel="showPicker1 = false"
         />
       </van-popup>
-      <van-field name="nationality" v-model="nationality" type="text" label="Nationality" required placeholder="nationality"
+      <van-field name="nationality" v-model="nationality" type="text" label="Nationality" required
+                 placeholder="nationality"
                  :rules="[{ required: auth, message: 'Please enter this item.' }]"/>
 
       <div style="margin: 36px;">
@@ -51,7 +53,7 @@
 </template>
 
 <script>
-import {instance} from '../request';
+import {instance} from '@/request';
 
 export default {
   name: "Prestudy",
@@ -60,9 +62,9 @@ export default {
       loading: false,
       auth: true,
       gender: "",
-      age:"",
+      age: "",
       age_items: ['18-24', '25-34', '35-44', '45-54', '55-64', '65 and over'],
-      nationality:"",
+      nationality: "",
       showPicker1: false,
       showPicker2: false,
 
@@ -74,28 +76,13 @@ export default {
       this.loading = true;
       values['uuid'] = localStorage.getItem('uuid');
       values['page1T'] = new Date().getTime();
-      instance.post('/api/page1', values).then((res) => {
+      instance.post('/que/pre1', values).then((res) => {
         //console.log(res)
         if (res.data.status === 1) {
           localStorage.setItem('step', '1');
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          if(localStorage.getItem('condition')==='1'){
-            this.$router.replace('/chatbot').catch((err) => {
-              console.log(err.message)
-            });}
-          if(localStorage.getItem('condition')==='2'){
-            this.$router.replace('/chatbotexp').catch((err) => {
-              console.log(err.message)
-            });}
-          if(localStorage.getItem('condition')==='3'){
-            this.$router.replace('/chatbotexpava').catch((err) => {
-              console.log(err.message)
-            });}
-          if(localStorage.getItem('condition')==='4'){
-            this.$router.replace('/chatbotava').catch((err) => {
-              console.log(err.message)
-            });}
+          this.$router.replace('/scenario')
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")
@@ -106,7 +93,7 @@ export default {
         this.$toast("Network error, please try again.");
       })
     },
-    onFailed (){
+    onFailed() {
       this.$toast("You may have missed some items, please fill in.");
     },
     onConfirm1(value) {

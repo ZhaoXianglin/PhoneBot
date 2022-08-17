@@ -98,7 +98,7 @@
     <van-popup
         v-model="show_help"
         :style="{ height: '520px',width:'90%',overflow:'hidden'}"
-        @close="closeHelp"
+        @close="greeting"
         :close-on-click-overlay="true"
         round
     >
@@ -108,10 +108,11 @@
             :fixed="true"
             @click-right="show_help=!show_help"
         />
-<!--        <div style="position: fixed;top: 0">-->
-<!--          <van-button type="info" block @click="show_help=!show_help" round > Close</van-button>-->
-<!--        </div>-->
-        <div style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
+        <!--        <div style="position: fixed;top: 0">-->
+        <!--          <van-button type="info" block @click="show_help=!show_help" round > Close</van-button>-->
+        <!--        </div>-->
+        <div
+            style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
           <h3>Tips for tuning the recommendations by phone features</h3>
           <h4>By brand:</h4>
           <ul>
@@ -124,7 +125,6 @@
             <li>"I want to buy a cheaper price phone."</li>
             <li>"The price can be higher."</li>
           </ul>
-
           <h4>By resolution:</h4>
           <ul>
             <li>"I need a phone having better display."</li>
@@ -156,7 +156,6 @@
           <br>
         </div>
       </div>
-
     </van-popup>
 
     <!--右侧购物车-->
@@ -246,6 +245,29 @@
       </div>
     </van-popup>
 
+    <!-- 提醒 -->
+    <van-popup
+        v-model="show_err_reminder"
+        :style="{width:'80%'}"
+        :close-on-click-overlay="false"
+        round
+    >
+      <van-nav-bar title='A kind reminder'/>
+      <div style="padding: 12px">
+        <p>Please keep Lily’s preferences in mind when you pick mobile phones for her.</p>
+        <ul>
+          <li>1. She often uses her mobile phone to watch videos.</li>
+          <li>2. She hates frequently charging her mobile phone.</li>
+          <li>3. Her budget for purchasing a new mobile phone is 400 US dollars.</li>
+        </ul>
+        <h4 style="color: #B24040">I just want to add the phone to my cart!</h4>
+        <p style="text-align: center">
+          <van-button type="warning" @click="addToCart"> Yes</van-button>&nbsp;
+          <van-button type="info" @click="tryAnother"> No</van-button>
+        </p>
+      </div>
+
+    </van-popup>
     <!-- 去下一页   -->
     <van-popup
         v-model="show_next_page"
@@ -283,7 +305,14 @@
             </template>
           </van-card>
         </div>
-        <p style="padding:0 16px;">These are your favorite phones. Let's move to the next step.</p>
+        <p v-if="identity_cue==='0'" style="padding:0 16px;color: #B24040">I am glad you found these good phones for
+          Lily. Now, you
+          will be asked to complete a questionnaire regarding your experience of chatting with RecBot (an automated
+          sales chatbot) </p>
+        <p v-if="identity_cue==='1'" style="padding:0 16px;color: #B24040;">I am glad you found these good phones for
+          Lily. Now, you
+          will be asked to complete a questionnaire regarding your experience of chatting with Susan (a sales
+          assistant).</p>
         <van-button type="primary" block @click="nextPage">Next</van-button>
       </div>
     </van-popup>
@@ -297,13 +326,17 @@ import {botui} from '@/components/BotUi';
 import {instance} from "@/request";
 
 export default {
-  name: "ChatbotwithAva",
+  name: "Assistant",
   components: {
     BotUi,
   },
   data: function () {
     return {
+      //实验条件
+      identity_cue: "0",
+      explanation_style: "1",
       //控制功能
+      show_err_reminder: false,
       loading: false,
       msg_btn_ctrl: true,
       show_help: true,
@@ -324,6 +357,8 @@ export default {
         },
       ],
 
+      //current action
+
       //critical的标识
       in_crit: false,
       crit_text_point: 0,
@@ -335,22 +370,26 @@ export default {
       clicked_trans_url: "",
       message: "",
       user_prefer: {
-        brands: [],
+        brand: '',
         budget: 700,
-        cameras: 12,
+        display_size: '',
+        battery: '',
+        weight: ''
       },
       phone_in_cart: [],
       current_phone: {},
       latest_dialog: [],
+      //最后一次的动作
       last_action: "",
-      try_another_count: 0,
-      critical_data: [],
+      //用户的名字
+      username: "",
       bot_msg: ['I find this phone for you.', 'You may like this phone.', 'Please check this phone.']
     }
   },
-  // mounted() {
-  //   localStorage.setItem("uuid", "e34cddc4a7ae47bb9f7badf9e44cf41e");
-  // },
+  mounted() {
+    this.explanation_style = localStorage.getItem("explanation_style")
+    this.identity_cue = localStorage.getItem("identity_cue")
+  },
   methods: {
     //从卡片组件里面获得点击事件的url
     clicked_url: function (childValue) {
@@ -360,11 +399,21 @@ export default {
     },
     //默认对话
     bot: function (msg) {
-      return botui.message.bot({
+      let config = {
         type: 'html',
         loading: true,
-        delay: 1600,
-        photo: require("../assets/imgs/bg.png"),
+        delay: 600,
+        photo: "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar1.png",
+        content: msg
+      };
+      if (this.identity_cue === '1') {
+        config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
+        config.delay = msg.length * 80
+      }
+      return botui.message.bot(config)
+    },
+    human: function (msg) {
+      return botui.message.human({
         content: msg
       })
     },
@@ -386,7 +435,11 @@ export default {
         }).then((res) => {
           //判断点了什么按钮
           if (res.text === 'Add to cart') {
-            this.addToCart(this.current_phone);
+            if (this.checkBeforeToCart()) {
+              this.addToCart(this.current_phone);
+            } else {
+              this.show_err_reminder = true;
+            }
           }
           if (res.text === 'Next item') {
             this.tryAnother();
@@ -399,50 +452,40 @@ export default {
     },
 
     //初始化用户偏好
-    submitPreference(values) {
-      if (values.brands.length < 1) {
-        this.$toast("Please select at last one brand.");
-      } else {
-        this.loading = true;
-        values['uuid'] = localStorage.getItem('uuid');
-        values['preferT'] = new Date().getTime();
-        instance.post('/api/prefer', values).then((res) => {
-          //console.log(res)
-          if (res.data.status === 1) {
-            this.loading = false;
-            this.show_preference = false;
-            this.current_phone = res.data.phone;
-            //添加操作记录
-            this.latest_dialog.push({
-              "agent": "robot",
-              "action": "Initialize",
-              "timestamp": new Date().getTime()
-            })
-            this.bot("Great! Now I have found some phones for you. You can add the phone of your interest to the shopping cart.").then(() => {
-              this.botPhoneCard(this.current_phone);
-              this.msg_btn_ctrl = false;
-            })
-          } else {
-            this.loading = false;
-            this.$toast("Please read and accept the informed consent first.")
-          }
-        }).catch((err) => {
-          console.log(err.message);
+    submitPreference() {
+      this.user_prefer.uuid = localStorage.getItem('uuid')
+      this.user_prefer.preferT = new Date().getTime();
+      this.user_prefer.explanation_style = this.explanation_style
+      instance.post('/chat/prefer', this.user_prefer).then((res) => {
+        //console.log(res)
+        if (res.data.status === 1) {
           this.loading = false;
-          this.$toast("Network error, please try again.");
-        })
-      }
+          this.show_preference = false;
+          this.current_phone = res.data.phone;
+          //添加操作记录
+          this.latest_dialog.push({
+            "agent": "robot",
+            "action": "Initialize",
+            "timestamp": new Date().getTime()
+          })
+          this.bot("Great! Now I have found some phones for you. You can add the phone of your interest to the shopping cart.").then(() => {
+            this.botPhoneCard(this.current_phone);
+            this.msg_btn_ctrl = false;
+          })
+        } else {
+          this.loading = false;
+          this.$toast("Please read and accept the informed consent first.")
+        }
+      }).catch((err) => {
+        console.log(err.message);
+        this.loading = false;
+        this.$toast("Network error, please try again.");
+      })
     },
 
     //发送用户消息
     sendMessage: function () {
-      this.last_action = 'sendMessage';
       botui.action.hide();
-      if (this.in_crit) {
-        this.in_crit = false;
-        this.crit_text_point = 0;
-        this.crit_phone_point = [0, 0];
-      }
       //先禁用按钮
       if (this.message.length >= 2) {
         //可以发送
@@ -450,34 +493,44 @@ export default {
         botui.message.human({
           content: this.message,
         }).then(() => {
-          this.latest_dialog.push({
-            "agent": "you",
-            "text": this.message,
-            "modality": "typing",
-            "action": "User_Critique",
-            "critique": [],
-            "critiqued_item": this.current_phone.id,
-            "timestamp": new Date().getTime()
-          })
-          instance.post('/api/userMessage', {
-            msgT: new Date().getTime(),
-            message: this.message,
-            logger: this.latest_dialog,
-            uuid: localStorage.getItem('uuid'),
-          }).then((res) => {
-            console.log(res);
-            this.current_phone = res.data.phone;
-            this.latest_dialog = [];
-            let msg = this.bot_msg[this.randomNum(0, 2)]
-            this.bot(msg).then(() => {
-              this.botPhoneCard(this.current_phone);
-            });
+          //这里是问名字
+          if (this.last_action === 'ask_username') {
+            this.username = this.message;
             this.msg_btn_ctrl = false;
             this.message = null;
-          }).catch(() => {
-            this.msg_btn_ctrl = false;
-            this.$toast('Please try again.');
-          })
+            this.ask_prefer()
+          } else {
+            this.last_action = 'sendMessage';
+            this.latest_dialog.push({
+              "agent": "you",
+              "text": this.message,
+              "modality": "typing",
+              "action": "User_Critique",
+              "critique": [],
+              "critiqued_item": this.current_phone.id,
+              "timestamp": new Date().getTime()
+            })
+            instance.post('/chat/userMessage', {
+              msgT: new Date().getTime(),
+              message: this.message,
+              explanation_style: this.explanation_style,
+              logger: this.latest_dialog,
+              uuid: localStorage.getItem('uuid'),
+            }).then((res) => {
+              console.log(res);
+              this.current_phone = res.data.phone;
+              this.latest_dialog = [];
+              //let msg = this.bot_msg[this.randomNum(0, 2)]
+              this.bot(res.data.msg).then(() => {
+                this.botPhoneCard(this.current_phone);
+              });
+              this.msg_btn_ctrl = false;
+              this.message = null;
+            }).catch(() => {
+              this.msg_btn_ctrl = false;
+              this.$toast('Please try again.');
+            })
+          }
         })
       } else {
         this.msg_btn_ctrl = false;
@@ -486,8 +539,15 @@ export default {
 
     },
 
+    //加入购物车前的检查
+    checkBeforeToCart: function () {
+      if (this.current_phone.battery <= 3000) return false
+      if (this.current_phone.price > 400) return false
+      return this.current_phone.displaysize > 5;
+    },
     //加入购物车
     addToCart() {
+      this.show_err_reminder = false;
       this.last_action = "addToCart";
       this.bot("Please rate your liked phone.").then(() => {
         this.show_rate = true
@@ -509,88 +569,18 @@ export default {
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
         } else {
-          if (this.in_crit) {
-            if (this.crit_text_point < 3 && this.crit_phone_point[1] === 3) {
-              this.crit_phone_point[1] = 0
-              this.crit_phone_point[0] += 1
-              this.crit_text_point += 1
-            }
-            if (this.crit_text_point < 3 && this.crit_phone_point[1] === 0) {
-              //需要bot 说话
-              botui.message.bot({
-                type: 'html',
-                loading: true,
-                delay: 1600,
-                content: this.critical_data['crit'][this.crit_text_point]
-              }).then(() => {
-                botui.action.button({
-                  addMessage: false,
-                  human: false,
-                  action: [{
-                    text: 'Yes',
-                    value: 'Yes'
-                  },
-                    {
-                      text: 'No',
-                      value: 'No'
-                    }]
-                }).then((res) => {
-                  //判断点了什么按钮
-                  if (res.text === 'Yes') {
-                    //查询手机是什么
-                    instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-                      this.current_phone = res.data
-                      //展示手机卡片
-                      this.PhoneCard_2btn(this.current_phone)
-                      this.crit_phone_point[1] += 1
-                    })
-                  }
-                  if (res.text === 'No') {
-                    this.crit_phone_point[0] += 1
-                    this.crit_phone_point[1] = 0
-                    this.crit_text_point += 1
-                    this.tryAnother()
-                  }
-                })
-              })
-            } else if (this.crit_phone_point[1] < 3 && this.crit_text_point < 3) {
-              instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-                this.current_phone = res.data;
-                this.crit_phone_point[1] += 1;
-                this.PhoneCard_2btn(this.current_phone);
-              })
-            } else {
-              //全都展示完了，给一个新的推荐
-              this.in_crit = false;
-              this.crit_text_point = 0;
-              this.crit_phone_point = [0, 0];
-              instance.post("/api/updatemodel", {
-                uuid: this.uuid,
-                logger: this.latest_dialog,
-                lTime: new Date().getTime(),
-              }).then((res) => {
-                this.latest_dialog = [];
-                this.current_phone = res.data.phone;
-                this.botPhoneCard(this.current_phone);
-              })
-            }
-          } else {
-            this.in_crit = false;
-            this.crit_text_point = 0;
-            this.crit_phone_point = [0, 0];
-            instance.post("/api/updatemodel", {
-              uuid: this.uuid,
-              logger: this.latest_dialog,
-              lTime: new Date().getTime(),
-            }).then((res) => {
-              this.latest_dialog = [];
-              this.current_phone = res.data.phone;
-              let msg = this.bot_msg[this.randomNum(0, 2)]
-              this.bot(msg).then(() => {
-                this.botPhoneCard(this.current_phone);
-              });
-            })
-          }
+          instance.post("/chat/updatemodel", {
+            uuid: this.uuid,
+            logger: this.latest_dialog,
+            explanation_style: this.explanation_style,
+            lTime: new Date().getTime(),
+          }).then((res) => {
+            this.latest_dialog = [];
+            this.current_phone = res.data.phone;
+            this.bot(res.data.msg).then(() => {
+              this.botPhoneCard(this.current_phone);
+            });
+          })
         }
       } else {
         this.$toast("Please rate this phone first.")
@@ -599,193 +589,27 @@ export default {
 
     //再来一个推荐
     tryAnother() {
-      console.log(this.crit_phone_point);
-      if (this.in_crit) {
-        if (this.crit_text_point < 3 && this.crit_phone_point[1] === 3) {
-          this.crit_phone_point[1] = 0
-          this.crit_phone_point[0] += 1
-          this.crit_text_point += 1
-        }
-        if (this.crit_text_point < 3 && this.crit_phone_point[1] === 0) {
-          //需要bot 说话
-          botui.message.bot({
-            type: 'html',
-            loading: true,
-            delay: 1600,
-            content: this.critical_data['crit'][this.crit_text_point]
-          }).then(() => {
-            botui.action.button({
-              addMessage: false,
-              human: false,
-              action: [{
-                text: 'Yes',
-                value: 'Yes'
-              },
-                {
-                  text: 'No',
-                  value: 'No'
-                }]
-            }).then((res) => {
-              //判断点了什么按钮
-              if (res.text === 'Yes') {
-                //查询手机是什么
-                instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-                  this.current_phone = res.data
-                  //展示手机卡片
-                  this.PhoneCard_2btn(this.current_phone)
-                  this.crit_phone_point[1] += 1
-                })
-              }
-              if (res.text === 'No') {
-                this.crit_phone_point[0] += 1
-                this.crit_phone_point[1] = 0
-                this.crit_text_point += 1
-                this.tryAnother()
-              }
-            })
-          })
-        } else if (this.crit_phone_point[1] < 3 && this.crit_text_point < 3) {
-          instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-            this.current_phone = res.data;
-            this.crit_phone_point[1] += 1;
-            this.PhoneCard_2btn(this.current_phone);
-          })
-        } else {
-          //全都展示完了，给一个新的推荐
-          this.in_crit = false;
-          this.crit_text_point = 0;
-          this.crit_phone_point = [0, 0];
-          instance.post("/api/updatemodel", {
-            uuid: this.uuid,
-            logger: this.latest_dialog,
-            lTime: new Date().getTime(),
-          }).then((res) => {
-            this.latest_dialog = [];
-            this.current_phone = res.data.phone;
-            this.botPhoneCard(this.current_phone);
-          })
-        }
-      } else {
-        if (this.try_another_count === 0) {
-          this.try_another_count += 1;
-        }
-        if (this.last_action === 'tryAnother') {
-          this.try_another_count += 1
-        }
-        if (this.try_another_count === 3) {
-          this.last_action = "letBotSuggect";
-          this.try_another_count = 0;
-          this.letBotSuggest();
-        } else {
-          this.last_action = "tryAnother";
-          botui.message.human({
-            content: "Show another phone",
-          }).then(() => {
-            this.latest_dialog.push({
-              "agent": "you",
-              "action": "Next",
-              "timestamp": new Date().getTime()
-            })
-            instance.post("/api/updatemodel", {
-              uuid: this.uuid,
-              logger: this.latest_dialog,
-              lTime: new Date().getTime(),
-            }).then((res) => {
-              this.latest_dialog = [];
-              this.current_phone = res.data.phone;
-              let msg = this.bot_msg[this.randomNum(0, 2)]
-              this.bot(msg).then(() => {
-                this.botPhoneCard(this.current_phone);
-              });
-            })
-          })
-        }
-      }
-    },
-
-// let bot suggest
-    letBotSuggest: function () {
-      let that = this;
-      this.in_crit = true;
-      botui.message.bot({
-        type: 'html',
-        loading: true,
-      }).then((index) => {
-        //直接发送请求获取推荐的列表
-        instance.post("/api/syscri", {
+      this.show_err_reminder = false;
+      this.last_action = "tryAnother";
+      botui.message.human({
+        content: "Show another phone",
+      }).then(() => {
+        this.latest_dialog.push({
+          "agent": "you",
+          "action": "Next",
+          "timestamp": new Date().getTime()
+        })
+        instance.post("/chat/updatemodel", {
           uuid: this.uuid,
           logger: this.latest_dialog,
+          explanation_style: this.explanation_style,
           lTime: new Date().getTime(),
         }).then((res) => {
-          that.critical_data = res.data['phones']
-        }).then(() => (
-            //得到推荐列表后，开始展示
-            botui.message.update(index, {
-              loading: false,
-              content: that.critical_data['crit'][this.crit_text_point]
-            }).then(() => {
-              //先问yes no
-              botui.action.button({
-                addMessage: false,
-                human: false,
-                action: [{
-                  text: 'Yes',
-                  value: 'Yes'
-                },
-                  {
-                    text: 'No',
-                    value: 'No'
-                  }]
-              }).then((res) => {
-                //判断点了什么按钮
-                if (res.text === 'Yes') {
-                  //查询手机是什么
-                  instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-                    this.current_phone = res.data
-                    //展示手机卡片
-                    this.PhoneCard_2btn(this.current_phone)
-                    this.crit_phone_point[1] += 1
-                  })
-                }
-                if (res.text === 'No') {
-                  this.crit_phone_point[0] += 1
-                  this.crit_phone_point[1] = 0
-                  this.crit_text_point += 1
-                  this.tryAnother()
-                }
-              })
-            })
-        ))
-      })
-    },
-
-//给系统推荐用
-    PhoneCard_2btn: function (phone) {
-      botui.message.bot({
-        type: 'phone',
-        loading: true,
-        delay: 1600,
-        content: phone,
-      }).then(() => {
-        botui.action.button({
-          addMessage: false,
-          human: false,
-          action: [{
-            text: 'Add to cart',
-            value: 'Add to cart'
-          },
-            {
-              text: 'Next item',
-              value: 'Next item'
-            }]
-        }).then((res) => {
-          //判断点了什么按钮
-          if (res.text === 'Add to cart') {
-            this.addToCart(this.current_phone);
-          }
-          if (res.text === 'Next item') {
-            this.tryAnother();
-          }
+          this.latest_dialog = [];
+          this.current_phone = res.data.phone;
+          this.bot(res.data.msg).then(() => {
+            this.botPhoneCard(this.current_phone);
+          });
         })
       })
     },
@@ -797,30 +621,235 @@ export default {
     },
 
 //初始化引导语的入口
-    closeHelp: function () {
+    greeting: function () {
       if (this.help_showed_count === 1) {
         // 初始状态
-        this.bot("Hey, I am Alice, your assistant for buying mobile phones. Could you tell me what kinds of phones you like?").then(() => {
-          botui.action.button({
-            addMessage: true,
-            human: false,
-            action: [{text: "OK", value: "OK"}]
-          }).then((res) => {
-            if (res.text === 'OK') {
-              this.show_preference = true;
-            }
-          })
+        let msg = "Hey! I’m RecBot, an <b>automated chatbot</b> at Phoneshop."
+        if (this.identity_cue === '1') msg = "Hello! I’m Susan, <b> a sales assistant</b> working at Phoneshop."
+        this.bot(msg).then(() => {
+          this.ask_name()
         })
       }
+    },
+    ask_prefer: function () {
+      this.msg_btn_ctrl = true;
+      let username = "Participant.";
+      if (this.identity_cue === '1') {
+        username = this.username + '.';
+      }
+      let msg = username + " I’m happy to help you with your purchase. We have all different types of mobile phones."
+      this.bot(msg).then(() => {
+        return this.bot("To ensure that I make the most suitable recommendations for you, I’d like to ask you some questions.")
+      }).then(() => {
+        return this.bot("What is your maximum budget for buying a phone? ")
+      }).then(() => {
+        botui.action.button({
+          addMessage: false,
+          human: false,
+          action: [
+            {
+              text: '$300',
+              value: '300'
+            }, {
+              text: '$400',
+              value: '400'
+            },
+            {
+              text: '$500',
+              value: '500'
+            },
+          ]
+        }).then(res => {
+          this.user_prefer.budget = res.value;
+          return this.human(res.text)
+        }).then(() => {
+          let msg = "Okay."
+          if (this.identity_cue === '1') msg = "Okay. I know your budget is $" + this.user_prefer.budget + '.'
+          return this.bot(msg)
+        }).then(() => {
+          this.bot("By the way, do you have any specific requirements in the following aspects?").then(() => {
+            botui.action.button({
+              addMessage: true,
+              human: true,
+              action: [
+                {
+                  text: 'Display size',
+                  value: 'display'
+                }, {
+                  text: 'Battery capacity',
+                  value: 'battery'
+                },
+                {
+                  text: 'Brand',
+                  value: 'brand'
+                },
+                {
+                  text: 'Weight',
+                  value: 'weight'
+                },
+                {
+                  text: 'No Preference',
+                  value: 'no'
+                },
+              ]
+            }).then(res => {
+              switch (res.value) {
+                case 'display':
+                  this.ask_size()
+                  break
+                case 'battery':
+                  this.ask_battery();
+                  break;
+                case 'brand':
+                  this.ask_brand();
+                  break;
+                case 'weight':
+                  this.ask_weight();
+                  break
+                case 'no':
+                  this.submitPreference()
+                  break;
+              }
+            })
+          })
+        })
+      })
+    },
+    ask_name: function () {
+      return this.bot("what should I call you?").then(() => {
+        this.msg_btn_ctrl = false
+        this.last_action = 'ask_username'
+      })
+    }
+    ,
+//
+    ask_size: function () {
+      let msg = "Okay."
+      if (this.identity_cue === '1') msg = "Okay. Display size"
+      this.bot(msg).then(() => {
+        this.bot(" Which display size are you looking for?").then(() => {
+          botui.action.button({
+            addMessage: true,
+            human: true,
+            action: [
+              {
+                text: 'Small(3.7-4 inches)',
+                value: 'Small'
+              }, {
+                text: 'Medium',
+                value: 'Medium'
+              },
+              {
+                text: 'Large',
+                value: 'Large'
+              },
+            ]
+          }).then(res => {
+            this.user_prefer.display_size = res.value
+            this.submitPreference()
+          })
+        })
+      })
+    }
+    ,
+    ask_battery: function () {
+      let msg = "Okay."
+      if (this.identity_cue === '1') msg = "Okay. Battery."
+      this.bot(msg).then(() => {
+        this.bot(" Which battery capacity are you looking for?").then(() => {
+          botui.action.button({
+            addMessage: false,
+            human: true,
+            action: [
+              {
+                text: 'Small',
+                value: 'Small'
+              }, {
+                text: 'Medium',
+                value: 'Medium'
+              },
+              {
+                text: 'Large',
+                value: 'Large'
+              },
+            ]
+          }).then(res => {
+            this.user_prefer.battery = res.value
+            this.submitPreference()
+          })
+        })
+      })
+    }
+    ,
+    ask_brand: function () {
+      let msg = "Okay."
+      if (this.identity_cue === '1') msg = "Okay. Brand."
+      this.bot(msg).then(() => {
+        this.bot(" Which brand are you looking for?").then(() => {
+          botui.action.button({
+            addMessage: false,
+            human: true,
+            action: [
+              {
+                text: 'Apple',
+                value: 'Apple'
+              }, {
+                text: 'Samsung',
+                value: 'Samsung'
+              },
+              {
+                text: 'Huawei',
+                value: 'Huawei'
+              },
+              {
+                text: 'Other',
+                value: 'Other'
+              },
+            ]
+          }).then(res => {
+            this.user_prefer.brand = res.value
+            this.submitPreference()
+          })
+        })
+      })
+    },
+    ask_weight: function () {
+      let msg = "Okay."
+      if (this.identity_cue === '1') msg = "Okay. Weight."
+      this.bot(msg).then(() => {
+        this.bot(" Which weight range are you looking for?").then(() => {
+          botui.action.button({
+            addMessage: false,
+            human: true,
+            action: [
+              {
+                text: 'Light',
+                value: 'Light'
+              }, {
+                text: 'Medium',
+                value: 'Medium'
+              },
+              {
+                text: 'Heavy',
+                value: 'Heavy'
+              },
+            ]
+          }).then(res => {
+            this.user_prefer.weight = res.value
+            this.submitPreference()
+          })
+        })
+      })
     },
 
 //购物车部分
     clickCart: function () {
       this.show_cart = true
-    },
+    }
+    ,
 //跳到下一页
     nextPage: function () {
-      instance.post('/api/page2', {
+      instance.post('/chat/page2', {
         'page2T': new Date().getTime(),
         'phonelist': this.phone_in_cart,
         'uuid': localStorage.getItem('uuid')
@@ -830,7 +859,8 @@ export default {
           console.log(err.message)
         });
       })
-    },
+    }
+    ,
 
     randomNum: function (minNum, maxNum) {
       switch (arguments.length) {
@@ -842,7 +872,8 @@ export default {
           return 0;
       }
     }
-  },
+  }
+  ,
   computed: {
     // 计算属性的 getter
     cart_item_count: function () {
@@ -852,39 +883,5 @@ export default {
 }
 </script>
 <style scoped>
-.avatar_back {
-  position: absolute;
-  top: 3px;
-  left: 50%;
-  margin-left: -26px;
-  z-index: 499;
-  width: 50px;
-  height: 50px;
-  border: 1px solid #c8c9cc;
-  border-radius: 46px;
-  background-color: #dcdee0;
-}
-
-.avatar {
-  position: absolute;
-  z-index: 500;
-  width: 43px;
-  height: 43px;
-  background-repeat: no-repeat;
-  background-image: url('../assets/imgs/avatar.png');
-}
-
-.avatar_ani {
-  animation: avatar 1s steps(16) infinite;
-}
-
-@keyframes avatar {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -688px, 0;
-  }
-}
 
 </style>
