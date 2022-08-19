@@ -409,7 +409,7 @@ export default {
       };
       if (this.identity_cue === '1') {
         config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
-        config.delay = msg.length * 80
+        config.delay = msg.length * 40
       }
       return botui.message.bot(config)
     },
