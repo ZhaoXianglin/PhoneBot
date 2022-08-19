@@ -159,7 +159,7 @@ export default {
       this.loading = true;
       values['uuid'] = localStorage.getItem('uuid');
       values['que1T'] = new Date().getTime();
-      instance.post('/api/que1', values).then((res) => {
+      instance.post('/que/que1', values).then((res) => {
         //console.log(res)
         if (res.data.status === 1) {
           localStorage.setItem('step', '3');
