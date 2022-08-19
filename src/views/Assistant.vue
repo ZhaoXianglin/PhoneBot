@@ -258,7 +258,7 @@
         <ul>
           <li>1. She often uses her mobile phone to watch videos.</li>
           <li>2. She hates frequently charging her mobile phone.</li>
-          <li>3. Her budget for purchasing a new mobile phone is 400 US dollars.</li>
+          <li>3. Her budget for purchasing a new mobile phone is 300 US dollars.</li>
         </ul>
         <h4 style="color: #B24040">I just want to add the phone to my cart!</h4>
         <p style="text-align: center">
@@ -305,14 +305,14 @@
             </template>
           </van-card>
         </div>
-        <p v-if="identity_cue==='0'" style="padding:0 16px;color: #B24040">I am glad you found these good phones for
+        <p v-if="identity_cue==='0'" style="padding:0 16px;color: black">I am glad you found these good phones for
           Lily. Now, you
-          will be asked to complete a questionnaire regarding your experience of chatting with RecBot (an automated
-          sales chatbot) </p>
-        <p v-if="identity_cue==='1'" style="padding:0 16px;color: #B24040;">I am glad you found these good phones for
+          will be asked to complete a questionnaire regarding your experience of chatting with <b> RecBot (an automated
+            sales chatbot)</b></p>
+        <p v-if="identity_cue==='1'" style="padding:0 16px;color: black;">I am glad you found these good phones for
           Lily. Now, you
-          will be asked to complete a questionnaire regarding your experience of chatting with Susan (a sales
-          assistant).</p>
+          will be asked to complete a questionnaire regarding your experience of chatting with <b>Susan (a sales
+            assistant).</b></p>
         <van-button type="primary" block @click="nextPage">Next</van-button>
       </div>
     </van-popup>
@@ -398,11 +398,12 @@ export default {
       this.show_phone_page = true;
     },
     //默认对话
-    bot: function (msg) {
+    bot: function (msg, style = "") {
       let config = {
         type: 'html',
+        cssClass: style,
         loading: true,
-        delay: 600,
+        delay: 10,
         photo: "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar1.png",
         content: msg
       };
@@ -421,12 +422,17 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
-      botui.message.bot({
+      let config = {
         type: 'phone',
         loading: true,
-        delay: 1600,
+        delay: 100,
         content: phone,
-      }).then(() => {
+      }
+      if (this.identity_cue === '1') {
+        config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
+        config.delay = 1600
+      }
+      botui.message.bot(config).then(() => {
         console.log(botui)
         botui.action.button({
           addMessage: false,
@@ -468,7 +474,7 @@ export default {
             "action": "Initialize",
             "timestamp": new Date().getTime()
           })
-          this.bot("Great! Now I have found some phones for you. You can add the phone of your interest to the shopping cart.").then(() => {
+          this.bot(res.data.msg, 'explanation').then(() => {
             this.botPhoneCard(this.current_phone);
             this.msg_btn_ctrl = false;
           })
@@ -499,6 +505,7 @@ export default {
             this.msg_btn_ctrl = false;
             this.message = null;
             this.ask_prefer()
+            this
           } else {
             this.last_action = 'sendMessage';
             this.latest_dialog.push({
@@ -521,7 +528,7 @@ export default {
               this.current_phone = res.data.phone;
               this.latest_dialog = [];
               //let msg = this.bot_msg[this.randomNum(0, 2)]
-              this.bot(res.data.msg).then(() => {
+              this.bot(res.data.msg, 'explanation').then(() => {
                 this.botPhoneCard(this.current_phone);
               });
               this.msg_btn_ctrl = false;
@@ -541,9 +548,9 @@ export default {
 
     //加入购物车前的检查
     checkBeforeToCart: function () {
-      if (this.current_phone.battery <= 3000) return false
-      if (this.current_phone.price > 400) return false
-      return this.current_phone.displaysize > 5;
+      if (this.current_phone.battery <= 4050) return false
+      if (this.current_phone.price > 300) return false
+      return this.current_phone.displaysize > 6.4;
     },
     //加入购物车
     addToCart() {
@@ -577,7 +584,7 @@ export default {
           }).then((res) => {
             this.latest_dialog = [];
             this.current_phone = res.data.phone;
-            this.bot(res.data.msg).then(() => {
+            this.bot(res.data.msg, 'explanation').then(() => {
               this.botPhoneCard(this.current_phone);
             });
           })
@@ -607,7 +614,7 @@ export default {
         }).then((res) => {
           this.latest_dialog = [];
           this.current_phone = res.data.phone;
-          this.bot(res.data.msg).then(() => {
+          this.bot(res.data.msg, 'explanation').then(() => {
             this.botPhoneCard(this.current_phone);
           });
         })
@@ -632,6 +639,7 @@ export default {
       }
     },
     ask_prefer: function () {
+      this.last_action = 'ask_prefer'
       this.msg_btn_ctrl = true;
       let username = "Participant.";
       if (this.identity_cue === '1') {
@@ -648,15 +656,15 @@ export default {
           human: false,
           action: [
             {
+              text: '$200',
+              value: '200'
+            }, {
               text: '$300',
               value: '300'
-            }, {
-              text: '$400',
-              value: '400'
             },
             {
-              text: '$500',
-              value: '500'
+              text: '$400',
+              value: '400'
             },
           ]
         }).then(res => {
@@ -725,7 +733,8 @@ export default {
 //
     ask_size: function () {
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. Display size"
+      this.last_action = 'ask_size'
+      if (this.identity_cue === '1') msg = "Okay. I see the display size of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which display size are you looking for?").then(() => {
           botui.action.button({
@@ -733,7 +742,7 @@ export default {
             human: true,
             action: [
               {
-                text: 'Small(3.7-4 inches)',
+                text: 'Small',
                 value: 'Small'
               }, {
                 text: 'Medium',
@@ -753,8 +762,9 @@ export default {
     }
     ,
     ask_battery: function () {
+      this.last_action = 'ask_battery'
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. Battery."
+      if (this.identity_cue === '1') msg = "Okay. I see the battery of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which battery capacity are you looking for?").then(() => {
           botui.action.button({
@@ -782,8 +792,9 @@ export default {
     }
     ,
     ask_brand: function () {
+      this.last_action = 'ask_brand'
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. Brand."
+      if (this.identity_cue === '1') msg = "Okay. I see the brand of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which brand are you looking for?").then(() => {
           botui.action.button({
@@ -814,8 +825,9 @@ export default {
       })
     },
     ask_weight: function () {
+      this.last_action = this.ask_weight
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. Weight."
+      if (this.identity_cue === '1') msg = "Okay. I see the weight of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which weight range are you looking for?").then(() => {
           botui.action.button({
@@ -882,6 +894,9 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 
+.explanation .botui-message-content.html {
+  background-color: #FFF0C5 !important;
+}
 </style>
