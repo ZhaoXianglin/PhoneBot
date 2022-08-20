@@ -599,9 +599,13 @@ export default {
           }).then((res) => {
             this.latest_dialog = [];
             this.current_phone = res.data.phone;
-            this.bot(res.data.msg, 'explanation').then(() => {
-              this.botPhoneCard(this.current_phone);
-            });
+            let seed = Math.round(Math.random());
+            let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
+            this.bot(temp_msg[seed]).then(() => {
+              this.bot(res.data.msg, 'explanation').then(() => {
+                this.botPhoneCard(this.current_phone);
+              });
+            })
           })
         }
       } else {
