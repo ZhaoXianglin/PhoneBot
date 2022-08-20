@@ -58,129 +58,129 @@
 
       <h4>Duration:</h4>
       <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
-      <h4>Task steps:</h4>
-      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the
-        task steps below. (using the arrow buttons to view the previous or next step)</p>
-      <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange"
-                 :touchable="false">
-        <van-swipe-item>
-          <van-image
-              style="margin: 10px"
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step1.png')"
-          />
-          <p><b>Step 1:</b> Fill out your personal background.</p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step2.png')"
-          />
+<!--      <h4>Task steps:</h4>-->
+<!--      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the-->
+<!--        task steps below. (using the arrow buttons to view the previous or next step)</p>-->
+<!--      <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange"-->
+<!--                 :touchable="false">-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              style="margin: 10px"-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step1.png')"-->
+<!--          />-->
+<!--          <p><b>Step 1:</b> Fill out your personal background.</p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step2.png')"-->
+<!--          />-->
 
-          <p><b>Step 2:</b> Read some tips for modifying recommendations through conversation.
-          </p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              v-if="condition < 3"
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step3_base.png')"
-          />
-          <van-image
-              v-else
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step3.png')"
-          />
+<!--          <p><b>Step 2:</b> Read some tips for modifying recommendations through conversation.-->
+<!--          </p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              v-if="condition < 3"-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step3_base.png')"-->
+<!--          />-->
+<!--          <van-image-->
+<!--              v-else-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step3.png')"-->
+<!--          />-->
 
-          <p><b>Step 3:</b> Click OK to specify your preference for mobile phones. Please select at most three brands
-            you like
-          </p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              v-if="condition<3"
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step4_base.png')"
-          />
-          <van-image
-              v-else
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step4.png')"
-          />
-          <p><b>Step 4:</b> Specify your preference regarding the brand, budget, and camera resolution.</p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step5.png')"
-          />
-          <p><b>Step 5:</b> Chat with the web app when you want to modify recommended phones.
-          </p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step6.png')"
-          />
-          <p><b>Step 6:</b> View the detail of a recommended phone if you wish. Accept or decline a recommended phone by
-            clicking the “Add to cart” or “Try another” button.
-          </p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              v-if="condition<3"
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step7_base.png')"
-          />
-          <van-image
-              v-else
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step7.png')"
-          />
-          <p><b>Step 7:</b> Rate the phone you add to the shopping cart.</p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step8.png')"
-          />
-          <p><b>Step 8:</b> Fill out a post-study questionnaire after finishing the task.
-          </p>
-        </van-swipe-item>
-        <van-swipe-item>
-          <van-image
-              width="90%"
-              fit="contain"
-              :src="require('../assets/imgs/step9.png')"
-          />
-          <p><b>Step 9:</b> Copy the code to the Mechanical Turk to verify the finished task and get a reward.</p>
-        </van-swipe-item>
-        <template #indicator>
-          <div class="custom-indicator"></div>
-        </template>
-      </van-swipe>
-      <van-row justify="space-around" type="flex">
-        <van-col span="6">
-          <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>
-        </van-col>
-        <van-col span="6" style="text-align: center">
-          <span style="font-weight: bold;line-height: 36px;">Step {{ current_img + 1 }} / 9</span>
-        </van-col>
-        <van-col span="6">
-          <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>
-        </van-col>
-      </van-row>
+<!--          <p><b>Step 3:</b> Click OK to specify your preference for mobile phones. Please select at most three brands-->
+<!--            you like-->
+<!--          </p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              v-if="condition<3"-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step4_base.png')"-->
+<!--          />-->
+<!--          <van-image-->
+<!--              v-else-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step4.png')"-->
+<!--          />-->
+<!--          <p><b>Step 4:</b> Specify your preference regarding the brand, budget, and camera resolution.</p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step5.png')"-->
+<!--          />-->
+<!--          <p><b>Step 5:</b> Chat with the web app when you want to modify recommended phones.-->
+<!--          </p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step6.png')"-->
+<!--          />-->
+<!--          <p><b>Step 6:</b> View the detail of a recommended phone if you wish. Accept or decline a recommended phone by-->
+<!--            clicking the “Add to cart” or “Try another” button.-->
+<!--          </p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              v-if="condition<3"-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step7_base.png')"-->
+<!--          />-->
+<!--          <van-image-->
+<!--              v-else-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step7.png')"-->
+<!--          />-->
+<!--          <p><b>Step 7:</b> Rate the phone you add to the shopping cart.</p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step8.png')"-->
+<!--          />-->
+<!--          <p><b>Step 8:</b> Fill out a post-study questionnaire after finishing the task.-->
+<!--          </p>-->
+<!--        </van-swipe-item>-->
+<!--        <van-swipe-item>-->
+<!--          <van-image-->
+<!--              width="90%"-->
+<!--              fit="contain"-->
+<!--              :src="require('../assets/imgs/step9.png')"-->
+<!--          />-->
+<!--          <p><b>Step 9:</b> Copy the code to the Mechanical Turk to verify the finished task and get a reward.</p>-->
+<!--        </van-swipe-item>-->
+<!--        <template #indicator>-->
+<!--          <div class="custom-indicator"></div>-->
+<!--        </template>-->
+<!--      </van-swipe>-->
+<!--      <van-row justify="space-around" type="flex">-->
+<!--        <van-col span="6">-->
+<!--          <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>-->
+<!--        </van-col>-->
+<!--        <van-col span="6" style="text-align: center">-->
+<!--          <span style="font-weight: bold;line-height: 36px;">Step {{ current_img + 1 }} / 9</span>-->
+<!--        </van-col>-->
+<!--        <van-col span="6">-->
+<!--          <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>-->
+<!--        </van-col>-->
+<!--      </van-row>-->
       <h4>Notes:</h4>
       <ul>
         <li>You are highly recommended to test this web app on a <b>mobile phone</b>.</li>
@@ -207,7 +207,7 @@ export default {
   data: function () {
     return {
       current_img: 0,
-      startStatus: true,
+      startStatus: false,
       loading: false,
       loading1: false,
       uuid: localStorage.getItem('uuid'),

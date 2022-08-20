@@ -903,7 +903,7 @@ export default {
 }
 
 .botui-message-content {
-  background-color: #fff;
+  background-color: #FFF;
   color: #000;
   width: auto;
   max-width: 77%;
