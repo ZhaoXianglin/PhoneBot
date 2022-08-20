@@ -347,6 +347,8 @@ export default {
       identity_cue: "",
       explanation_style: "",
       //控制功能
+      //是否展示过输入提示。
+      can_show_enter_tips: true,
       show_err_reminder: false,
       loading: false,
       msg_btn_ctrl: true,
@@ -435,7 +437,6 @@ export default {
         content: msg
       })
     },
-    //提交手机偏好
 
     //商品卡片
     botPhoneCard: function (phone) {
@@ -476,6 +477,36 @@ export default {
       })
     },
 
+    // 提示可以输入
+    enter_tips: function () {
+      this.last_action = 'enter_tips'
+      this.bot("If you are not satisfied with current recommendations, you can modify your requirement by typing in the input field.").then(() => {
+        botui.action.button({
+          addMessage: false,
+          human: false,
+          action: [
+            {
+              text: 'Next recommendation',
+              value: 'next'
+            }, {
+              text: 'Modify my requirement',
+              value: 'modify'
+            }
+          ]
+        }).then((res) => {
+          if (res.value === 'next') {
+            //再也不显示这个提示了
+            this.can_show_enter_tips = false;
+            this.tryAnother()
+          } else {
+            this.can_show_enter_tips = false;
+            this.bot("For example, \"I need a (small / medium / large) display\", \"a phone with (low / medium / high) battery capacity\".").then(() => {
+              this.bot("I am waiting for you to type your requirements :)")
+            })
+          }
+        })
+      })
+    },
     //初始化用户偏好
     submitPreference() {
       this.user_prefer.username = this.username;
@@ -570,7 +601,7 @@ export default {
     checkBeforeToCart: function () {
       if (this.current_phone.battery <= 4050) return false
       if (this.current_phone.price > 300) return false
-      return this.current_phone.displaysize > 6.4;
+      return this.current_phone.displaysize >= 6.4;
     },
     //加入购物车
     addToCart() {
@@ -622,27 +653,31 @@ export default {
     //再来一个推荐
     tryAnother() {
       this.show_err_reminder = false;
-      this.last_action = "tryAnother";
-      this.human("Show another phone",
-      ).then(() => {
-        this.latest_dialog.push({
-          "agent": "you",
-          "action": "Next",
-          "timestamp": new Date().getTime()
+      if (this.can_show_enter_tips && this.last_action === 'tryAnother') {
+        this.enter_tips()
+      } else {
+        this.last_action = "tryAnother";
+        this.human("Show another phone",
+        ).then(() => {
+          this.latest_dialog.push({
+            "agent": "you",
+            "action": "Next",
+            "timestamp": new Date().getTime()
+          })
+          instance.post("/chat/updatemodel", {
+            uuid: this.uuid,
+            logger: this.latest_dialog,
+            explanation_style: this.explanation_style,
+            lTime: new Date().getTime(),
+          }).then((res) => {
+            this.latest_dialog = [];
+            this.current_phone = res.data.phone;
+            this.bot(res.data.msg, 'explanation').then(() => {
+              this.botPhoneCard(this.current_phone);
+            });
+          })
         })
-        instance.post("/chat/updatemodel", {
-          uuid: this.uuid,
-          logger: this.latest_dialog,
-          explanation_style: this.explanation_style,
-          lTime: new Date().getTime(),
-        }).then((res) => {
-          this.latest_dialog = [];
-          this.current_phone = res.data.phone;
-          this.bot(res.data.msg, 'explanation').then(() => {
-            this.botPhoneCard(this.current_phone);
-          });
-        })
-      })
+      }
     },
 
 //左上角tips部分
@@ -754,7 +789,7 @@ export default {
         this.last_action = 'ask_username'
       })
     },
-//
+
     ask_size: function () {
       let msg = "Okay."
       this.last_action = 'ask_size'
@@ -899,8 +934,7 @@ export default {
         });
       })
     },
-  }
-  ,
+  },
   computed: {
     // 计算属性的 getter
     cart_item_count: function () {
