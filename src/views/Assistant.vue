@@ -367,11 +367,6 @@ export default {
 
       //current action
 
-      //critical的标识
-      in_crit: false,
-      crit_text_point: 0,
-      crit_phone_point: [0, 0],
-
       //数据部分
       uuid: localStorage.getItem("uuid"),
       //uuid: 'e34cddc4a7ae47bb9f7badf9e44cf41e',
@@ -387,6 +382,8 @@ export default {
       phone_in_cart: [],
       current_phone: {},
       latest_dialog: [],
+      //log
+      log: [],
       //最后一次的动作
       last_action: "",
       //用户的名字
@@ -405,6 +402,13 @@ export default {
       console.log(this.clicked_trans_url)
       this.show_phone_page = true;
     },
+    //添加日志打点
+    addLog: function (type, actionName, content) {
+      let logtime = new Date().getTime();
+      let log = {'type': type, 'action': actionName, 'content': content, 'logtime': logtime}
+      this.log.push(log)
+    },
+
     //默认对话
     bot: function (msg, style = "") {
       let config = {
@@ -419,9 +423,11 @@ export default {
         config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
         config.delay = msg.length * 40
       }
+      this.addLog('bot', this.last_action, msg)
       return botui.message.bot(config)
     },
     human: function (msg) {
+      this.addLog('human', this.last_action, msg)
       return botui.message.human({
         content: msg
       })
@@ -440,6 +446,7 @@ export default {
         config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
         config.delay = 1600
       }
+      this.addLog('bot', 'phonecard', phone.id + '|' + phone.modelname)
       botui.message.bot(config).then(() => {
         console.log(botui)
         botui.action.button({
@@ -452,6 +459,7 @@ export default {
             if (this.checkBeforeToCart()) {
               this.addToCart(this.current_phone);
             } else {
+              this.current_phone.warning = true;
               this.show_err_reminder = true;
             }
           }
@@ -505,16 +513,13 @@ export default {
       if (this.message.length >= 2) {
         //可以发送
         this.msg_btn_ctrl = true;
-        botui.message.human({
-          content: this.message,
-        }).then(() => {
+        this.human(this.message).then(() => {
           //这里是问名字
           if (this.last_action === 'ask_username') {
             this.username = this.message;
             this.msg_btn_ctrl = false;
             this.message = null;
             this.ask_prefer()
-            this
           } else {
             this.last_action = 'sendMessage';
             this.latest_dialog.push({
@@ -573,6 +578,7 @@ export default {
         "action": "Accept_Item",
         "timestamp": new Date().getTime()
       })
+      this.addLog('human', this.last_action, this.current_phone.id + '|' + this.current_phone.modelname)
     },
 
     //手机评分
@@ -607,9 +613,8 @@ export default {
     tryAnother() {
       this.show_err_reminder = false;
       this.last_action = "tryAnother";
-      botui.message.human({
-        content: "Show another phone",
-      }).then(() => {
+      this.human("Show another phone",
+      ).then(() => {
         this.latest_dialog.push({
           "agent": "you",
           "action": "Next",
@@ -710,6 +715,7 @@ export default {
                 },
               ]
             }).then(res => {
+              this.addLog('human', this.last_action, res.text)
               switch (res.value) {
                 case 'display':
                   this.ask_size()
@@ -763,6 +769,7 @@ export default {
               },
             ]
           }).then(res => {
+            this.addLog('human', this.last_action, res.text)
             this.user_prefer.display_size = res.value
             this.submitPreference()
           })
@@ -793,6 +800,7 @@ export default {
               },
             ]
           }).then(res => {
+            this.addLog('human', this.last_action, res.text)
             this.user_prefer.battery = res.value
             this.submitPreference()
           })
@@ -827,6 +835,7 @@ export default {
               },
             ]
           }).then(res => {
+            this.addLog('human', this.last_action, res.text)
             this.user_prefer.brand = res.value
             this.submitPreference()
           })
@@ -856,6 +865,7 @@ export default {
               },
             ]
           }).then(res => {
+            this.addLog('human', this.last_action, res.text)
             this.user_prefer.weight = res.value
             this.submitPreference()
           })
@@ -872,7 +882,8 @@ export default {
     nextPage: function () {
       instance.post('/chat/page2', {
         'page2T': new Date().getTime(),
-        'phonelist': this.phone_in_cart,
+        'cart': JSON.stringify(this.phone_in_cart),
+        'log': JSON.stringify(this.log),
         'uuid': localStorage.getItem('uuid')
       }).then((res) => {
         console.log(res)
