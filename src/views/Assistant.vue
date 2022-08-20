@@ -262,16 +262,19 @@
     >
       <van-nav-bar title='A kind reminder'/>
       <div style="padding: 12px">
+        <h4 style="color: #B24040">It seems this phone cannot meet Lily’s requirements.</h4>
+
         <p>Please keep Lily’s preferences in mind when you pick mobile phones for her.</p>
         <ul>
           <li>1. She often uses her mobile phone to watch videos.</li>
           <li>2. She hates frequently charging her mobile phone.</li>
           <li>3. Her budget for purchasing a new mobile phone is 300 US dollars.</li>
         </ul>
-        <h4 style="color: #B24040">It seems this phone cannot meet Lily’s requirements.</h4>
         <p style="text-align: center">
-          <van-button type="warning" @click="addToCart"> Still add to cart</van-button>&nbsp;
           <van-button type="info" @click="tryAnother"> Check other phones</van-button>
+          <br>
+          <br>
+          <a style="color: #1989fa" @click="addToCart"> Still add to cart</a>
         </p>
       </div>
 
@@ -541,8 +544,11 @@ export default {
               console.log(res);
               this.current_phone = res.data.phone;
               this.latest_dialog = [];
-              //let msg = this.bot_msg[this.randomNum(0, 2)]
-              this.bot(res.data.msg, 'explanation').then(() => {
+              let msg = res.data.msg;
+              if (this.identity_cue === '1') {
+                msg = "Ok, I see it! " + msg
+              }
+              this.bot(msg, 'explanation').then(() => {
                 this.botPhoneCard(this.current_phone);
               });
               this.msg_btn_ctrl = false;
@@ -747,8 +753,7 @@ export default {
         this.msg_btn_ctrl = false
         this.last_action = 'ask_username'
       })
-    }
-    ,
+    },
 //
     ask_size: function () {
       let msg = "Okay."
@@ -779,8 +784,7 @@ export default {
           })
         })
       })
-    }
-    ,
+    },
     ask_battery: function () {
       this.last_action = 'ask_battery'
       let msg = "Okay."
@@ -788,7 +792,7 @@ export default {
       this.bot(msg).then(() => {
         this.bot(" Which battery capacity are you looking for?").then(() => {
           botui.action.button({
-            addMessage: false,
+            addMessage: true,
             human: true,
             action: [
               {
@@ -810,8 +814,7 @@ export default {
           })
         })
       })
-    }
-    ,
+    },
     ask_brand: function () {
       this.last_action = 'ask_brand'
       let msg = "Okay."
@@ -819,7 +822,7 @@ export default {
       this.bot(msg).then(() => {
         this.bot(" Which brand are you looking for?").then(() => {
           botui.action.button({
-            addMessage: false,
+            addMessage: true,
             human: true,
             action: [
               {
@@ -895,19 +898,7 @@ export default {
           console.log(err.message)
         });
       })
-    }
-    ,
-
-    randomNum: function (minNum, maxNum) {
-      switch (arguments.length) {
-        case 1:
-          return parseInt(Math.random() * minNum + 1, 10);
-        case 2:
-          return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-        default:
-          return 0;
-      }
-    }
+    },
   }
   ,
   computed: {

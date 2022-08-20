@@ -12,24 +12,38 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/scenario_1.png "
       />
       <br/>
-      <ol v-animate-css.once="animationInfinite2" style="margin-top: 10px">
-        <li>1. She often uses her mobile phone to watch videos.</li>
-        <li>2. She hates frequently charging her mobile phone.</li>
-        <li>3. Her budget for purchasing a new mobile phone is <strong>300 US </strong>dollars.</li>
-      </ol>
-      <br>
+
+      <h3 v-animate-css.once="animationInfinite2">1. She often uses her mobile phone to watch videos.</h3>
       <van-image
           v-animate-css.once="animationInfinite3"
           width="100%"
           style="max-width: 960px"
-          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/scenario_2.png "
+          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
-      <p v-animate-css.once="animationInfinite4"
-      >With these preferences in mind, you begin your search for a phone by visiting a website called Phoneshop which
+
+      <h3 v-animate-css.once="animationInfinite4">2. She hates frequently charging her mobile phone.</h3>
+      <van-image
+          v-animate-css.once="animationInfinite5"
+          width="100%"
+          style="max-width: 960px"
+          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
+      />
+      <h3 v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
+        US </strong>dollars.
+      </h3>
+      <van-image
+          v-animate-css.once="animationInfinite7"
+          width="100%"
+          style="max-width: 960px; margin: 0 auto"
+          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
+      />
+      <br>
+      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for a phone by
+        visiting a website called Phoneshop which
         can help you pick three mobile phones for Lily. To determine which phone is the best to buy, you decide to chat
         with an online chat agent who can provide recommendations.</p>
 
-      <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite5">
+      <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
                     native-type="submit" @click="start"
         >Let's Start！
@@ -45,7 +59,7 @@
     >
       <van-nav-bar title='Test'/>
       <div class="phone_preference">
-        <van-form @submit="submitPreference">
+        <van-form>
           <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. Who do you need to pick three mobile phones for?</p>
           <van-radio-group v-model="test1">
             <van-radio name="1">Lily</van-radio>
@@ -117,13 +131,31 @@ export default {
         duration: 1000,
         iteration: 1
       },
+      animationInfinite6: {
+        classes: 'fadeIn',
+        delay: 7000,
+        duration: 1000,
+        iteration: 1
+      },
+      animationInfinite7: {
+        classes: 'fadeIn',
+        delay: 8000,
+        duration: 1000,
+        iteration: 1
+      },
+      animationInfinite8: {
+        classes: 'fadeIn',
+        delay: 9000,
+        duration: 1000,
+        iteration: 1
+      },
+      animationInfinite9: {
+        classes: 'fadeIn',
+        delay: 10000,
+        duration: 1000,
+        iteration: 1
+      },
     }
-  },
-  mounted: function () {
-    const that = this;
-    setTimeout(function () {
-      that.$refs.scrollbtn.scrollIntoView({behavior: "smooth", block: "center"});
-    }, 11500);
   },
   methods: {
     start: function () {
