@@ -130,7 +130,11 @@
             <li>"I need a phone having better display."</li>
             <li>"I want a phone having higher resolution."</li>
           </ul>
-
+          <h4>By Battery:</h4>
+          <ul>
+            <li>"I need a better battery."</li>
+            <li>"I want a phone having large battery."</li>
+          </ul>
           <h4> By storage:</h4>
           <ul>
             <li>"I need a phone with a large storage."</li>
@@ -142,7 +146,11 @@
             <li>"I want to buy a phone having better CPU."</li>
             <li>"I want to buy a phone running applications faster."</li>
           </ul>
-
+          <h4>By Screen:</h4>
+          <ul>
+            <li>"I need a phone with having better display."</li>
+            <li>"I want to buy a phone with a large screen."</li>
+          </ul>
           <h4>By operating system:</h4>
           <ul>
             <li>"I want to buy an Android phone."</li>
@@ -260,10 +268,10 @@
           <li>2. She hates frequently charging her mobile phone.</li>
           <li>3. Her budget for purchasing a new mobile phone is 300 US dollars.</li>
         </ul>
-        <h4 style="color: #B24040">I just want to add the phone to my cart!</h4>
+        <h4 style="color: #B24040">It seems this phone cannot meet Lily’s requirements.</h4>
         <p style="text-align: center">
-          <van-button type="warning" @click="addToCart"> Yes</van-button>&nbsp;
-          <van-button type="info" @click="tryAnother"> No</van-button>
+          <van-button type="warning" @click="addToCart"> Still add to cart</van-button>&nbsp;
+          <van-button type="info" @click="tryAnother"> Check other phones</van-button>
         </p>
       </div>
 
@@ -333,8 +341,8 @@ export default {
   data: function () {
     return {
       //实验条件
-      identity_cue: "0",
-      explanation_style: "1",
+      identity_cue: "",
+      explanation_style: "",
       //控制功能
       show_err_reminder: false,
       loading: false,
@@ -459,7 +467,8 @@ export default {
 
     //初始化用户偏好
     submitPreference() {
-      this.user_prefer.uuid = localStorage.getItem('uuid')
+      this.user_prefer.username = this.username;
+      this.user_prefer.uuid = localStorage.getItem('uuid');
       this.user_prefer.preferT = new Date().getTime();
       this.user_prefer.explanation_style = this.explanation_style
       instance.post('/chat/prefer', this.user_prefer).then((res) => {
@@ -742,14 +751,14 @@ export default {
             human: true,
             action: [
               {
-                text: 'Small',
+                text: 'Small (2.4″ - 6.2″)',
                 value: 'Small'
               }, {
-                text: 'Medium',
+                text: 'Medium (6.2″ - 6.5″)',
                 value: 'Medium'
               },
               {
-                text: 'Large',
+                text: 'Large (6.5″ - 8.0″)',
                 value: 'Large'
               },
             ]
@@ -772,14 +781,14 @@ export default {
             human: true,
             action: [
               {
-                text: 'Small',
+                text: 'Small (1300mAh - 4000mAh)',
                 value: 'Small'
               }, {
-                text: 'Medium',
+                text: 'Medium (4000mAh - 4500mAh)',
                 value: 'Medium'
               },
               {
-                text: 'Large',
+                text: 'Large(4500mAh - 13000mAh)',
                 value: 'Large'
               },
             ]
@@ -835,14 +844,14 @@ export default {
             human: true,
             action: [
               {
-                text: 'Light',
+                text: 'Light (117g-173g)',
                 value: 'Light'
               }, {
-                text: 'Medium',
+                text: 'Medium(173g-181g)',
                 value: 'Medium'
               },
               {
-                text: 'Heavy',
+                text: 'Heavy(181g-203g)',
                 value: 'Heavy'
               },
             ]
