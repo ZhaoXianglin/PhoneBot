@@ -494,7 +494,7 @@ export default {
       })
       this.latest_dialog.push({
         "agent": "you",
-        "action": "Accept_Item",
+        "action": "accept_item",
         "timestamp": new Date().getTime()
       })
     },

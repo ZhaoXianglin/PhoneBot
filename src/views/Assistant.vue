@@ -402,7 +402,7 @@ export default {
       let config = {
         type: 'html',
         loading: true,
-        delay: 600,
+        delay: 10,
         photo: "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar1.png",
         content: msg
       };
@@ -499,6 +499,7 @@ export default {
             this.msg_btn_ctrl = false;
             this.message = null;
             this.ask_prefer()
+            this
           } else {
             this.last_action = 'sendMessage';
             this.latest_dialog.push({
@@ -632,6 +633,7 @@ export default {
       }
     },
     ask_prefer: function () {
+      this.last_action = 'ask_prefer'
       this.msg_btn_ctrl = true;
       let username = "Participant.";
       if (this.identity_cue === '1') {
@@ -725,6 +727,7 @@ export default {
 //
     ask_size: function () {
       let msg = "Okay."
+      this.last_action = 'ask_size'
       if (this.identity_cue === '1') msg = "Okay. Display size"
       this.bot(msg).then(() => {
         this.bot(" Which display size are you looking for?").then(() => {
@@ -753,6 +756,7 @@ export default {
     }
     ,
     ask_battery: function () {
+      this.last_action = 'ask_battery'
       let msg = "Okay."
       if (this.identity_cue === '1') msg = "Okay. Battery."
       this.bot(msg).then(() => {
@@ -782,6 +786,7 @@ export default {
     }
     ,
     ask_brand: function () {
+      this.last_action = 'ask_brand'
       let msg = "Okay."
       if (this.identity_cue === '1') msg = "Okay. Brand."
       this.bot(msg).then(() => {
@@ -814,6 +819,7 @@ export default {
       })
     },
     ask_weight: function () {
+      this.last_action = this.ask_weight
       let msg = "Okay."
       if (this.identity_cue === '1') msg = "Okay. Weight."
       this.bot(msg).then(() => {
