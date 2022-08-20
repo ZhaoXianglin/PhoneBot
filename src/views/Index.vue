@@ -4,21 +4,20 @@
     <van-popup v-model="show" round :close-on-click-overlay="false" :style="{ height: '90%', width:'90%' }">
       <div class="consent">
         <header style="text-align:center;">
-          <h4>Hong Kong Baptist University<br/>
+          <h4>User Study<br/>
             Informed Consent Statement
           </h4>
         </header>
         <h5>Purpose of Research Study:</h5>
-        <p>This study aims to evaluate a web app that recommends mobile phones to you.</p>
+        <p>This study aims to evaluate a web app that help people choose mobile phones.</p>
         <h5>Procedure:</h5>
-        <p>Your task is to find three phones of your interest. After that, you will provide your evaluation feedback by
-          completing an online questionnaire.</p>
+        <p>Your task is to read a user scenario and then <b>help Lily choose three mobile phones</b> that you think can meet her requirements. In the end, you need to evaluate the web app based on your experience.</p>
         <h5>Duration:</h5>
-        <p>This study will take about 20 minutes to complete (including time for filling out
+        <p>This whole study will take about 15 minutes to complete (including time for filling out
           questionnaires).</p>
-        <h5>Benefits:</h5>
-        <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we
-          believe your feedback will help us improve our web app for mobile phone recommendations.</p>
+<!--        <h5>Benefits:</h5>-->
+<!--        <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we-->
+<!--          believe your feedback will help us improve our web app for mobile phone recommendations.</p>-->
         <h5>Risk & Confidentiality:</h5>
         <p>There is no risk in taking this study. We will try to keep all of the data collected in confidential places
           (in HKBU server with encryption), and only use them for research purposes.</p>
@@ -30,7 +29,7 @@
         <p>We may decide to end your participation if we identify that you are not following the instructions closely
           enough.</p>
         <h5>Contact Information:</h5>
-        <p>If you have any questions about this research, you may contact: Yucheng Jin at yuchengjin@hkbu.edu.hk</p>
+        <p>If you have any questions about this research, you may contact: Wanling Cai at cswlcai@comp.hkbu.edu.hk</p>
 
         <p>You can contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk if you feel that you have not
           been treated according to the description in this form.</p>
@@ -50,14 +49,13 @@
 
       <p><b>Dear participants,</b></p>
       <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that helps users
-        select mobile phones.</p>
+        choose mobile phones.</p>
       <h4>Tasks:</h4>
-      <p>Please use the provided web app to find <b>three phones</b> that suit your preferences. If the initial
-        recommendations do not fit your taste, we suggest that you <b>modify recommendations by chatting with the web
+      <p>Please use the provided web app to find <b>three phones</b> according to Lily's requirements mentioned in a scenario. Please note that you can <b>modify recommendations by chatting with the web
           app</b>. All mobile phone information used in this experiment is from gsmarena.com.</p>
 
       <h4>Duration:</h4>
-      <p>Approximately 20 minutes (including time for filling out the questionnaire).</p>
+      <p>Approximately 15 minutes.</p>
 <!--      <h4>Task steps:</h4>-->
 <!--      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the-->
 <!--        task steps below. (using the arrow buttons to view the previous or next step)</p>-->
@@ -183,8 +181,8 @@
 <!--      </van-row>-->
       <h4>Notes:</h4>
       <ul>
-        <li>You are highly recommended to test this web app on a <b>mobile phone</b>.</li>
-        <li>You are recommended to use Chrome browser (version > 33.0) or Safari on iPhones.</li>
+        <li>You are suggested to test this web app on a <b>mobile phone</b>.</li>
+        <li>You are suggested to use Chrome browser (version > 33.0) or Safari on iPhones.</li>
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>
       <div style="margin: 24px 16px;padding-bottom:48px">
