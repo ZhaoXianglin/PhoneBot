@@ -891,7 +891,7 @@ export default {
       this.bot(msg).then(() => {
         this.bot(" Which weight range are you looking for?").then(() => {
           botui.action.button({
-            addMessage: false,
+            addMessage: true,
             human: true,
             action: [
               {
