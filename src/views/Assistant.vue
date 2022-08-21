@@ -551,9 +551,9 @@ export default {
 
 //发送用户消息
     sendMessage: function () {
-      botui.action.hide();
-      //先禁用按钮
       if (this.message.length >= 2) {
+        //先移除按钮
+        botui.action.hide();
         //可以发送
         this.msg_btn_ctrl = true;
         this.human(this.message).then(() => {
