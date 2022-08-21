@@ -1,10 +1,9 @@
 <template>
   <div id="scenario">
-    <van-nav-bar title="Scenario"/>
+    <van-nav-bar title="User scenario"/>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
-        Now she wants to ask you to help her
-        pick three phones according to her basic requirements.</p>
+        Now she wants to seek help from you. You need pick three phones according to her basic preference below.</p>
       <van-image
           v-animate-css.once="animationInfinite1"
           width="100%"
@@ -13,7 +12,7 @@
       />
       <br/>
 
-      <h3 v-animate-css.once="animationInfinite2">1. She often uses her mobile phone to watch videos.</h3>
+      <b v-animate-css.once="animationInfinite2">1. She often uses her mobile phone to watch videos.</b>
       <van-image
           v-animate-css.once="animationInfinite3"
           width="100%"
@@ -21,16 +20,16 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <h3 v-animate-css.once="animationInfinite4">2. She hates frequently charging her mobile phone.</h3>
+      <b v-animate-css.once="animationInfinite4">2. She hates frequently charging her mobile phone.</b>
       <van-image
           v-animate-css.once="animationInfinite5"
           width="100%"
           style="max-width: 960px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
       />
-      <h3 v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
+      <b v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
         US </strong>dollars.
-      </h3>
+      </b>
       <van-image
           v-animate-css.once="animationInfinite7"
           width="100%"
@@ -38,15 +37,13 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
       />
       <br>
-      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for a phone by
-        visiting a website called Phoneshop which
-        can help you pick three mobile phones for Lily. To determine which phone is the best to buy, you decide to chat
-        with an online chat agent who can provide recommendations.</p>
+      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones by
+        visiting a website called Phoneshop, where an online chat agent can recommend mobile phones based on your requirements.</p>
 
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
                     native-type="submit" @click="start"
-        >Let's Start！
+        >I understand!
         </van-button>
       </div>
     </div>
@@ -57,7 +54,7 @@
         :close-on-click-overlay="false"
         round
     >
-      <van-nav-bar title='Test'/>
+      <van-nav-bar title='Quiz'/>
       <div class="phone_preference">
         <van-form>
           <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. Who do you need to pick three mobile phones for?</p>

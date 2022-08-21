@@ -113,12 +113,7 @@
         <!--        </div>-->
         <div
             style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
-          <h3>Tips for tuning the recommendations by phone features</h3>
-          <h4>By brand:</h4>
-          <ul>
-            <li>"I like the iPhone."</li>
-            <li>"I want to buy a Huawei mobile phone."</li>
-          </ul>
+          <h3>Tips for chatting with the app for phone searching</h3>
 
           <h4>By price:</h4>
           <ul>
@@ -126,7 +121,19 @@
             <li>"The price can be higher."</li>
           </ul>
 
-          <h4>By resolution:</h4>
+          <h4>By brand:</h4>
+          <ul>
+            <li>"I like the iPhone."</li>
+            <li>"I want to buy a Huawei mobile phone."</li>
+          </ul>
+
+          <h4>By size:</h4>
+          <ul>
+            <li>"I like a light weight phone."</li>
+            <li>"I want to buy a phone with a slim body."</li>
+          </ul>
+
+          <h4>By display:</h4>
           <ul>
             <li>"I need a phone having better display."</li>
             <li>"I want a phone having higher resolution."</li>
@@ -149,11 +156,7 @@
             <li>"I want to buy an Android phone."</li>
             <li>"I like the ios system."</li>
           </ul>
-          <h4>By size:</h4>
-          <ul>
-            <li>"I like a light weight phone."</li>
-            <li>"I want to buy a phone with a slim body."</li>
-          </ul>
+
           <br>
         </div>
       </div>
