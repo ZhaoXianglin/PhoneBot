@@ -53,7 +53,7 @@
       <ul>
         <li>Read a user scenario about Lily's preferences for purchasing mobile phones and finish a simple quiz.</li>
         <li>Use the provided chatbot to find <b>three phones</b> based on Lily's preferences.</li>
-        <li>Fill a questionnaire to evaluate the chatbot based on your experience.</li>
+        <li>Fill out a questionnaire to evaluate the chatbot based on your experience.</li>
       </ul>
 
       <h4>Duration:</h4>
