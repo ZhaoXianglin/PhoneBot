@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted: function () {
-    if (localStorage.getItem('step') === '4' || localStorage.getItem('step') === '6') {
+    if (localStorage.getItem('step') === '5' || localStorage.getItem('step') === '6') {
       this.code = localStorage.getItem("code");
       localStorage.setItem('finished', "1")
       localStorage.setItem("active", new Date().getTime().toString());

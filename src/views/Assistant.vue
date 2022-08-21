@@ -529,10 +529,12 @@ export default {
             "action": "Initialize",
             "timestamp": new Date().getTime()
           })
-          this.bot(res.data.msg, 'explanation').then(() => {
-            this.botPhoneCard(this.current_phone);
-            this.msg_btn_ctrl = false;
-          })
+          this.bot("Ok, I see it!").then(() => {
+            this.bot(res.data.msg, 'explanation').then(() => {
+              this.botPhoneCard(this.current_phone);
+              this.msg_btn_ctrl = false;
+            })
+          });
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")
@@ -715,8 +717,7 @@ export default {
           this.ask_name()
         })
       }
-    }
-    ,
+    },
     ask_prefer: function () {
       this.last_action = 'ask_prefer'
       this.msg_btn_ctrl = true;
@@ -802,15 +803,13 @@ export default {
           })
         })
       })
-    }
-    ,
+    },
     ask_name: function () {
       return this.bot("what should I call you?").then(() => {
         this.msg_btn_ctrl = false
         this.last_action = 'ask_username'
       })
-    }
-    ,
+    },
 
     ask_size: function () {
       let msg = "Okay."
@@ -841,8 +840,7 @@ export default {
           })
         })
       })
-    }
-    ,
+    },
     ask_battery: function () {
       this.last_action = 'ask_battery'
       let msg = "Okay."

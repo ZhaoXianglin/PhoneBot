@@ -38,7 +38,8 @@
         <template #input>
           <van-row style="width: 100%;">
             <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">22. Did the chatbot explain why the phones were recommended?</span></van-col>
+              <van-col span="24"><span style="font-weight:600">22. Did the chatbot explain why the phones were recommended?</span>
+              </van-col>
             </van-row>
             <van-row type="flex" align="center" justify="between">
               <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>
@@ -66,7 +67,8 @@
         <template #input>
           <van-row style="width: 100%;">
             <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">23.Did the chatbot show anyone’s opinions about the recommended phones?</span></van-col>
+              <van-col span="24"><span style="font-weight:600">23.Did the chatbot show anyone’s opinions about the recommended phones?</span>
+              </van-col>
             </van-row>
             <van-row type="flex" align="center" justify="between">
               <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>
@@ -109,48 +111,45 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
+      //q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
       q1group: [
-        {q: "The chatbot behaved like a human.", t: "cui_human1"},
-        {q: "I felt like conversing with a real human when interacting with this chatbot.", t: "cui_human2"},
-        {q: "This chatbot system has human properties.", t: "cui_human3"},
-
         {q: "I usually trust people until they give me a reason not to trust them.", t: "trust_propensity1"},
         {q: "Trusting another person is not difficult for me.", t: "trust_propensity2"},
         {q: "My tendency to trust others is high.", t: "trust_propensity3"},
 
         {q: "The recommended phones can meet my provided requirements.", t: "accuracy1"},
-        {q: "The recommended phones were well-chosen.", t: "accuracy2"},
-        {q: "The recommended phones were relevant.", t: "accuracy3"},
-
         {q: "The chatbot explains why the phones are recommended to me.", t: "explain1"},
-        {q: "The chatbot explained why the recommended phones could fit my preference.", t: "explain3"},
-        {q: "The chatbot told me the reason why I received the recommended phones.", t: "explain4"},
-
         {q: "There is a sense of human contact on this chatbot.", t: "social_presence1"},
+        {q: "The recommended phones were well-chosen.", t: "accuracy2"},
+        {q: "The chatbot explained why the recommended phones could fit my preference.", t: "explain3"},
         {q: "There is a sense of personal communication on this chatbot.", t: "social_presence2"},
+        {q: "The recommended phones were relevant.", t: "accuracy3"},
+        {q: "The chatbot told me the reason why I received the recommended phones.", t: "explain4"},
         {q: "There is a sense of human warmth in this chatbot.", t: "social_presence4"},
 
-        {q: "Using the recommender to find what I like is easy.", t: "ease4"},
-        {q: "Finding a phone to buy with the help of the recommender is easy.", t: "ease5"},
-        {q: "It was easy to find what I liked by using the chatbot.", t: "ease6"},
 
+        {q: "Using the recommender to find what I like is easy.", t: "ease4"},
         {q: "The chatbot helped me find the ideal phone.", t: "useful2"},
+        {q: "The chatbot behaved like a human.", t: "cui_human1"},
+        {q: "Finding a phone to buy with the help of the recommender is easy.", t: "ease5"},
         {q: "Using the chatbot to find what I like is easy.", t: "useful3"},
+        {q: "I felt like conversing with a real human when interacting with this chatbot.", t: "cui_human2"},
+        {q: "It was easy to find what I liked by using the chatbot.", t: "ease6"},
         {q: "Using the chatbot helps me select a mobile phone more quickly.", t: "useful4"},
+        {q: "This chatbot system has human properties.", t: "cui_human3"},
 
       ],
       q1groupans: Array(23).fill(null),
     }
   },
-  mounted() {
-    let rand_ques = []
-    this.q_seq.forEach((v) => {
-      rand_ques.push(this.q1group[v - 1])
-      //console.log(v, this.q1group[v - 1])
-    })
-    this.q1group = rand_ques
-  },
+  // mounted() {
+  //   let rand_ques = []
+  //   this.q_seq.forEach((v) => {
+  //     rand_ques.push(this.q1group[v - 1])
+  //     //console.log(v, this.q1group[v - 1])
+  //   })
+  //   this.q1group = rand_ques
+  // },
   methods: {
     onFailed() {
       this.$toast("You may have missed some items, please fill in.");
