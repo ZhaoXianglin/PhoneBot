@@ -487,7 +487,7 @@ export default {
           return this.bot("\"I need a phone with (low / medium / high) battery capacity\"")
         }).then(() => {
           botui.action.button({
-            addMessage: true,
+            addMessage: false,
             human: true,
             action: [
               {
@@ -504,7 +504,9 @@ export default {
             if (res.value === 'next') {
               this.tryAnother()
             } else {
-              this.bot("OK, tell me your requirement.").then(() => {
+              this.human("Modify my requirement").then(() => {
+                this.bot("OK, tell me your requirement.").then(() => {
+                })
               })
             }
           })
