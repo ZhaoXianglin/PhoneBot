@@ -9,9 +9,9 @@
           </h4>
         </header>
         <h5>Purpose of Research Study:</h5>
-        <p>This study aims to evaluate a web app that help people choose mobile phones.</p>
+        <p>This study aims to evaluate a web app that helps people choose mobile phones.</p>
         <h5>Procedure:</h5>
-        <p>Your task is to read a user scenario and then <b>help Lily choose three mobile phones</b> that you think can meet her requirements. In the end, you need to evaluate the web app based on your experience.</p>
+        <p>Your task is to use the web app to find three mobile phones based on the given requirements.</p>
         <h5>Duration:</h5>
         <p>This whole study will take about 15 minutes to complete (including time for filling out
           questionnaires).</p>
@@ -48,11 +48,13 @@
       <h3>Welcome to participate in our study!</h3>
 
       <p><b>Dear participants,</b></p>
-      <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that helps users
-        choose mobile phones.</p>
-      <h4>Tasks:</h4>
-      <p>Please use the provided web app to find <b>three phones</b> according to Lily's requirements mentioned in a scenario. Please note that you can <b>modify recommendations by chatting with the web
-          app</b>. All mobile phone information used in this experiment is from gsmarena.com.</p>
+      <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that can <b>recommend mobile phones</b> based on your requirements.</p>
+      <h4>Task:</h4>
+      <ul>
+        <li>Read a user scenario about Lily's preferences for purchasing mobile phones and finish a simple quiz.</li>
+        <li>Use the provided web app to find <b>three phones</b> based on Lily's preferences.</li>
+        <li>Fill a questionnaire to evaluate the web app based on your experience.</li>
+      </ul>
 
       <h4>Duration:</h4>
       <p>Approximately 15 minutes.</p>
@@ -181,6 +183,7 @@
 <!--      </van-row>-->
       <h4>Notes:</h4>
       <ul>
+        <li>You can chat with the app to adjust the phone recommendations.</li>
         <li>You are suggested to test this web app on a <b>mobile phone</b>.</li>
         <li>You are suggested to use Chrome browser (version > 33.0) or Safari on iPhones.</li>
       </ul>
