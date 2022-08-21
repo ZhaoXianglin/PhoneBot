@@ -9,15 +9,15 @@
           </h4>
         </header>
         <h5>Purpose of Research Study:</h5>
-        <p>This study aims to evaluate a web app that helps people choose mobile phones.</p>
+        <p>This study aims to evaluate a chatbot that helps people choose mobile phones.</p>
         <h5>Procedure:</h5>
-        <p>Your task is to use the web app to find three mobile phones based on the given requirements.</p>
+        <p>Your task is to use the chatbot to find three mobile phones based on the given requirements.</p>
         <h5>Duration:</h5>
         <p>This whole study will take about 15 minutes to complete (including time for filling out
           questionnaires).</p>
 <!--        <h5>Benefits:</h5>-->
-<!--        <p>You will experience a web app for mobile phone recommendations by attending this study. In addition, we-->
-<!--          believe your feedback will help us improve our web app for mobile phone recommendations.</p>-->
+<!--        <p>You will experience a chatbot for mobile phone recommendations by attending this study. In addition, we-->
+<!--          believe your feedback will help us improve our chatbot for mobile phone recommendations.</p>-->
         <h5>Risk & Confidentiality:</h5>
         <p>There is no risk in taking this study. We will try to keep all of the data collected in confidential places
           (in HKBU server with encryption), and only use them for research purposes.</p>
@@ -48,12 +48,12 @@
       <h3>Welcome to participate in our study!</h3>
 
       <p><b>Dear participants,</b></p>
-      <p>Thank you very much for participating in this experiment, which aims to evaluate a web app that can <b>recommend mobile phones</b> based on your requirements.</p>
+      <p>Thank you very much for participating in this experiment, which aims to evaluate a chatbot that can <b>recommend mobile phones</b> based on your requirements.</p>
       <h4>Task:</h4>
       <ul>
         <li>Read a user scenario about Lily's preferences for purchasing mobile phones and finish a simple quiz.</li>
-        <li>Use the provided web app to find <b>three phones</b> based on Lily's preferences.</li>
-        <li>Fill a questionnaire to evaluate the web app based on your experience.</li>
+        <li>Use the provided chatbot to find <b>three phones</b> based on Lily's preferences.</li>
+        <li>Fill a questionnaire to evaluate the chatbot based on your experience.</li>
       </ul>
 
       <h4>Duration:</h4>
@@ -121,7 +121,7 @@
 <!--              fit="contain"-->
 <!--              :src="require('../assets/imgs/step5.png')"-->
 <!--          />-->
-<!--          <p><b>Step 5:</b> Chat with the web app when you want to modify recommended phones.-->
+<!--          <p><b>Step 5:</b> Chat with the chatbot when you want to modify recommended phones.-->
 <!--          </p>-->
 <!--        </van-swipe-item>-->
 <!--        <van-swipe-item>-->
@@ -184,7 +184,7 @@
       <h4>Notes:</h4>
       <ul>
         <li>You can chat with the app to adjust the phone recommendations.</li>
-        <li>You are suggested to test this web app on a <b>mobile phone</b>.</li>
+        <li>You are suggested to test this chatbot on a <b>mobile phone</b>.</li>
         <li>You are suggested to use Chrome browser (version > 33.0) or Safari on iPhones.</li>
       </ul>
       <p>We greatly appreciate your efforts and time in advance.</p>

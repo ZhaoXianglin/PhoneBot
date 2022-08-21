@@ -112,13 +112,14 @@ export default {
       auth: true,
       //q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
       q1group: [
-        {q: "The chatbot behaved like a human.", t: "cui_human1"},
-        {q: "I felt like conversing with a real human when interacting with this chatbot.", t: "cui_human2"},
-        {q: "This chatbot system has human properties.", t: "cui_human3"},
 
         {q: "I usually trust people until they give me a reason not to trust them.", t: "trust_propensity1"},
         {q: "Trusting another person is not difficult for me.", t: "trust_propensity2"},
         {q: "My tendency to trust others is high.", t: "trust_propensity3"},
+
+        {q: "The chatbot behaved like a human.", t: "cui_human1"},
+        {q: "I felt like conversing with a real human when interacting with this chatbot.", t: "cui_human2"},
+        {q: "This chatbot system has human properties.", t: "cui_human3"},
 
         {q: "The recommended phones can meet my provided requirements.", t: "accuracy1"},
         {q: "The chatbot explains why the phones are recommended to me.", t: "explain1"},
@@ -130,12 +131,12 @@ export default {
         {q: "The chatbot told me the reason why I received the recommended phones.", t: "explain4"},
         {q: "There is a sense of human warmth in this chatbot.", t: "social_presence4"},
 
-        {q: "Using the recommender to find what I like is easy.", t: "ease4"},
+        {q: "Using the chatbot to find what I like is easy.", t: "ease4"},
         {q: "The chatbot helped me find the ideal phone.", t: "useful2"},
-        {q: "Finding a phone to buy with the help of the recommender is easy.", t: "ease5"},
+        {q: "Finding a phone to buy with the help of the chatbot is easy.", t: "ease5"},
         {q: "Using the chatbot to find what I like is easy.", t: "useful3"},
         {q: "It was easy to find what I liked by using the chatbot.", t: "ease6"},
-        {q: "Using the chatbot helps me select a mobile phone more quickly.", t: "useful4"},
+        {q: "Using the chatbot helps me choose a mobile phone more quickly.", t: "useful4"},
 
       ],
       q1groupans: Array(23).fill(null),

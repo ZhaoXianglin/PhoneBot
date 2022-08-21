@@ -61,7 +61,7 @@ export default {
         {q: "The chatbot helped me understand why the phones were recommended to me.", t: "explain2"},
         {q: "There was a sense of sociability on this chatbot.", t: "social_presence3"},
         {q: "I could easily use the chatbot to find phones that meet my requirements.", t: "ease1"},
-        {q: "The chatbot gave me good suggestions for selecting mobile phones.", t: "useful1"},
+        {q: "The chatbot gave me good suggestions for choosing mobile phones.", t: "useful1"},
 
 
         {q: "The chatbot's responses are readable and fluent.", t: "cui_resQuali1"},
