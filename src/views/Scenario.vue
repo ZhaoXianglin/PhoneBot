@@ -112,43 +112,43 @@ export default {
       },
       animationInfinite3: {
         classes: 'fadeIn',
-        delay: 6000,
+        delay: 7000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite4: {
         classes: 'fadeIn',
-        delay: 7000,
+        delay: 8000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite5: {
         classes: 'fadeIn',
-        delay: 8000,
+        delay: 10000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite6: {
         classes: 'fadeIn',
-        delay: 9000,
+        delay: 11000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite7: {
         classes: 'fadeIn',
-        delay: 10000,
+        delay: 13000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite8: {
         classes: 'fadeIn',
-        delay: 11000,
+        delay: 14000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite9: {
         classes: 'fadeIn',
-        delay: 12000,
+        delay: 15000,
         duration: 1000,
         iteration: 1
       },
