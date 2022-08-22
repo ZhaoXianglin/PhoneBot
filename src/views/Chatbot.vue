@@ -113,7 +113,7 @@
         <!--        </div>-->
         <div
             style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
-          <h3>Tips for chatting with the app for phone searching</h3>
+          <h3>Tips for chatting for phone searching</h3>
 
           <h4>By price:</h4>
           <ul>
