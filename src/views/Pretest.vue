@@ -9,6 +9,10 @@
     </van-steps>
     <p style="padding-left: 10px;font-weight:bolder">Personal Information：</p>
     <van-form @submit="onSubmit" @failed="onFailed" scroll-to-error validate-trigger="onSubmit">
+
+      <van-field name="prolific_id" v-model="prolific_id" type="text" label="Prolific ID" required
+                 placeholder="your unique Prolific ID."
+                 :rules="[{ required: auth, message: 'Please enter this item.' }]"/>
       <van-field name="gender" label="Gender" required
                  :rules="[{ required: auth, message: 'Please select this item.' }]">
         <template #input>
@@ -63,6 +67,7 @@ export default {
       auth: true,
       gender: "",
       age: "",
+      prolific_id: "",
       age_items: ['18-24', '25-34', '35-44', '45-54', '55-64', '65 and over'],
       nationality: "",
       showPicker1: false,
