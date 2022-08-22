@@ -6,34 +6,34 @@
         Now she seeks help from you. You need pick <b>three mobile phones </b>according to her basic preference below.</p>
       <van-image
           v-animate-css.once="animationInfinite1"
-          width="100%"
-          style="max-width: 960px"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/scenario_1.png "
       />
       <br/>
 
-      <b v-animate-css.once="animationInfinite2">1. She often watches videos on her mobile phone.</b>
+      <p v-animate-css.once="animationInfinite2">1. She often watches videos on her mobile phone.</p>
       <van-image
           v-animate-css.once="animationInfinite3"
-          width="100%"
-          style="max-width: 960px"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <b v-animate-css.once="animationInfinite4">2. She hates frequently charging the phone.</b>
+      <p v-animate-css.once="animationInfinite4">2. She hates frequently charging the phone.</p>
       <van-image
           v-animate-css.once="animationInfinite5"
-          width="100%"
-          style="max-width: 960px"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
       />
-      <b v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
+      <p v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
         US </strong>dollars.
-      </b>
+      </p>
       <van-image
           v-animate-css.once="animationInfinite7"
-          width="100%"
-          style="max-width: 960px; margin: 0 auto"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
       />
       <br>
