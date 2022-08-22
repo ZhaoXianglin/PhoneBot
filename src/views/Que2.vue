@@ -77,7 +77,7 @@ export default {
           q: "Given a chance, I predict that I would consider buying the phones recommended by the chatbot in the near future.",
           t: "intent2purchase1"
         },
-        {q: "I can always rely on this chatbot for selecting a mobile phone.", t: "intent2depend2"},
+        {q: "I can always rely on this chatbot for choosing a mobile phone.", t: "intent2depend2"},
         {q: "I would not hesitate to use the recommendations this chatbot supplied me.", t: "intent2follow2"},
         {q: "I will likely buy the phones recommended by the chatbot in the near future.", t: "intent2purchase2"},
         {q: "I feel that I could count on this chatbot to help with picking out a mobile phone.", t: "intent2depend3"},

@@ -71,7 +71,7 @@ export default {
             confirmButtonText: "Yes, continue",
             cancelButtonText: "No",
             title: 'Additional Survey',
-            message: 'We still have 21 bonus question items (take about 2-3 minutes). You will get a bonus of 0.5 US dollars for answering these extra questions  :)',
+            message: 'We still have 32 bonus question items (take about 3-4 minutes). You will get a bonus of 0.5 US dollars for answering these extra questions  :)',
           })
               .then(() => {
                 // on confirm

@@ -3,7 +3,7 @@
     <van-nav-bar title="User scenario"/>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
-        Now she wants to seek help from you. You need pick three phones according to her basic preference below.</p>
+        Now she seeks help from you. You need pick <b>three mobile phones </b>according to her basic preference below.</p>
       <van-image
           v-animate-css.once="animationInfinite1"
           width="100%"
@@ -12,7 +12,7 @@
       />
       <br/>
 
-      <b v-animate-css.once="animationInfinite2">1. She often uses her mobile phone to watch videos.</b>
+      <b v-animate-css.once="animationInfinite2">1. She often watches videos on her mobile phone.</b>
       <van-image
           v-animate-css.once="animationInfinite3"
           width="100%"
@@ -20,7 +20,7 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <b v-animate-css.once="animationInfinite4">2. She hates frequently charging her mobile phone.</b>
+      <b v-animate-css.once="animationInfinite4">2. She hates frequently charging the phone.</b>
       <van-image
           v-animate-css.once="animationInfinite5"
           width="100%"
@@ -37,8 +37,8 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
       />
       <br>
-      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones by
-        visiting a website called Phoneshop, where an online chat agent can recommend mobile phones based on your requirements.</p>
+    <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones by
+        visiting a website called Phoneshop, where a chatbot can recommend mobile phones based on your requirements.</p>
 
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
