@@ -12,7 +12,7 @@
       />
       <br/>
 
-      <p v-animate-css.once="animationInfinite2">1. She often watches videos on her mobile phone.</p>
+      <p v-animate-css.once="animationInfinite2">1. She often <strong>watches videos</strong> on her mobile phone.</p>
       <van-image
           v-animate-css.once="animationInfinite3"
           width="80%"
@@ -20,7 +20,7 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <p v-animate-css.once="animationInfinite4">2. She hates frequently charging the phone.</p>
+      <p v-animate-css.once="animationInfinite4">2. She <strong>hates frequently charging</strong> the phone.</p>
       <van-image
           v-animate-css.once="animationInfinite5"
           width="80%"
@@ -100,55 +100,55 @@ export default {
       },
       animationInfinite1: {
         classes: 'fadeIn',
-        delay: 2000,
+        delay: 4000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite2: {
         classes: 'fadeIn',
-        delay: 3000,
+        delay: 5000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite3: {
         classes: 'fadeIn',
-        delay: 4000,
+        delay: 6000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite4: {
         classes: 'fadeIn',
-        delay: 5000,
+        delay: 7000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite5: {
         classes: 'fadeIn',
-        delay: 6000,
+        delay: 8000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite6: {
         classes: 'fadeIn',
-        delay: 7000,
+        delay: 9000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite7: {
         classes: 'fadeIn',
-        delay: 8000,
+        delay: 10000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite8: {
         classes: 'fadeIn',
-        delay: 9000,
+        delay: 11000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite9: {
         classes: 'fadeIn',
-        delay: 10000,
+        delay: 12000,
         duration: 1000,
         iteration: 1
       },
