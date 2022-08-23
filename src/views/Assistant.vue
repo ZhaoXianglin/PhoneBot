@@ -343,6 +343,8 @@ export default {
       explanation_style: "",
       //控制功能
       //是否展示过输入提示。
+      // 解释展示的数量
+      exp_count: 0,
       can_show_enter_tips: true,
       show_err_reminder: false,
       loading: false,
@@ -528,8 +530,10 @@ export default {
           })
           this.bot("Ok, I see it!").then(() => {
             this.bot(res.data.msg, 'explanation').then(() => {
+              this.exp_count += 1;
               this.botPhoneCard(this.current_phone);
               this.msg_btn_ctrl = false;
+
             })
           });
         } else {
@@ -579,6 +583,7 @@ export default {
               //console.log(res);
               this.current_phone = res.data.phone;
               this.latest_dialog = [];
+              this.exp_count += 1;
               if (this.identity_cue === '1') {
                 this.bot("Ok, I see it!").then(() => {
                   this.bot(res.data.msg, 'explanation').then(() => {
@@ -603,16 +608,14 @@ export default {
         this.$toast('Please enter more information.');
       }
 
-    }
-    ,
+    },
 
 //加入购物车前的检查
     checkBeforeToCart: function () {
       if (this.current_phone.battery <= 4050) return false
       if (this.current_phone.price > 300) return false
       return this.current_phone.displaysize >= 6.4;
-    }
-    ,
+    },
 //加入购物车
     addToCart() {
       this.show_err_reminder = false;
@@ -626,8 +629,7 @@ export default {
         "timestamp": new Date().getTime()
       })
       this.addLog('human', this.last_action, this.current_phone.id + '|' + this.current_phone.modelname)
-    }
-    ,
+    },
 
 //手机评分
     submitPhoneRate() {
@@ -651,6 +653,7 @@ export default {
             let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
             this.bot(temp_msg[seed]).then(() => {
               this.bot(res.data.msg, 'explanation').then(() => {
+                this.exp_count += 1;
                 this.botPhoneCard(this.current_phone);
               });
             })
@@ -659,8 +662,7 @@ export default {
       } else {
         this.$toast("Please rate this phone first.")
       }
-    }
-    ,
+    },
 
 //再来一个推荐
     tryAnother() {
@@ -688,21 +690,20 @@ export default {
             let res_temp = ["OK", 'Sure']
             this.bot(res_temp[seed]).then(() => {
               this.bot(res.data.msg, 'explanation').then(() => {
+                this.exp_count += 1;
                 this.botPhoneCard(this.current_phone);
               });
             })
           })
         })
       }
-    }
-    ,
+    },
 
 //左上角tips部分
     clickHelp: function () {
       this.show_help = true;
       this.help_showed_count += 1;
-    }
-    ,
+    },
 
 //初始化引导语的入口
     greeting: function () {
@@ -956,6 +957,13 @@ export default {
       })
     }
     ,
+  },
+  watch: {
+    exp_count: function () {
+      if (this.exp_count >= 3) {
+        this.explanation_style = '0'
+      }
+    }
   },
   computed: {
     // 计算属性的 getter
