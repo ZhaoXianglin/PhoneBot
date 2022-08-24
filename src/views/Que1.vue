@@ -12,7 +12,8 @@
         <template #input>
           <van-row style="width: 100%;">
             <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">1. Did the chatbot explain why the phones were recommended?</span>
+              <van-col span="24"><span
+                  style="font-weight:600">1. How did the chatbot explain the recommended phones?</span>
               </van-col>
             </van-row>
             <van-row type="flex" align="center" justify="between">
@@ -20,15 +21,18 @@
               <van-col>
                 <van-radio-group v-model="q1groupans[21]" direction="horizontal" class="matrix_table">
                   <van-radio name="1" checked-color="#ee0a24" class="item">
-                    Yes
-                  </van-radio>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <van-radio name="-1" checked-color="#ee0a24" class="item">
-                    No
+                    Based on the other customers’ experience
                   </van-radio>
                   &nbsp;
-                  <van-radio name="0" checked-color="#ee0a24" class="item">
-                    Not Sure
+                  <van-radio v-if="identity_cue==='1'" name="2" checked-color="#ee0a24" class="item">
+                    Based on the the Susan’s experience
+                  </van-radio>
+                  <van-radio v-if="identity_cue==='0'" name="2" checked-color="#ee0a24" class="item">
+                    Based on the the RecBot’s experience
+                  </van-radio>
+                  &nbsp;
+                  <van-radio name="3" checked-color="#ee0a24" class="item">
+                    Based on the ranking in the recommendation pool
                   </van-radio>
                 </van-radio-group>
               </van-col>
@@ -37,35 +41,35 @@
           </van-row>
         </template>
       </van-field>
-      <van-field :rules="[{ required: auth, message: 'required' }]" name="check2">
-        <template #input>
-          <van-row style="width: 100%;">
-            <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">2.Did the chatbot show anyone’s opinions about the recommended phones?</span>
-              </van-col>
-            </van-row>
-            <van-row type="flex" align="center" justify="between">
-              <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>
-              <van-col>
-                <van-radio-group v-model="q1groupans[22]" direction="horizontal" class="matrix_table">
-                  <van-radio name="1" checked-color="#ee0a24" class="item">
-                    Yes
-                  </van-radio>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <van-radio name="-1" checked-color="#ee0a24" class="item">
-                    No
-                  </van-radio>
-                  &nbsp;
-                  <van-radio name="0" checked-color="#ee0a24" class="item">
-                    Not Sure
-                  </van-radio>
-                </van-radio-group>
-              </van-col>
-              <van-col span="4"></van-col>
-            </van-row>
-          </van-row>
-        </template>
-      </van-field>
+<!--      <van-field :rules="[{ required: auth, message: 'required' }]" name="check2">-->
+<!--        <template #input>-->
+<!--          <van-row style="width: 100%;">-->
+<!--            <van-row type="flex">-->
+<!--              <van-col span="24"><span style="font-weight:600">2.Did the chatbot show anyone’s opinions about the recommended phones?</span>-->
+<!--              </van-col>-->
+<!--            </van-row>-->
+<!--            <van-row type="flex" align="center" justify="between">-->
+<!--              <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>-->
+<!--              <van-col>-->
+<!--                <van-radio-group v-model="q1groupans[22]" direction="horizontal" class="matrix_table">-->
+<!--                  <van-radio name="1" checked-color="#ee0a24" class="item">-->
+<!--                    Yes-->
+<!--                  </van-radio>-->
+<!--                  &nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                  <van-radio name="-1" checked-color="#ee0a24" class="item">-->
+<!--                    No-->
+<!--                  </van-radio>-->
+<!--                  &nbsp;-->
+<!--                  <van-radio name="0" checked-color="#ee0a24" class="item">-->
+<!--                    Not Sure-->
+<!--                  </van-radio>-->
+<!--                </van-radio-group>-->
+<!--              </van-col>-->
+<!--              <van-col span="4"></van-col>-->
+<!--            </van-row>-->
+<!--          </van-row>-->
+<!--        </template>-->
+<!--      </van-field>-->
 
       <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
         statements?</p>
@@ -77,7 +81,7 @@
         <template #input>
           <van-row style="width: 100%;">
             <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">{{ index + 3 }}. {{ item.q }}</span></van-col>
+              <van-col span="24"><span style="font-weight:600">{{ index + 2 }}. {{ item.q }}</span></van-col>
             </van-row>
             <van-row type="flex" align="center" justify="between">
               <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>
@@ -107,6 +111,7 @@ export default {
   name: "Que1",
   data: function () {
     return {
+      identity_cue: "",
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
@@ -177,6 +182,9 @@ export default {
         this.$toast("Network error, please try again.");
       })
     },
+  },
+  mounted() {
+    this.identity_cue = localStorage.getItem("identity_cue")
   }
 }
 </script>

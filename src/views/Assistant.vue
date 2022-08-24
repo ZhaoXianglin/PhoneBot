@@ -345,6 +345,7 @@ export default {
       //是否展示过输入提示。
       // 解释展示的数量
       exp_count: 0,
+      explanation_styple_control: 'explanation',
       can_show_enter_tips: true,
       show_err_reminder: false,
       loading: false,
@@ -529,7 +530,7 @@ export default {
             "timestamp": new Date().getTime()
           })
           this.bot("Ok, I see it!").then(() => {
-            this.bot(res.data.msg, 'explanation').then(() => {
+            this.bot(res.data.msg, this.explanation_styple_control).then(() => {
               this.exp_count += 1;
               this.botPhoneCard(this.current_phone);
               this.msg_btn_ctrl = false;
@@ -586,12 +587,12 @@ export default {
               this.exp_count += 1;
               if (this.identity_cue === '1') {
                 this.bot("Ok, I see it!").then(() => {
-                  this.bot(res.data.msg, 'explanation').then(() => {
+                  this.bot(res.data.msg, this.explanation_styple_control).then(() => {
                     this.botPhoneCard(this.current_phone);
                   })
                 });
               } else {
-                this.bot(res.data.msg, 'explanation').then(() => {
+                this.bot(res.data.msg, this.explanation_styple_control).then(() => {
                   this.botPhoneCard(this.current_phone);
                 })
               }
@@ -652,7 +653,7 @@ export default {
             let seed = Math.round(Math.random());
             let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
             this.bot(temp_msg[seed]).then(() => {
-              this.bot(res.data.msg, 'explanation').then(() => {
+              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
                 this.exp_count += 1;
                 this.botPhoneCard(this.current_phone);
               });
@@ -689,7 +690,7 @@ export default {
             let seed = Math.round(Math.random());
             let res_temp = ["OK", 'Sure']
             this.bot(res_temp[seed]).then(() => {
-              this.bot(res.data.msg, 'explanation').then(() => {
+              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
                 this.exp_count += 1;
                 this.botPhoneCard(this.current_phone);
               });
