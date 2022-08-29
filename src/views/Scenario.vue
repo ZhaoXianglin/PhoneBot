@@ -1,52 +1,49 @@
 <template>
   <div id="scenario">
-    <van-nav-bar title="Scenario"/>
+    <van-nav-bar title="User scenario"/>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
-        Now she wants to ask you to help her
-        pick three phones according to her basic requirements.</p>
+        Now she seeks help from you. You need pick <b>three mobile phones </b>according to her basic preference below.</p>
       <van-image
           v-animate-css.once="animationInfinite1"
-          width="100%"
-          style="max-width: 960px"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/scenario_1.png "
       />
       <br/>
 
-      <h3 v-animate-css.once="animationInfinite2">1. She often uses her mobile phone to watch videos.</h3>
+      <p v-animate-css.once="animationInfinite2">1. She often <strong>watches videos</strong> on her mobile phone.</p>
       <van-image
           v-animate-css.once="animationInfinite3"
-          width="100%"
-          style="max-width: 960px"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <h3 v-animate-css.once="animationInfinite4">2. She hates frequently charging her mobile phone.</h3>
+      <p v-animate-css.once="animationInfinite4">2. She <strong>hates frequently charging</strong> the phone.</p>
       <van-image
           v-animate-css.once="animationInfinite5"
-          width="100%"
-          style="max-width: 960px"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
       />
-      <h3 v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
+      <p v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
         US </strong>dollars.
-      </h3>
+      </p>
       <van-image
           v-animate-css.once="animationInfinite7"
-          width="100%"
-          style="max-width: 960px; margin: 0 auto"
+          width="80%"
+          style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
       />
       <br>
-      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for a phone by
-        visiting a website called Phoneshop which
-        can help you pick three mobile phones for Lily. To determine which phone is the best to buy, you decide to chat
-        with an online chat agent who can provide recommendations.</p>
+    <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones by
+        visiting a website called Phoneshop, where a chatbot can recommend mobile phones based on your requirements.</p>
 
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
                     native-type="submit" @click="start"
-        >Let's Start！
+        >I understand!
         </van-button>
       </div>
     </div>
@@ -57,7 +54,7 @@
         :close-on-click-overlay="false"
         round
     >
-      <van-nav-bar title='Test'/>
+      <van-nav-bar title='Quiz'/>
       <div class="phone_preference">
         <van-form>
           <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. Who do you need to pick three mobile phones for?</p>
@@ -103,55 +100,55 @@ export default {
       },
       animationInfinite1: {
         classes: 'fadeIn',
-        delay: 2000,
+        delay: 4000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite2: {
         classes: 'fadeIn',
-        delay: 3000,
+        delay: 5000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite3: {
         classes: 'fadeIn',
-        delay: 4000,
+        delay: 7000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite4: {
         classes: 'fadeIn',
-        delay: 5000,
+        delay: 8000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite5: {
         classes: 'fadeIn',
-        delay: 6000,
+        delay: 10000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite6: {
         classes: 'fadeIn',
-        delay: 7000,
+        delay: 11000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite7: {
         classes: 'fadeIn',
-        delay: 8000,
+        delay: 13000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite8: {
         classes: 'fadeIn',
-        delay: 9000,
+        delay: 14000,
         duration: 1000,
         iteration: 1
       },
       animationInfinite9: {
         classes: 'fadeIn',
-        delay: 10000,
+        delay: 15000,
         duration: 1000,
         iteration: 1
       },

@@ -10,6 +10,7 @@
         {{ code }}</h2>
       <h3>Thank you for completing this survey.</h3>
       <h3>Now you can close this page.</h3>
+      <p>Part of the content about mobile phones is fictitious for experimental purposes. Please do not buy mobile phones based on the results of this experiment.</p>
     </div>
 
   </div>
@@ -24,7 +25,7 @@ export default {
     }
   },
   mounted: function () {
-    if (localStorage.getItem('step') === '4' || localStorage.getItem('step') === '6') {
+    if (localStorage.getItem('step') === '5' || localStorage.getItem('step') === '6') {
       this.code = localStorage.getItem("code");
       localStorage.setItem('finished', "1")
       localStorage.setItem("active", new Date().getTime().toString());

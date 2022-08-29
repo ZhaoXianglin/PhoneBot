@@ -26,7 +26,7 @@
       </van-field>
     </div>
     <div class="chatbot-content">
-      <BotUi v-on:clicked_url="clicked_url"></BotUi>
+      <BotUi @clicked_url="clicked_url" @card_add_to_cart="checkBeforeToCart"></BotUi>
     </div>
 
     <!-- 初始化的偏好-->
@@ -113,28 +113,32 @@
         <!--        </div>-->
         <div
             style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
-          <h3>Tips for tuning the recommendations by phone features</h3>
-          <h4>By brand:</h4>
-          <ul>
-            <li>"I like the iPhone."</li>
-            <li>"I want to buy a Huawei mobile phone."</li>
-          </ul>
+          <h3>Tips for chatting for phone searching</h3>
 
           <h4>By price:</h4>
           <ul>
             <li>"I want to buy a cheaper price phone."</li>
             <li>"The price can be higher."</li>
           </ul>
-          <h4>By resolution:</h4>
+
+          <h4>By brand:</h4>
+          <ul>
+            <li>"I like the iPhone."</li>
+            <li>"I want to buy a Huawei mobile phone."</li>
+          </ul>
+
+          <h4>By size:</h4>
+          <ul>
+            <li>"I like a light weight phone."</li>
+            <li>"I want to buy a phone with a slim body."</li>
+          </ul>
+
+          <h4>By display:</h4>
           <ul>
             <li>"I need a phone having better display."</li>
             <li>"I want a phone having higher resolution."</li>
           </ul>
-          <h4>By Battery:</h4>
-          <ul>
-            <li>"I need a better battery."</li>
-            <li>"I want a phone having large battery."</li>
-          </ul>
+
           <h4> By storage:</h4>
           <ul>
             <li>"I need a phone with a large storage."</li>
@@ -146,20 +150,11 @@
             <li>"I want to buy a phone having better CPU."</li>
             <li>"I want to buy a phone running applications faster."</li>
           </ul>
-          <h4>By Screen:</h4>
-          <ul>
-            <li>"I need a phone with having better display."</li>
-            <li>"I want to buy a phone with a large screen."</li>
-          </ul>
+
           <h4>By operating system:</h4>
           <ul>
             <li>"I want to buy an Android phone."</li>
             <li>"I like the ios system."</li>
-          </ul>
-          <h4>By size:</h4>
-          <ul>
-            <li>"I like a light weight phone."</li>
-            <li>"I want to buy a phone with a slim body."</li>
           </ul>
           <br>
         </div>
@@ -347,6 +342,10 @@ export default {
       identity_cue: "",
       explanation_style: "",
       //控制功能
+      //是否展示过输入提示。
+
+      explanation_styple_control: 'explanation',
+      can_show_enter_tips: true,
       show_err_reminder: false,
       loading: false,
       msg_btn_ctrl: true,
@@ -402,7 +401,6 @@ export default {
     //从卡片组件里面获得点击事件的url
     clicked_url: function (childValue) {
       this.clicked_trans_url = "https://www.chatbot.fans:3000/?url=" + childValue
-      console.log(this.clicked_trans_url)
       this.show_phone_page = true;
     },
     //添加日志打点
@@ -435,10 +433,11 @@ export default {
         content: msg
       })
     },
-    //提交手机偏好
 
     //商品卡片
     botPhoneCard: function (phone) {
+      //把当前手机加入显示过的手机列表
+      this.$store.commit('addShowedPhone', phone)
       let config = {
         type: 'phone',
         loading: true,
@@ -451,7 +450,6 @@ export default {
       }
       this.addLog('bot', 'phonecard', phone.id + '|' + phone.modelname)
       botui.message.bot(config).then(() => {
-        console.log(botui)
         botui.action.button({
           addMessage: false,
           human: false,
@@ -459,12 +457,7 @@ export default {
         }).then((res) => {
           //判断点了什么按钮
           if (res.text === 'Add to cart') {
-            if (this.checkBeforeToCart()) {
-              this.addToCart(this.current_phone);
-            } else {
-              this.current_phone.warning = true;
-              this.show_err_reminder = true;
-            }
+            this.checkBeforeToCart(phone.id)
           }
           if (res.text === 'Next item') {
             this.tryAnother();
@@ -476,7 +469,43 @@ export default {
       })
     },
 
-    //初始化用户偏好
+    // 提示可以输入
+    enter_tips: function () {
+      this.last_action = 'enter_tips'
+      this.bot("If you are not satisfied with current recommendations, you can modify your requirement by typing in the input field.").then(() => {
+        this.bot("For example, you could say:").then(() => {
+          return this.bot("\"I need a (small / medium / large) display\"")
+        }).then(() => {
+          return this.bot("\"I need a phone with (low / medium / high) battery capacity\"")
+        }).then(() => {
+          botui.action.button({
+            addMessage: false,
+            human: true,
+            action: [
+              {
+                text: 'Next recommendation',
+                value: 'next'
+              }, {
+                text: 'Modify my requirement',
+                value: 'modify'
+              }
+            ]
+          }).then((res) => {
+            //再也不显示这个提示了
+            this.can_show_enter_tips = false;
+            if (res.value === 'next') {
+              this.tryAnother()
+            } else {
+              this.human("Modify my requirement").then(() => {
+                this.bot("OK, tell me your requirement.").then(() => {
+                })
+              })
+            }
+          })
+        })
+      })
+    },
+//初始化用户偏好
     submitPreference() {
       this.user_prefer.username = this.username;
       this.user_prefer.uuid = localStorage.getItem('uuid');
@@ -487,17 +516,19 @@ export default {
         if (res.data.status === 1) {
           this.loading = false;
           this.show_preference = false;
-          this.current_phone = res.data.phone;
           //添加操作记录
           this.latest_dialog.push({
             "agent": "robot",
             "action": "Initialize",
             "timestamp": new Date().getTime()
           })
-          this.bot(res.data.msg, 'explanation').then(() => {
-            this.botPhoneCard(this.current_phone);
-            this.msg_btn_ctrl = false;
-          })
+          this.bot("Ok, I see it!").then(() => {
+            this.bot(res.data.msg, this.explanation_styple_control).then(() => {
+              this.current_phone = res.data.phone;
+              this.botPhoneCard(res.data.phone);
+              this.msg_btn_ctrl = false;
+            })
+          });
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")
@@ -507,13 +538,14 @@ export default {
         this.loading = false;
         this.$toast("Network error, please try again.");
       })
-    },
+    }
+    ,
 
-    //发送用户消息
+//发送用户消息
     sendMessage: function () {
-      botui.action.hide();
-      //先禁用按钮
       if (this.message.length >= 2) {
+        //先移除按钮
+        botui.action.hide();
         //可以发送
         this.msg_btn_ctrl = true;
         this.human(this.message).then(() => {
@@ -539,18 +571,25 @@ export default {
               message: this.message,
               explanation_style: this.explanation_style,
               logger: this.latest_dialog,
+              phone: this.$store.state.current_phone,
               uuid: localStorage.getItem('uuid'),
             }).then((res) => {
-              console.log(res);
+              //console.log(res);
               this.current_phone = res.data.phone;
               this.latest_dialog = [];
-              let msg = res.data.msg;
               if (this.identity_cue === '1') {
-                msg = "Ok, I see it! " + msg
+                this.bot("Ok, I see it!").then(() => {
+                  this.bot(res.data.msg, this.explanation_styple_control).then(() => {
+                    this.botPhoneCard(this.current_phone);
+                  })
+                });
+              } else {
+                this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
+                  this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
+                    this.botPhoneCard(this.current_phone);
+                  })
+                })
               }
-              this.bot(msg, 'explanation').then(() => {
-                this.botPhoneCard(this.current_phone);
-              });
               this.msg_btn_ctrl = false;
               this.message = null;
             }).catch(() => {
@@ -566,13 +605,20 @@ export default {
 
     },
 
-    //加入购物车前的检查
-    checkBeforeToCart: function () {
-      if (this.current_phone.battery <= 4050) return false
-      if (this.current_phone.price > 300) return false
-      return this.current_phone.displaysize > 6.4;
+//加入购物车前的检查
+    checkBeforeToCart: function (phone_id) {
+      if (phone_id !== this.current_phone.id) {
+        this.current_phone = this.$store.state.showed_phones[phone_id]
+      }
+      if (this.current_phone.battery >= 4050 && this.current_phone.price <= 300 && this.current_phone.displaysize >= 6.4) {
+        this.addToCart(phone_id);
+      } else {
+        //提示当前的手机是有过提醒的
+        this.$store.commit('setWarning', phone_id)
+        this.show_err_reminder = true;
+      }
     },
-    //加入购物车
+//加入购物车
     addToCart() {
       this.show_err_reminder = false;
       this.last_action = "addToCart";
@@ -587,12 +633,13 @@ export default {
       this.addLog('human', this.last_action, this.current_phone.id + '|' + this.current_phone.modelname)
     },
 
-    //手机评分
+//手机评分
     submitPhoneRate() {
       //console.log(this.crit_phone_point);
       this.last_action = 'submitPhoneRate';
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
+        this.$store.commit('addToCart', this.current_phone.id)
         this.show_rate = false;
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
@@ -601,13 +648,21 @@ export default {
             uuid: this.uuid,
             logger: this.latest_dialog,
             explanation_style: this.explanation_style,
+            phone: this.current_phone,
             lTime: new Date().getTime(),
           }).then((res) => {
             this.latest_dialog = [];
             this.current_phone = res.data.phone;
-            this.bot(res.data.msg, 'explanation').then(() => {
-              this.botPhoneCard(this.current_phone);
-            });
+            let seed = Math.round(Math.random());
+            let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
+            this.bot(temp_msg[seed]).then(() => {
+              this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
+                this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
+                  this.botPhoneCard(this.current_phone);
+                })
+
+              });
+            })
           })
         }
       } else {
@@ -615,30 +670,41 @@ export default {
       }
     },
 
-    //再来一个推荐
+//再来一个推荐
     tryAnother() {
       this.show_err_reminder = false;
-      this.last_action = "tryAnother";
-      this.human("Show another phone",
-      ).then(() => {
-        this.latest_dialog.push({
-          "agent": "you",
-          "action": "Next",
-          "timestamp": new Date().getTime()
+      if (this.can_show_enter_tips && this.last_action === 'tryAnother') {
+        this.enter_tips()
+      } else {
+        this.last_action = "tryAnother";
+        this.human("Show another phone",
+        ).then(() => {
+          this.latest_dialog.push({
+            "agent": "you",
+            "action": "Next",
+            "timestamp": new Date().getTime()
+          })
+          instance.post("/chat/updatemodel", {
+            uuid: this.uuid,
+            logger: this.latest_dialog,
+            explanation_style: this.explanation_style,
+            phone: this.current_phone,
+            lTime: new Date().getTime(),
+          }).then((res) => {
+            this.latest_dialog = [];
+            this.current_phone = res.data.phone;
+            let seed = Math.round(Math.random());
+            let res_temp = ["OK", 'Sure']
+            this.bot(res_temp[seed]).then(() => {
+              this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
+                this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
+                  this.botPhoneCard(this.current_phone);
+                })
+              });
+            })
+          })
         })
-        instance.post("/chat/updatemodel", {
-          uuid: this.uuid,
-          logger: this.latest_dialog,
-          explanation_style: this.explanation_style,
-          lTime: new Date().getTime(),
-        }).then((res) => {
-          this.latest_dialog = [];
-          this.current_phone = res.data.phone;
-          this.bot(res.data.msg, 'explanation').then(() => {
-            this.botPhoneCard(this.current_phone);
-          });
-        })
-      })
+      }
     },
 
 //左上角tips部分
@@ -750,7 +816,7 @@ export default {
         this.last_action = 'ask_username'
       })
     },
-//
+
     ask_size: function () {
       let msg = "Okay."
       this.last_action = 'ask_size'
@@ -775,7 +841,7 @@ export default {
             ]
           }).then(res => {
             this.addLog('human', this.last_action, res.text)
-            this.user_prefer.display_size = res.value
+            this.user_prefer.displaysize = res.value
             this.submitPreference()
           })
         })
@@ -810,7 +876,8 @@ export default {
           })
         })
       })
-    },
+    }
+    ,
     ask_brand: function () {
       this.last_action = 'ask_brand'
       let msg = "Okay."
@@ -844,7 +911,8 @@ export default {
           })
         })
       })
-    },
+    }
+    ,
     ask_weight: function () {
       this.last_action = this.ask_weight
       let msg = "Okay."
@@ -852,7 +920,7 @@ export default {
       this.bot(msg).then(() => {
         this.bot(" Which weight range are you looking for?").then(() => {
           botui.action.button({
-            addMessage: false,
+            addMessage: true,
             human: true,
             action: [
               {
@@ -874,7 +942,8 @@ export default {
           })
         })
       })
-    },
+    }
+    ,
 
 //购物车部分
     clickCart: function () {
@@ -894,9 +963,10 @@ export default {
           console.log(err.message)
         });
       })
-    },
-  }
-  ,
+    }
+    ,
+  },
+
   computed: {
     // 计算属性的 getter
     cart_item_count: function () {
