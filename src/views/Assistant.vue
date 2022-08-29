@@ -577,19 +577,13 @@ export default {
               //console.log(res);
               this.current_phone = res.data.phone;
               this.latest_dialog = [];
-              if (this.identity_cue === '1') {
-                this.bot("Ok, I see it!").then(() => {
-                  this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                    this.botPhoneCard(this.current_phone);
-                  })
-                });
-              } else {
-                this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
-                  this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
-                    this.botPhoneCard(this.current_phone);
-                  })
+
+              this.bot("Ok, I see it!").then(() => {
+                this.bot(res.data.msg, this.explanation_styple_control).then(() => {
+                  this.botPhoneCard(this.current_phone);
                 })
-              }
+              });
+
               this.msg_btn_ctrl = false;
               this.message = null;
             }).catch(() => {
@@ -656,11 +650,8 @@ export default {
             let seed = Math.round(Math.random());
             let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
             this.bot(temp_msg[seed]).then(() => {
-              this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
-                this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
-                  this.botPhoneCard(this.current_phone);
-                })
-
+              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
+                this.botPhoneCard(this.current_phone);
               });
             })
           })
@@ -694,12 +685,10 @@ export default {
             this.latest_dialog = [];
             this.current_phone = res.data.phone;
             let seed = Math.round(Math.random());
-            let res_temp = ["OK", 'Sure']
+            let res_temp = ["You may also like this phone.", 'Maybe you can check this phone.']
             this.bot(res_temp[seed]).then(() => {
-              this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
-                this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
-                  this.botPhoneCard(this.current_phone);
-                })
+              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
+                this.botPhoneCard(this.current_phone);
               });
             })
           })
