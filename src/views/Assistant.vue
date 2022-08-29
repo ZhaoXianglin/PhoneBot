@@ -745,7 +745,7 @@ export default {
       })
     },
     ask_name: function () {
-      return this.bot("what should I call you?").then(() => {
+      return this.bot("What should I call you?").then(() => {
         this.msg_btn_ctrl = false
         this.last_action = 'ask_username'
       })
