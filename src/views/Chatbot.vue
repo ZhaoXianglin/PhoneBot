@@ -512,88 +512,18 @@ export default {
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
         } else {
-          if (this.in_crit) {
-            if (this.crit_text_point < 3 && this.crit_phone_point[1] === 3) {
-              this.crit_phone_point[1] = 0
-              this.crit_phone_point[0] += 1
-              this.crit_text_point += 1
-            }
-            if (this.crit_text_point < 3 && this.crit_phone_point[1] === 0) {
-              //需要bot 说话
-              botui.message.bot({
-                type: 'html',
-                loading: true,
-                delay: 1600,
-                content: this.critical_data['crit'][this.crit_text_point]
-              }).then(() => {
-                botui.action.button({
-                  addMessage: false,
-                  human: false,
-                  action: [{
-                    text: 'Yes',
-                    value: 'Yes'
-                  },
-                    {
-                      text: 'No',
-                      value: 'No'
-                    }]
-                }).then((res) => {
-                  //判断点了什么按钮
-                  if (res.text === 'Yes') {
-                    //查询手机是什么
-                    instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-                      this.current_phone = res.data
-                      //展示手机卡片
-                      this.PhoneCard_2btn(this.current_phone)
-                      this.crit_phone_point[1] += 1
-                    })
-                  }
-                  if (res.text === 'No') {
-                    this.crit_phone_point[0] += 1
-                    this.crit_phone_point[1] = 0
-                    this.crit_text_point += 1
-                    this.tryAnother()
-                  }
-                })
-              })
-            } else if (this.crit_phone_point[1] < 3 && this.crit_text_point < 3) {
-              instance.get("/api/phone?id=" + this.critical_data['phones'][this.crit_phone_point[0]][this.crit_phone_point[1]]).then((res) => {
-                this.current_phone = res.data;
-                this.crit_phone_point[1] += 1;
-                this.PhoneCard_2btn(this.current_phone);
-              })
-            } else {
-              //全都展示完了，给一个新的推荐
-              this.in_crit = false;
-              this.crit_text_point = 0;
-              this.crit_phone_point = [0, 0];
-              instance.post("/api/updatemodel", {
-                uuid: this.uuid,
-                logger: this.latest_dialog,
-                lTime: new Date().getTime(),
-              }).then((res) => {
-                this.latest_dialog = [];
-                this.current_phone = res.data.phone;
-                this.botPhoneCard(this.current_phone);
-              })
-            }
-          } else {
-            this.in_crit = false;
-            this.crit_text_point = 0;
-            this.crit_phone_point = [0, 0];
-            instance.post("/api/updatemodel", {
-              uuid: this.uuid,
-              logger: this.latest_dialog,
-              lTime: new Date().getTime(),
-            }).then((res) => {
-              this.latest_dialog = [];
-              this.current_phone = res.data.phone;
-              let msg = this.bot_msg[this.randomNum(0, 2)]
-              this.bot(msg).then(() => {
-                this.botPhoneCard(this.current_phone);
-              });
-            })
-          }
+          instance.post("/api/updatemodel", {
+            uuid: this.uuid,
+            logger: this.latest_dialog,
+            lTime: new Date().getTime(),
+          }).then((res) => {
+            this.latest_dialog = [];
+            this.current_phone = res.data.phone;
+            let msg = this.bot_msg[this.randomNum(0, 2)]
+            this.bot(msg).then(() => {
+              this.botPhoneCard(this.current_phone);
+            });
+          })
         }
       } else {
         this.$toast("Please rate this phone first.")

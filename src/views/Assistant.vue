@@ -26,7 +26,7 @@
       </van-field>
     </div>
     <div class="chatbot-content">
-      <BotUi v-on:clicked_url="clicked_url"></BotUi>
+      <BotUi @clicked_url="clicked_url" @card_add_to_cart="checkBeforeToCart"></BotUi>
     </div>
 
     <!-- 初始化的偏好-->
@@ -343,8 +343,7 @@ export default {
       explanation_style: "",
       //控制功能
       //是否展示过输入提示。
-      // 解释展示的数量
-      exp_count: 0,
+
       explanation_styple_control: 'explanation',
       can_show_enter_tips: true,
       show_err_reminder: false,
@@ -402,7 +401,6 @@ export default {
     //从卡片组件里面获得点击事件的url
     clicked_url: function (childValue) {
       this.clicked_trans_url = "https://www.chatbot.fans:3000/?url=" + childValue
-      console.log(this.clicked_trans_url)
       this.show_phone_page = true;
     },
     //添加日志打点
@@ -438,6 +436,8 @@ export default {
 
     //商品卡片
     botPhoneCard: function (phone) {
+      //把当前手机加入显示过的手机列表
+      this.$store.commit('addShowedPhone', phone)
       let config = {
         type: 'phone',
         loading: true,
@@ -450,7 +450,6 @@ export default {
       }
       this.addLog('bot', 'phonecard', phone.id + '|' + phone.modelname)
       botui.message.bot(config).then(() => {
-        console.log(botui)
         botui.action.button({
           addMessage: false,
           human: false,
@@ -458,12 +457,7 @@ export default {
         }).then((res) => {
           //判断点了什么按钮
           if (res.text === 'Add to cart') {
-            if (this.checkBeforeToCart()) {
-              this.addToCart(this.current_phone);
-            } else {
-              this.current_phone.warning = true;
-              this.show_err_reminder = true;
-            }
+            this.checkBeforeToCart(phone.id)
           }
           if (res.text === 'Next item') {
             this.tryAnother();
@@ -522,7 +516,6 @@ export default {
         if (res.data.status === 1) {
           this.loading = false;
           this.show_preference = false;
-          this.current_phone = res.data.phone;
           //添加操作记录
           this.latest_dialog.push({
             "agent": "robot",
@@ -531,10 +524,9 @@ export default {
           })
           this.bot("Ok, I see it!").then(() => {
             this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-              this.exp_count += 1;
-              this.botPhoneCard(this.current_phone);
+              this.current_phone = res.data.phone;
+              this.botPhoneCard(res.data.phone);
               this.msg_btn_ctrl = false;
-
             })
           });
         } else {
@@ -579,12 +571,12 @@ export default {
               message: this.message,
               explanation_style: this.explanation_style,
               logger: this.latest_dialog,
+              phone: this.$store.state.current_phone,
               uuid: localStorage.getItem('uuid'),
             }).then((res) => {
               //console.log(res);
               this.current_phone = res.data.phone;
               this.latest_dialog = [];
-              this.exp_count += 1;
               if (this.identity_cue === '1') {
                 this.bot("Ok, I see it!").then(() => {
                   this.bot(res.data.msg, this.explanation_styple_control).then(() => {
@@ -592,8 +584,10 @@ export default {
                   })
                 });
               } else {
-                this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                  this.botPhoneCard(this.current_phone);
+                this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
+                  this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
+                    this.botPhoneCard(this.current_phone);
+                  })
                 })
               }
               this.msg_btn_ctrl = false;
@@ -612,10 +606,17 @@ export default {
     },
 
 //加入购物车前的检查
-    checkBeforeToCart: function () {
-      if (this.current_phone.battery <= 4050) return false
-      if (this.current_phone.price > 300) return false
-      return this.current_phone.displaysize >= 6.4;
+    checkBeforeToCart: function (phone_id) {
+      if (phone_id !== this.current_phone.id) {
+        this.current_phone = this.$store.state.showed_phones[phone_id]
+      }
+      if (this.current_phone.battery >= 4050 && this.current_phone.price <= 300 && this.current_phone.displaysize >= 6.4) {
+        this.addToCart(phone_id);
+      } else {
+        //提示当前的手机是有过提醒的
+        this.$store.commit('setWarning', phone_id)
+        this.show_err_reminder = true;
+      }
     },
 //加入购物车
     addToCart() {
@@ -638,6 +639,7 @@ export default {
       this.last_action = 'submitPhoneRate';
       if (this.current_phone.rate) {
         this.phone_in_cart.push(this.current_phone);
+        this.$store.commit('addToCart', this.current_phone.id)
         this.show_rate = false;
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
@@ -646,6 +648,7 @@ export default {
             uuid: this.uuid,
             logger: this.latest_dialog,
             explanation_style: this.explanation_style,
+            phone: this.current_phone,
             lTime: new Date().getTime(),
           }).then((res) => {
             this.latest_dialog = [];
@@ -653,9 +656,11 @@ export default {
             let seed = Math.round(Math.random());
             let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
             this.bot(temp_msg[seed]).then(() => {
-              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                this.exp_count += 1;
-                this.botPhoneCard(this.current_phone);
+              this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
+                this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
+                  this.botPhoneCard(this.current_phone);
+                })
+
               });
             })
           })
@@ -683,6 +688,7 @@ export default {
             uuid: this.uuid,
             logger: this.latest_dialog,
             explanation_style: this.explanation_style,
+            phone: this.current_phone,
             lTime: new Date().getTime(),
           }).then((res) => {
             this.latest_dialog = [];
@@ -690,9 +696,10 @@ export default {
             let seed = Math.round(Math.random());
             let res_temp = ["OK", 'Sure']
             this.bot(res_temp[seed]).then(() => {
-              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                this.exp_count += 1;
-                this.botPhoneCard(this.current_phone);
+              this.bot(res.data.msg[0], this.explanation_styple_control).then(() => {
+                this.bot(res.data.msg[1], this.explanation_styple_control).then(() => {
+                  this.botPhoneCard(this.current_phone);
+                })
               });
             })
           })
@@ -834,7 +841,7 @@ export default {
             ]
           }).then(res => {
             this.addLog('human', this.last_action, res.text)
-            this.user_prefer.display_size = res.value
+            this.user_prefer.displaysize = res.value
             this.submitPreference()
           })
         })
@@ -959,13 +966,7 @@ export default {
     }
     ,
   },
-  watch: {
-    exp_count: function () {
-      if (this.exp_count >= 3) {
-        this.explanation_style = '0'
-      }
-    }
-  },
+
   computed: {
     // 计算属性的 getter
     cart_item_count: function () {

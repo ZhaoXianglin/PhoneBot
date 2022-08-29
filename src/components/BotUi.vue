@@ -10,13 +10,18 @@
               <img :src="msg.photo" :class="[{human: msg.human, 'agent':!msg.human}]">
             </div>
             <div :class="[{human: msg.human, 'botui-message-content': true}, msg.type]">
-              <span v-if="msg.type=='text'" v-text="msg.content" v-botui-markdown></span>
-              <span v-if="msg.type=='html'" v-html="msg.content"></span>
-              <div v-if="msg.type=='phone'">
+              <span v-if="msg.type==='text'" v-text="msg.content" v-botui-markdown></span>
+              <span v-if="msg.type==='html'" v-html="msg.content"></span>
+              <div v-if="msg.type==='phone'">
                 <div style="min-width: 240px;">
-                  <div style="width: 100%;text-align:center;background-color: #f5f5f5"><img style="max-height: 360px" :src="msg.content.img" alt=""/></div>
-                  <div style="margin-top: 1em; display: flex; justify-content: space-between;"><span
-                      style="display:block;font-size: 20px;font-weight: bold">{{ msg.content.modelname }}</span></div>
+                  <div style="width: 100%;text-align:center;background-color: #f5f5f5">
+                    <img style="max-height: 360px" :src="msg.content.img" alt=""/>
+                  </div>
+                  <div style="margin-top: 1em; display: flex; justify-content: space-between;">
+                    <span style="display:block;font-size: 20px;font-weight: bold">{{
+                        msg.content.modelname
+                      }}</span>
+                  </div>
                   <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
                     <tr>
                       <td style="width: 96px"> Storage:</td>
@@ -24,7 +29,7 @@
                     </tr>
                     <tr>
                       <td>Memory:</td>
-                      <td>{{ msg.content.ram }}</td>
+                      <td>{{ msg.content.ram }}GB</td>
                     </tr>
                     <tr>
                       <td>OS:</td>
@@ -50,13 +55,19 @@
                   <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">${{
                       msg.content.price
                     }}</span><br/>
-                  <div style="display: flex;justify-content: end"><a target="view_window"
-                                                                     @click="click_detail(msg.content.url)"
-                                                                     style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a>
+                  <div style="display: flex;justify-content: end">
+                    <a target="view_window" @click="click_detail(msg.content.url)"
+                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a>
+                  </div>
+                  <div style="display: flex;justify-content: end;margin-top: 10px"
+                       v-if="!showed_phones[msg.content.id].add_to_cart">
+                    <a target="view_window" @click="card_add_to_cart(msg.content.id)"
+                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Add
+                      to cart</a>
                   </div>
                 </div>
               </div>
-              <iframe v-if="msg.type=='embed'" :src="msg.content" frameborder="0" allowfullscreen></iframe>
+              <iframe v-if="msg.type==='embed'" :src="msg.content" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
         </transition>
@@ -74,7 +85,7 @@
     <div class="botui-actions-container">
       <transition name="slide-fade">
         <div v-if="action.show" v-botui-scroll>
-          <form v-if="action.type=='text'" class="botui-actions-text"
+          <form v-if="action.type==='text'" class="botui-actions-text"
                 @submit.prevent="handle_action_text()" :class="action.cssClass">
             {{ action }}
             <i v-if="action.text.icon" class="botui-icon botui-action-text-icon fa"
@@ -90,7 +101,7 @@
               <span>{{ (action.text.button && action.text.button.label) || 'Go' }}</span>
             </button>
           </form>
-          <form v-if="action.type=='select'" class="botui-actions-select" @submit.prevent="handle_action_select()"
+          <form v-if="action.type==='select'" class="botui-actions-select" @submit.prevent="handle_action_select()"
                 :class="action.cssClass">
             <i v-if="action.select.icon"
                class="botui-icon botui-action-select-icon fa"
@@ -228,18 +239,21 @@ export default {
         addMessage: true
       },
       messages: [],
-      clicked_url: "hello",
     };
   },
   computed: {
-    isMobile: function () {
-      return innerWidth && innerWidth <= 768;
+    showed_phones: function () {
+      return this.$store.state.showed_phones
     }
   },
   methods: {
     click_detail: function (url) {
-      this.clicked_url = url;
       this.$emit('clicked_url', url);
+    },
+    card_add_to_cart: function (id) {
+      console.log("发送id" + id)
+      this.$emit('card_add_to_cart', id);
+      //this.$store.commit('addToCart', id);
     },
     handle_action_button: function (button) {
       for (var i = 0; i < this.action.button.buttons.length; i++) {
