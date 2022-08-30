@@ -342,8 +342,8 @@ export default {
       identity_cue: "",
       explanation_style: "",
       //控制功能
+      try_another_count: 0,
       //是否展示过输入提示。
-
       explanation_styple_control: 'explanation',
       can_show_enter_tips: true,
       show_err_reminder: false,
@@ -638,9 +638,11 @@ export default {
         if (this.phone_in_cart.length === 3) {
           this.show_next_page = true;
         } else {
+          this.try_another_count += 1
           instance.post("/chat/updatemodel", {
             uuid: this.uuid,
             logger: this.latest_dialog,
+            try_another_count: this.try_another_count,
             explanation_style: this.explanation_style,
             phone: this.current_phone,
             lTime: new Date().getTime(),
@@ -663,6 +665,7 @@ export default {
 
 //再来一个推荐
     tryAnother() {
+      this.try_another_count += 1;
       this.show_err_reminder = false;
       if (this.can_show_enter_tips && this.last_action === 'tryAnother') {
         this.enter_tips()
@@ -678,14 +681,15 @@ export default {
           instance.post("/chat/updatemodel", {
             uuid: this.uuid,
             logger: this.latest_dialog,
+            try_another_count: this.try_another_count,
             explanation_style: this.explanation_style,
             phone: this.current_phone,
             lTime: new Date().getTime(),
           }).then((res) => {
             this.latest_dialog = [];
             this.current_phone = res.data.phone;
-            let seed = Math.round(Math.random());
-            let res_temp = ["You may also like this phone.", 'Maybe you can check this phone.']
+            let seed = this.try_another_count % 4;
+            let res_temp = ["OK, this could also be a good choice.", 'Sure, you may also want to try this.', "OK, maybe you can check this.", "Sure, this phone is worth a try."]
             this.bot(res_temp[seed]).then(() => {
               this.bot(res.data.msg, this.explanation_styple_control).then(() => {
                 this.botPhoneCard(this.current_phone);
