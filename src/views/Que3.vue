@@ -9,7 +9,7 @@
     </van-steps>
     <van-form @submit="onSubmit" scroll-to-error @failed="onFailed" validate-trigger="onSubmit">
       <p style="padding:0 10px;font-weight:bold;text-align: left">1. What else do you want to comment on the
-        recommendations provided by the chatbot?
+        recommendations provided by this chatbot?
       </p>
       <van-field
           v-model="openended1"
@@ -21,7 +21,7 @@
           :rules="[{ required: auth, message: 'required' }]"
       />
       <p style="padding:0 10px;font-weight:bold;text-align: left">2. What else do you want to comment on the interaction
-        with the chatbot?</p>
+        with this chatbot?</p>
       <van-field
           name="openended2"
           v-model="openended2"
@@ -71,7 +71,7 @@ export default {
             confirmButtonText: "Yes, continue",
             cancelButtonText: "No",
             title: 'Additional Survey',
-            message: 'We still have 32 bonus question items (take about 3-4 minutes). You will get a bonus of 0.5 US dollars for answering these extra questions  :)',
+            message: 'We still have 32 bonus question items (take about 3-4 minutes). You will get a bonus of 0.5 US dollars for answering these extra questions.:)',
           })
               .then(() => {
                 // on confirm

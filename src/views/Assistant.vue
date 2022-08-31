@@ -417,11 +417,11 @@ export default {
         cssClass: style,
         loading: true,
         delay: 10,
-        photo: "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar1.png",
+        photo: "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar1.png",
         content: msg
       };
       if (this.identity_cue === '1') {
-        config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
+        config.photo = "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar2.png";
         config.delay = msg.length * 40
       }
       this.addLog('bot', this.last_action, msg)
