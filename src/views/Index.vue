@@ -27,7 +27,7 @@
 <!--        <p>We may decide to end your participation if we identify that you are not following the instructions closely-->
 <!--          enough.</p>-->
         <h5>Contact Information:</h5>
-        <p>If you have any questions about this research, you may contact: Wanling Cai at cswlcai@comp.hkbu.edu.hk</p>
+        <p>If you have any questions about this research, you may contact: Xianglin ZHAO at csxlzhao@comp.hkbu.edu.hk</p>
 
         <p>You can contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk if you feel that you have not
           been treated according to the description in this form.</p>

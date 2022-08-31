@@ -3,7 +3,8 @@
     <van-nav-bar title="User scenario"/>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
-        Now she seeks help from you. You need pick <b>three mobile phones </b>according to her basic preference below.</p>
+        Now she seeks help from you. Please pick <b>three mobile phones</b> according to her basic preferences below.
+      </p>
       <van-image
           v-animate-css.once="animationInfinite1"
           width="80%"
@@ -37,13 +38,13 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
       />
       <br>
-    <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones by
-        visiting a website called Phoneshop, where a chatbot can recommend mobile phones based on your requirements.</p>
+      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones
+        by visiting a website called <b>Phoneshop</b>, where a chatbot can recommend mobile phones based on your requirements.</p>
 
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
                     native-type="submit" @click="start"
-        >I understand!
+        >I have read and understand Lily's needs.
         </van-button>
       </div>
     </div>
@@ -71,7 +72,7 @@
             <van-radio name="3">Camera</van-radio>
           </van-radio-group>
           <div style="margin: 16px;">
-            <van-button round block type="info" native-type="submit" :loading="loading" @click="next">Summit
+            <van-button round block type="info" native-type="submit" :loading="loading" @click="next">Submit
             </van-button>
           </div>
         </van-form>

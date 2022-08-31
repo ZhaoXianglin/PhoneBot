@@ -731,7 +731,7 @@ export default {
       if (this.identity_cue === '1') {
         username = this.username + '.';
       }
-      let msg = username + " I’m happy to help you with your purchase. We have all different types of mobile phones."
+      let msg = username + " I’m happy to help you with your purchase. We have different types of mobile phones."
       this.bot(msg).then(() => {
         return this.bot("To ensure that I make the most suitable recommendations for you, I’d like to ask you some questions.")
       }).then(() => {
