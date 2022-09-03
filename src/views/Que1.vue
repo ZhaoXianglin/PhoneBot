@@ -19,7 +19,7 @@
             <van-row type="flex" align="center" justify="between">
               <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>
               <van-col>
-                <van-radio-group v-model="q1groupans[21]" direction="horizontal" class="matrix_table">
+                <van-radio-group v-model="q1groupans[20]" direction="horizontal" class="matrix_table">
                   <van-radio name="1" checked-color="#ee0a24" class="item">
                     Based on the other customers’ experience
                   </van-radio>
@@ -118,10 +118,6 @@ export default {
       //q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
       q1group: [
 
-        {q: "I usually trust people until they give me a reason not to trust them.", t: "trust_propensity1"},
-        {q: "Trusting another person is not difficult for me.", t: "trust_propensity2"},
-        {q: "My tendency to trust others is high.", t: "trust_propensity3"},
-
         {q: "This chatbot behaved like a human.", t: "cui_human1"},
         {q: "I felt like conversing with a real human when interacting with this chatbot.", t: "cui_human2"},
         {q: "This chatbot system has human properties.", t: "cui_human3"},
@@ -144,7 +140,7 @@ export default {
         {q: "Using this chatbot helps me choose a mobile phone more quickly.", t: "useful4"},
 
       ],
-      q1groupans: Array(23).fill(null),
+      q1groupans: Array(19).fill(null),
     }
   },
   // mounted() {

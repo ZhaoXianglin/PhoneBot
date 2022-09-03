@@ -34,18 +34,18 @@ const store = new Vuex.Store({
         },
         addShowedPhone(state, phone) {
             //增加一个属性,先默认为true，让按钮不显示
-            phone.add_to_cart = true
+            phone.add_to_cart = false
             state.showed_phones[phone.id] = phone
             state.current_phone = phone
             state.showed_phones_list.push(phone.id)
             // 然后修改之前显示的一条
-            if (state.showed_phones_list.length > 1) {
-                let pre_id = state.showed_phones_list[state.showed_phones_list.length - 2]
-                if (!state.cart_phones.includes(pre_id)) {
-                    //如果上一个元素没有被加入购物车
-                    state.showed_phones[pre_id].add_to_cart = false;
-                }
-            }
+            // if (state.showed_phones_list.length > 1) {
+            //     let pre_id = state.showed_phones_list[state.showed_phones_list.length - 2]
+            //     if (!state.cart_phones.includes(pre_id)) {
+            //         //如果上一个元素没有被加入购物车
+            //         state.showed_phones[pre_id].add_to_cart = false;
+            //     }
+            // }
         },
         setWarning(state, phone_id) {
             state.showed_phones[phone_id].warning = true;

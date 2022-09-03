@@ -65,8 +65,8 @@ export default {
         {q: "This chatbot has good knowledge about mobile phones.", t: "trust_compe4"},
         {q: "This chatbot is truthful when conversing with me.", t: "trust_integity3"},
         {q: "This chatbot was respectful to me and considered my needs.", t: "cui_attentive7"},
+        {q: "Overall, this chatbot can be trusted.", t: "trust_compe5"},
         {q: 'Please respond to this question with "2".', t: "atten_chk1"},
-
 
         {
           q: "When I need to buy a mobile phone, I would feel comfortable depending on the information provided by this chatbot.",
@@ -84,7 +84,7 @@ export default {
         {q: "I would confidently follow the recommendations provided by this chatbot.", t: "intent2follow3"},
         {q: "Given the opportunity, I intend to buy the phones recommended by this chatbot.", t: "intent2purchase3"},
       ],
-      q1groupans: Array(20).fill(null),
+      q1groupans: Array(21).fill(null),
     }
   },
   // mounted() {
