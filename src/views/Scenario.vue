@@ -44,7 +44,7 @@
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
                     native-type="submit" @click="start"
-        >I have read and understand Lily's needs.
+        > I understand Lily's preference.
         </van-button>
       </div>
     </div>
