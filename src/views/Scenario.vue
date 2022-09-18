@@ -29,7 +29,7 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
       />
       <p v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
-        US </strong> US dollars.
+        US </strong> dollars.
       </p>
       <van-image
           v-animate-css.once="animationInfinite7"
