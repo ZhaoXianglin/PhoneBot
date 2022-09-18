@@ -13,7 +13,7 @@
       />
       <br/>
 
-      <p v-animate-css.once="animationInfinite2">1. She often <strong>watches videos</strong> on her mobile phone.</p>
+      <p v-animate-css.once="animationInfinite2">1. She prefers phones that have a <strong>a large display</strong> for watching videos.</p>
       <van-image
           v-animate-css.once="animationInfinite3"
           width="80%"
@@ -21,7 +21,7 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <p v-animate-css.once="animationInfinite4">2. She <strong>hates frequently charging</strong> the phone.</p>
+      <p v-animate-css.once="animationInfinite4">2. She prefers phones that have a <strong>long battery life</strong> for traveling.</p>
       <van-image
           v-animate-css.once="animationInfinite5"
           width="80%"
@@ -29,7 +29,7 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
       />
       <p v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
-        US </strong>dollars.
+        US </strong> US dollars.
       </p>
       <van-image
           v-animate-css.once="animationInfinite7"
@@ -44,7 +44,7 @@
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
                     native-type="submit" @click="start"
-        > I understand Lily's preference.
+        > I got Lily's requirements.
         </van-button>
       </div>
     </div>

@@ -49,7 +49,7 @@
       <p>Thank you very much for participating in this experiment, which aims to evaluate a chatbot that can <b>recommend mobile phones</b> based on your requirements.</p>
       <h4>Task:</h4>
       <ul>
-        <li>Read a user scenario about purchasing mobile phones and finish a simple quiz about the scenario.</li>
+        <li>Read a user scenario about purchasing mobile phones and finish a simple quiz about your understanding of scenario.</li>
         <li>Find <b>three mobile phones</b> that can meet the requirements shown in the user scenario.</li>
         <li>Fill out a questionnaire to evaluate the chatbot based on your experience.</li>
       </ul>
