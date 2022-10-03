@@ -15,28 +15,22 @@
               <van-col span="24"><span
                   style="font-weight:600">1. How did the chatbot explain the recommended phones?</span>
               </van-col>
-            </van-row>
-            <van-row type="flex" align="center" justify="between">
-              <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>
-              <van-col>
-                <van-radio-group v-model="q1groupans[20]" direction="horizontal" class="matrix_table">
+              <van-col span="24">
+                <van-radio-group v-model="q1groupans[20]">
                   <van-radio name="1" checked-color="#ee0a24" class="item">
                     Based on the other customers’ experience
                   </van-radio>
-                  &nbsp;
                   <van-radio v-if="identity_cue==='1'" name="2" checked-color="#ee0a24" class="item">
                     Based on the the Susan’s experience
                   </van-radio>
                   <van-radio v-if="identity_cue==='0'" name="2" checked-color="#ee0a24" class="item">
                     Based on the the RecBot’s experience
                   </van-radio>
-                  &nbsp;
                   <van-radio name="3" checked-color="#ee0a24" class="item">
                     Based on the ranking in the recommendation pool
                   </van-radio>
                 </van-radio-group>
               </van-col>
-              <van-col span="4"></van-col>
             </van-row>
           </van-row>
         </template>
