@@ -48,32 +48,32 @@
                  placeholder="nationality"
                  :rules="[{ required: auth, message: 'Please enter this item.' }]"/>
 
-      <p style="padding-left: 10px;font-weight:bolder">How much do you agree or disagree with the following statements?
-        Please rate the following statements based on your personal characteristics and opinions.</p>
-      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2),
-        Somewhat
-        disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
-      <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"
-                 :rules="[{ required: auth, message: 'required' }]">
-        <template #input>
-          <van-row style="width: 100%;">
-            <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">{{ index + 1 }}. {{ item.q }}</span></van-col>
-            </van-row>
-            <van-row type="flex" align="center" justify="between">
-              <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>
-              <van-col>
-                <van-radio-group v-model="q1groupans[index]" direction="horizontal" class="matrix_table">
-                  <van-radio :name="val" v-for="val in 7" :key="val" checked-color="#ee0a24" class="item">
-                    {{ val }}
-                  </van-radio>
-                </van-radio-group>
-              </van-col>
-              <van-col span="4">Strongly agree</van-col>
-            </van-row>
-          </van-row>
-        </template>
-      </van-field>
+<!--      <p style="padding-left: 10px;font-weight:bolder">How much do you agree or disagree with the following statements?-->
+<!--        Please rate the following statements based on your personal characteristics and opinions.</p>-->
+<!--      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2),-->
+<!--        Somewhat-->
+<!--        disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>-->
+<!--      <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"-->
+<!--                 :rules="[{ required: auth, message: 'required' }]">-->
+<!--        <template #input>-->
+<!--          <van-row style="width: 100%;">-->
+<!--            <van-row type="flex">-->
+<!--              <van-col span="24"><span style="font-weight:600">{{ index + 1 }}. {{ item.q }}</span></van-col>-->
+<!--            </van-row>-->
+<!--            <van-row type="flex" align="center" justify="between">-->
+<!--              <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>-->
+<!--              <van-col>-->
+<!--                <van-radio-group v-model="q1groupans[index]" direction="horizontal" class="matrix_table">-->
+<!--                  <van-radio :name="val" v-for="val in 7" :key="val" checked-color="#ee0a24" class="item">-->
+<!--                    {{ val }}-->
+<!--                  </van-radio>-->
+<!--                </van-radio-group>-->
+<!--              </van-col>-->
+<!--              <van-col span="4">Strongly agree</van-col>-->
+<!--            </van-row>-->
+<!--          </van-row>-->
+<!--        </template>-->
+<!--      </van-field>-->
 
       <div style="margin: 36px;">
         <van-button round block type="info" native-type="submit" :loading="loading">Continue</van-button>

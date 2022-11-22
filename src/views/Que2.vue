@@ -53,48 +53,40 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15, 18],
+      q_seq: [1, 4, 7, 10, 13, 16, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15],
       q1group: [
-        {q: "This chatbot was interested in what I was saying.", t: "cui_attentive2"},
-        {q: "This chatbot is like a real expert in assessing mobile phones.", t: "trust_compe1"},
-        {q: "This chatbot provides unbiased product recommendations.", t: "trust_integity1"},
-        {q: "This chatbot tried to know more about my needs.", t: "cui_attentive5"},
-        {q: "This chatbot considers my needs and all important attributes of mobile phones.", t: "trust_compe3"},
-        {q: "This chatbot is honest.", t: "trust_integity2"},
-        {q: "This chatbot paid attention to what I was saying.", t: "cui_attentive6"},
-        {q: "This chatbot has good knowledge about mobile phones.", t: "trust_compe4"},
-        {q: "This chatbot is truthful when conversing with me.", t: "trust_integity3"},
-        {q: "This chatbot was respectful to me and considered my needs.", t: "cui_attentive7"},
-        {q: "Overall, this chatbot can be trusted.", t: "trust_compe5"},
-        {q: 'Please respond to this question with "2".', t: "atten_chk1"},
+        {q: "The objective(s) of the purchase decision were clear to me.", t: "interlligence1"},
+        {q: "It was easy for me to get relevant quantitative (price, screen size, etc.) information needed to make the purchase.", t: "interlligence2"},
+        {q: "It was easy for me to get relevant qualitative (quality, usefulness, etc.) information needed to make the purchase.", t: "interlligence3"},
 
-        {
-          q: "When I need to buy a mobile phone, I would feel comfortable depending on the information provided by this chatbot.",
-          t: "intent2depend1"
-        },
-        {q: "If I need to choose a mobile phone, I would want to use this chatbot again.", t: "intent2follow1"},
-        {
-          q: "Given a chance, I predict that I would consider buying the phones recommended by this chatbot in the near future.",
-          t: "intent2purchase1"
-        },
-        {q: "I can always rely on this chatbot for choosing a mobile phone.", t: "intent2depend2"},
-        {q: "I would not hesitate to use the recommendations this chatbot supplied me.", t: "intent2follow2"},
+        {q: "I believe it was possible to identify various mobile phone candidates.", t: "design1"},
+        {q: "It was easy for me to establish criteria (such as price and screen size) to make the purchase decision.", t: "design2"},
+        {q: "With the information I had, I was able to narrow down my choices.", t: "design3"},
+
+        {q: "I believe that it was possible for me to evaluate the various mobile phones.", t: "choice1"},
+        {q: "Evaluation of the various mobile phones did not take me very long.", t: "choice2"},
+        {q: "It was an easy decision to pick the best mobile phone.", t: "choice3"},
+
+        {q: "This chatbot was interested in what I was saying.", t: "cui_attentive2"},
+        {q: "This chatbot tried to know more about my needs.", t: "cui_attentive5"},
+        {q: "This chatbot paid attention to what I was saying.", t: "cui_attentive6"},
+        {q: "This chatbot was respectful to me and considered my needs.", t: "cui_attentive7"},
+        {q: 'Please respond to this question with "2".', t: "atten_chk1"},
+        {q: "Given a chance, I predict that I would consider buying the phones recommended by this chatbot in the near future.", t: "intent2purchase1"},
         {q: "I will likely buy the phones recommended by this chatbot in the near future.", t: "intent2purchase2"},
-        {q: "I feel that I could count on this chatbot to help with picking out a mobile phone.", t: "intent2depend3"},
-        {q: "I would confidently follow the recommendations provided by this chatbot.", t: "intent2follow3"},
         {q: "Given the opportunity, I intend to buy the phones recommended by this chatbot.", t: "intent2purchase3"},
       ],
       q1groupans: Array(21).fill(null),
     }
   },
-  // mounted() {
-  //   let rand_ques = []
-  //   this.q_seq.forEach((v) => {
-  //     rand_ques.push(this.q1group[v - 1])
-  //     //console.log(v,i,this.q1group[v-1])
-  //   })
-  //   this.q1group = rand_ques
-  // },
+  mounted() {
+    let rand_ques = []
+    this.q_seq.forEach((v) => {
+      rand_ques.push(this.q1group[v - 1])
+      //console.log(v,i,this.q1group[v-1])
+    })
+    this.q1group = rand_ques
+  },
   methods: {
     onFailed() {
       this.$toast("You may have missed some items, please fill in.");

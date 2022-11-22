@@ -29,6 +29,9 @@
                   <van-radio name="3" checked-color="#ee0a24" class="item">
                     Based on the ranking in the recommendation pool
                   </van-radio>
+                  <van-radio name="0" checked-color="#ee0a24" class="item">
+                    No explanation is provided
+                  </van-radio>
                 </van-radio-group>
               </van-col>
             </van-row>

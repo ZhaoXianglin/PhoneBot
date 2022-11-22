@@ -612,6 +612,7 @@ export default {
     addToCart() {
       this.show_err_reminder = false;
       this.last_action = "addToCart";
+      botui.action.hide();
       this.bot("Please rate your liked phone.").then(() => {
         this.show_rate = true
       })
