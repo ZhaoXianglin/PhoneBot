@@ -597,6 +597,7 @@ export default {
 
 //加入购物车前的检查
     checkBeforeToCart: function (phone_id) {
+      botui.action.hide();
       if (phone_id !== this.current_phone.id) {
         this.current_phone = this.$store.state.showed_phones[phone_id]
       }
@@ -612,7 +613,6 @@ export default {
     addToCart() {
       this.show_err_reminder = false;
       this.last_action = "addToCart";
-      botui.action.hide();
       this.bot("Please rate your liked phone.").then(() => {
         this.show_rate = true
       })
