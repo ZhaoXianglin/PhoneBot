@@ -20,8 +20,7 @@
           placeholder="please enter"
           :rules="[{ required: auth, message: 'required' }]"
       />
-      <p style="padding:0 10px;font-weight:bold;text-align: left">2. What else do you want to comment on the interaction
-        with this chatbot?</p>
+      <p style="padding:0 10px;font-weight:bold;text-align: left">2. What else do you want to comment on the purchase decision support provided by the chatbot?</p>
       <van-field
           name="openended2"
           v-model="openended2"
@@ -67,24 +66,26 @@ export default {
           localStorage.setItem('code', res.data.msg);
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          this.$dialog.confirm({
-            confirmButtonText: "Yes, continue",
-            cancelButtonText: "No",
-            title: 'Additional Survey',
-            message: 'We still have 32 bonus question items (take about 3-4 minutes). You will get a bonus of £0.5 GBP for answering these extra questions:)',
-          })
-              .then(() => {
-                // on confirm
-                this.$router.replace('/que4').catch((err) => {
-                  console.log(err.message)
-                  localStorage.setItem('code', "");
-                });
-              })
-              .catch(() => {
-                this.$router.replace('/success').catch((err) => {
-                  console.log(err.message)
-                });
-              });
+          this.$router.replace('/que4').catch((err) => {
+            console.log(err.message)
+            localStorage.setItem('code', "");
+          });
+          // this.$dialog.confirm({
+          //   confirmButtonText: "Yes, continue",
+          //   cancelButtonText: "No",
+          //   title: 'Additional Survey',
+          //   message: 'We still have 32 bonus question items (take about 3-4 minutes). You will get a bonus of £0.5 GBP for answering these extra questions:)',
+          // }).then(() => {
+          //       // on confirm
+          //       this.$router.replace('/que4').catch((err) => {
+          //         console.log(err.message)
+          //         localStorage.setItem('code', "");
+          //       });
+          //     }).catch(() => {
+          //       this.$router.replace('/success').catch((err) => {
+          //         console.log(err.message)
+          //       });
+          //     });
 
         } else {
           this.loading = false;
