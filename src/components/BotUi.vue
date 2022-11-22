@@ -25,7 +25,7 @@
                   <table style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555">
                     <tr>
                       <td style="width: 96px"> Storage:</td>
-                      <td>{{ msg.content.storage }}</td>
+                      <td>{{ msg.content.storage }}GB</td>
                     </tr>
                     <tr>
                       <td>Memory:</td>
@@ -251,7 +251,6 @@ export default {
       this.$emit('clicked_url', url);
     },
     card_add_to_cart: function (id) {
-      console.log("发送id" + id)
       this.$emit('card_add_to_cart', id);
       //this.$store.commit('addToCart', id);
     },

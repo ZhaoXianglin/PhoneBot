@@ -27,7 +27,7 @@
 <!--        <p>We may decide to end your participation if we identify that you are not following the instructions closely-->
 <!--          enough.</p>-->
         <h5>Contact Information:</h5>
-        <p>If you have any questions about this research, you may contact: Wanling Cai at cswlcai@comp.hkbu.edu.hk</p>
+        <p>If you have any questions about this research, you may contact: Xianglin ZHAO at csxlzhao@comp.hkbu.edu.hk</p>
 
         <p>You can contact the Research Ethics Committee by email at hkbu_rec@hkbu.edu.hk if you feel that you have not
           been treated according to the description in this form.</p>
@@ -49,7 +49,7 @@
       <p>Thank you very much for participating in this experiment, which aims to evaluate a chatbot that can <b>recommend mobile phones</b> based on your requirements.</p>
       <h4>Task:</h4>
       <ul>
-        <li>Read a user scenario about purchasing mobile phones and finish a simple quiz about the scenario.</li>
+        <li>Read a user scenario about purchasing mobile phones and finish a simple quiz about your understanding of scenario.</li>
         <li>Find <b>three mobile phones</b> that can meet the requirements shown in the user scenario.</li>
         <li>Fill out a questionnaire to evaluate the chatbot based on your experience.</li>
       </ul>

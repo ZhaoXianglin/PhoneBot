@@ -113,7 +113,7 @@
         <!--        </div>-->
         <div
             style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
-          <h3>Tips for chatting for phone searching</h3>
+          <h4>You may refer to the following examples when you chat with the agent to adjust the recommendation results.</h4>
 
           <h4>By price:</h4>
           <ul>
@@ -184,8 +184,8 @@
           </template>
           <template #tags>
             <div>
-              <van-tag plain type="primary" style="margin:2px">Storage:{{ item.storage }}</van-tag>
-              <van-tag plain type="primary" style="margin:2px">RAM:{{ item.ram }}</van-tag>
+              <van-tag plain type="primary" style="margin:2px">Storage:{{ item.storage }}GB</van-tag>
+              <van-tag plain type="primary" style="margin:2px">RAM:{{ item.ram }}GB</van-tag>
               <van-tag plain type="primary" style="margin:2px">{{ item.os1 }}</van-tag>
               <van-tag plain type="primary" style="margin: 2px">{{ item.cam1 }}MP</van-tag>
               <van-tag plain type="primary" style="margin: 2px">{{ item.displaysize }}inches</van-tag>
@@ -229,8 +229,8 @@
           </template>
           <template #tags>
             <div>
-              <van-tag plain type="primary" style="margin:2px">Storage:{{ current_phone.storage }}</van-tag>
-              <van-tag plain type="primary" style="margin:2px">RAM:{{ current_phone.ram }}</van-tag>
+              <van-tag plain type="primary" style="margin:2px">Storage:{{ current_phone.storage }}GB</van-tag>
+              <van-tag plain type="primary" style="margin:2px">RAM:{{ current_phone.ram }}GB</van-tag>
               <van-tag plain type="primary" style="margin:2px">{{ current_phone.os1 }}</van-tag>
               <van-tag plain type="primary" style="margin: 2px">{{ current_phone.cam1 }}MP</van-tag>
               <van-tag plain type="primary" style="margin: 2px">{{ current_phone.displaysize }}inches</van-tag>
@@ -358,10 +358,6 @@ export default {
       show_phone_page: false,
       phone_buttons: [
         {
-          text: 'Add to cart',
-          value: 'Add to cart'
-        },
-        {
           text: 'Next item',
           value: 'Next item'
         },
@@ -417,11 +413,11 @@ export default {
         cssClass: style,
         loading: true,
         delay: 10,
-        photo: "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar1.png",
+        photo: "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar1.png",
         content: msg
       };
       if (this.identity_cue === '1') {
-        config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
+        config.photo = "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar2.png";
         config.delay = msg.length * 40
       }
       this.addLog('bot', this.last_action, msg)
@@ -724,7 +720,7 @@ export default {
       if (this.identity_cue === '1') {
         username = this.username + '.';
       }
-      let msg = username + " I’m happy to help you with your purchase. We have all different types of mobile phones."
+      let msg = username + " I’m happy to help you with your purchase. We have different types of mobile phones."
       this.bot(msg).then(() => {
         return this.bot("To ensure that I make the most suitable recommendations for you, I’d like to ask you some questions.")
       }).then(() => {
