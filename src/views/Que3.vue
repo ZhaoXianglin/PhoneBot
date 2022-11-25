@@ -53,7 +53,7 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21,],
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
       q1group: [
         {q: "I understood why the phones were recommended to me.", t: "trans1"},
         {q: "I understood how the system determined the quality of the phones.", t: "trans2"},
