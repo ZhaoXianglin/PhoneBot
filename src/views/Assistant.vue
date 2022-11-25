@@ -1,6 +1,6 @@
 <template>
   <div class="chatbot">
-    <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
+    <van-nav-bar title='' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
         <van-icon name="info-o" size="16"><span

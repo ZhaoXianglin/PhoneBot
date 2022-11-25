@@ -818,6 +818,7 @@ export default {
 
 .help {
   box-sizing: border-box;
+  display: none;
 }
 
 .help p {
