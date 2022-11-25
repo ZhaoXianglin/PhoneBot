@@ -53,7 +53,7 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15, 18],
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 22, 2, 5, 8, 11, 14, 17, 20, 23, 3, 6, 9, 12, 15, 18, 21,],
       q1group: [
         {q: "I understood why the phones were recommended to me.", t: "trans1"},
         {q: "I understood how the system determined the quality of the phones.", t: "trans2"},
@@ -76,11 +76,19 @@ export default {
 
         {q: "I was satisfied with the recommendations made by this chatbot.", t: "satis1"},
         {q: "The recommendations made by this chatbot were satisfying.", t: "satis2"},
-        {q: " These recommendations made by this chatbot made me satisfied.", t: "satis3"},
+        {q: "These recommendations made by this chatbot made me satisfied.", t: "satis3"},
+
+        {q: "The recommendations provided by the chatbot can be trusted.", t: "trust1"},
+        {q: "I can rely on the chatbot when I need to buy a mobile phone.", t: "trust2"},
+        {q: "I feel I could count on the chatbot to help me purchase the mobile phone I need.", t: "trust3"},
+        {
+          q: "If I need to buy a mobile phone, I would be willing to rely on the information provided by the chatbot.",
+          t: "trust4"
+        },
 
         {q: 'Please respond to this question with "1".', t: "atten_chk3"},
       ],
-      q1groupans: Array(19).fill(null),
+      q1groupans: Array(23).fill(null),
     }
   },
   mounted() {
