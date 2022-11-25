@@ -16,21 +16,12 @@
                   style="font-weight:600">1. How did the chatbot explain the recommended phones?</span>
               </van-col>
               <van-col span="24">
-                <van-radio-group v-model="q1groupans[20]">
+                <van-radio-group v-model="q1groupans[17]">
                   <van-radio name="1" checked-color="#ee0a24" class="item">
-                    Based on the other customers’ experience
-                  </van-radio>
-                  <van-radio v-if="identity_cue==='1'" name="2" checked-color="#ee0a24" class="item">
-                    Based on the the Susan’s experience
-                  </van-radio>
-                  <van-radio v-if="identity_cue==='0'" name="2" checked-color="#ee0a24" class="item">
-                    Based on the the RecBot’s experience
-                  </van-radio>
-                  <van-radio name="3" checked-color="#ee0a24" class="item">
-                    Based on the ranking in the recommendation pool
+                    Based on phone features (e.g., battery life, screen size).
                   </van-radio>
                   <van-radio name="0" checked-color="#ee0a24" class="item">
-                    No explanation is provided
+                    I didn't see any explanations.
                   </van-radio>
                 </van-radio-group>
               </van-col>
@@ -38,35 +29,35 @@
           </van-row>
         </template>
       </van-field>
-<!--      <van-field :rules="[{ required: auth, message: 'required' }]" name="check2">-->
-<!--        <template #input>-->
-<!--          <van-row style="width: 100%;">-->
-<!--            <van-row type="flex">-->
-<!--              <van-col span="24"><span style="font-weight:600">2.Did the chatbot show anyone’s opinions about the recommended phones?</span>-->
-<!--              </van-col>-->
-<!--            </van-row>-->
-<!--            <van-row type="flex" align="center" justify="between">-->
-<!--              <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>-->
-<!--              <van-col>-->
-<!--                <van-radio-group v-model="q1groupans[22]" direction="horizontal" class="matrix_table">-->
-<!--                  <van-radio name="1" checked-color="#ee0a24" class="item">-->
-<!--                    Yes-->
-<!--                  </van-radio>-->
-<!--                  &nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--                  <van-radio name="-1" checked-color="#ee0a24" class="item">-->
-<!--                    No-->
-<!--                  </van-radio>-->
-<!--                  &nbsp;-->
-<!--                  <van-radio name="0" checked-color="#ee0a24" class="item">-->
-<!--                    Not Sure-->
-<!--                  </van-radio>-->
-<!--                </van-radio-group>-->
-<!--              </van-col>-->
-<!--              <van-col span="4"></van-col>-->
-<!--            </van-row>-->
-<!--          </van-row>-->
-<!--        </template>-->
-<!--      </van-field>-->
+      <!--      <van-field :rules="[{ required: auth, message: 'required' }]" name="check2">-->
+      <!--        <template #input>-->
+      <!--          <van-row style="width: 100%;">-->
+      <!--            <van-row type="flex">-->
+      <!--              <van-col span="24"><span style="font-weight:600">2.Did the chatbot show anyone’s opinions about the recommended phones?</span>-->
+      <!--              </van-col>-->
+      <!--            </van-row>-->
+      <!--            <van-row type="flex" align="center" justify="between">-->
+      <!--              <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>-->
+      <!--              <van-col>-->
+      <!--                <van-radio-group v-model="q1groupans[22]" direction="horizontal" class="matrix_table">-->
+      <!--                  <van-radio name="1" checked-color="#ee0a24" class="item">-->
+      <!--                    Yes-->
+      <!--                  </van-radio>-->
+      <!--                  &nbsp;&nbsp;&nbsp;&nbsp;-->
+      <!--                  <van-radio name="-1" checked-color="#ee0a24" class="item">-->
+      <!--                    No-->
+      <!--                  </van-radio>-->
+      <!--                  &nbsp;-->
+      <!--                  <van-radio name="0" checked-color="#ee0a24" class="item">-->
+      <!--                    Not Sure-->
+      <!--                  </van-radio>-->
+      <!--                </van-radio-group>-->
+      <!--              </van-col>-->
+      <!--              <van-col span="4"></van-col>-->
+      <!--            </van-row>-->
+      <!--          </van-row>-->
+      <!--        </template>-->
+      <!--      </van-field>-->
 
       <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
         statements?</p>
@@ -94,6 +85,29 @@
           </van-row>
         </template>
       </van-field>
+      <div v-if="explanation_style==='1'">
+        <van-field v-for="(item, index) in q2group" :key="item.t" :name="item.t"
+                   :rules="[{ required: auth, message: 'required' }]">
+          <template #input>
+            <van-row style="width: 100%;">
+              <van-row type="flex">
+                <van-col span="24"><span style="font-weight:600">{{ index + 19 }}. {{ item.q }}</span></van-col>
+              </van-row>
+              <van-row type="flex" align="center" justify="between">
+                <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>
+                <van-col>
+                  <van-radio-group v-model="q2groupans[index]" direction="horizontal" class="matrix_table">
+                    <van-radio :name="val" v-for="val in 7" :key="val" checked-color="#ee0a24" class="item">
+                      {{ val }}
+                    </van-radio>
+                  </van-radio-group>
+                </van-col>
+                <van-col span="4">Strongly agree</van-col>
+              </van-row>
+            </van-row>
+          </template>
+        </van-field>
+      </div>
       <div style="margin: 36px;">
         <van-button round block type="info" native-type="submit" :loading="loading">Continue</van-button>
       </div>
@@ -108,46 +122,54 @@ export default {
   name: "Que1",
   data: function () {
     return {
-      identity_cue: "",
+      explanation_style: "",
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      //q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18, 21],
+      q_seq: [1, 4, 7, 10, 13, 16, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15],
       q1group: [
+        {q: "The objective(s) of the purchase decision were clear to me.", t: "interlligence1"},
+        {q: "It was easy for me to get relevant quantitative (price, screen size, etc.) information needed to make the purchase.", t: "interlligence2"},
+        {q: "It was easy for me to get relevant qualitative (quality, usefulness, etc.) information needed to make the purchase.", t: "interlligence3"},
 
-        {q: "This chatbot behaved like a human.", t: "cui_human1"},
-        {q: "I felt like conversing with a real human when interacting with this chatbot.", t: "cui_human2"},
-        {q: "This chatbot system has human properties.", t: "cui_human3"},
+        {q: "I believe it was possible to identify various mobile phone candidates.", t: "design1"},
+        {q: "It was easy for me to establish criteria (such as price and screen size) to make the purchase decision.", t: "design2"},
+        {q: "With the information I had, I was able to narrow down my choices.", t: "design3"},
 
-        {q: "The recommended phones can meet my provided requirements.", t: "accuracy1"},
-        {q: "This chatbot explains why the phones are recommended to me.", t: "explain1"},
-        {q: "There is a sense of human contact on this chatbot.", t: "social_presence1"},
-        {q: "The recommended phones were well-chosen.", t: "accuracy2"},
-        {q: "This chatbot explained why the recommended phones could fit my preference.", t: "explain3"},
-        {q: "There is a sense of personal communication on this chatbot.", t: "social_presence2"},
-        {q: "The recommended phones were relevant.", t: "accuracy3"},
-        {q: "This chatbot told me the reason why I received the recommended phones.", t: "explain4"},
-        {q: "There is a sense of human warmth in this chatbot.", t: "social_presence4"},
+        {q: "I believe that it was possible for me to evaluate the various mobile phones.", t: "choice1"},
+        {q: "Evaluation of the various mobile phones did not take me very long.", t: "choice2"},
+        {q: "It was an easy decision to pick the best mobile phone.", t: "choice3"},
 
-        {q: "Using this chatbot to find what I like is easy.", t: "ease4"},
-        {q: "This chatbot helped me find the ideal phone.", t: "useful2"},
-        {q: "Finding a phone to buy with the help of this chatbot is easy.", t: "ease5"},
-        {q: "Using this chatbot to find what I like is easy.", t: "useful3"},
-        {q: "It was easy to find what I liked by using this chatbot.", t: "ease6"},
-        {q: "Using this chatbot helps me choose a mobile phone more quickly.", t: "useful4"},
+        {q: "I felt in control of modifying my taste using this chatbot.", t: "control1"},
+        {q: "I could control the recommendations this chatbot made for me.", t: "control4"},
+        {q: "I felt in control of telling this chatbot what I wanted.", t: "control5"},
+        {q: "I felt in control of adjusting recommendations based on my preference.", t: "control6"},
 
+        {q: "This chatbot understands what I said.", t: "cui_unders1"},
+        {q: "I find that this chatbot understood what I want.", t: "cui_unders2"},
+        {q: "I felt that this chatbot understood my intentions.", t: "cui_unders3"},
+
+        {q: 'Please respond to this question with "5".', t: "atten_chk1"},
       ],
-      q1groupans: Array(19).fill(null),
+      q1groupans: Array(18).fill(null),
+
+      q2group: [
+        {q: "This explanation makes me confident that I will like the recommendation.", t: "eva_exp1"},
+        {q: "This explanation makes the recommendation process clear to me.", t: "eva_exp2"},
+        {q: "This explanation for the recommendation is convincing.", t: "eva_exp3"},
+      ],
+      q2groupans: Array(3).fill(null),
     }
   },
-  // mounted() {
-  //   let rand_ques = []
-  //   this.q_seq.forEach((v) => {
-  //     rand_ques.push(this.q1group[v - 1])
-  //     //console.log(v, this.q1group[v - 1])
-  //   })
-  //   this.q1group = rand_ques
-  // },
+  mounted() {
+    this.explanation_style = localStorage.getItem("explanation_style")
+    let rand_ques = []
+    this.q_seq.forEach((v) => {
+      rand_ques.push(this.q1group[v - 1])
+      //console.log(v, this.q1group[v - 1])
+    })
+    this.q1group = rand_ques
+  },
   methods: {
     onFailed() {
       this.$toast("You may have missed some items, please fill in.");
@@ -176,9 +198,7 @@ export default {
       })
     },
   },
-  mounted() {
-    this.identity_cue = localStorage.getItem("identity_cue")
-  }
+
 }
 </script>
 

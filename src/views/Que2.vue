@@ -53,30 +53,35 @@ export default {
       loading: false,
       st: localStorage.getItem('st'),
       auth: true,
-      q_seq: [1, 4, 7, 10, 13, 16, 2, 5, 8, 11, 14, 17, 3, 6, 9, 12, 15],
+      q_seq: [1, 4, 7, 10, 13, 16, 19, 2, 5, 8, 11, 14, 17, 20, 3, 6, 9, 12, 15, 18],
       q1group: [
-        {q: "The objective(s) of the purchase decision were clear to me.", t: "interlligence1"},
-        {q: "It was easy for me to get relevant quantitative (price, screen size, etc.) information needed to make the purchase.", t: "interlligence2"},
-        {q: "It was easy for me to get relevant qualitative (quality, usefulness, etc.) information needed to make the purchase.", t: "interlligence3"},
+        {q: "The recommended phones can meet my provided requirements.", t: "accuracy1"},
+        {q: "The recommended phones were well-chosen.", t: "accuracy2"},
+        {q: "The recommended phones were relevant.", t: "accuracy3"},
+        {q: "The recommended phones were interesting.", t: "accuracy4"},
 
-        {q: "I believe it was possible to identify various mobile phone candidates.", t: "design1"},
-        {q: "It was easy for me to establish criteria (such as price and screen size) to make the purchase decision.", t: "design2"},
-        {q: "With the information I had, I was able to narrow down my choices.", t: "design3"},
+        {q: "This chatbot explains why the phones are recommended to me.", t: "explain1"},
+        {q: "This chatbot helped me understand why the phones were recommended to me.", t: "explain2"},
+        {q: "The chatbot explained the logic of recommending phones.", t: "explain3"},
+        {q: "This chatbot told me the reason why I received the recommended phones.", t: "explain4"},
 
-        {q: "I believe that it was possible for me to evaluate the various mobile phones.", t: "choice1"},
-        {q: "Evaluation of the various mobile phones did not take me very long.", t: "choice2"},
-        {q: "It was an easy decision to pick the best mobile phone.", t: "choice3"},
+        {q: "There was a sense of human contact on this chatbot.", t: "social_presence1"},
+        {q: "There was a sense of personal communication on this chatbot.", t: "social_presence2"},
+        {q: "There was a sense of sociability on this chatbot.", t: "social_presence3"},
+        {q: "There was a sense of human warmth in this chatbot.", t: "social_presence4"},
 
         {q: "This chatbot was interested in what I was saying.", t: "cui_attentive2"},
         {q: "This chatbot tried to know more about my needs.", t: "cui_attentive5"},
         {q: "This chatbot paid attention to what I was saying.", t: "cui_attentive6"},
         {q: "This chatbot was respectful to me and considered my needs.", t: "cui_attentive7"},
-        {q: 'Please respond to this question with "2".', t: "atten_chk1"},
+
         {q: "Given a chance, I predict that I would consider buying the phones recommended by this chatbot in the near future.", t: "intent2purchase1"},
         {q: "I will likely buy the phones recommended by this chatbot in the near future.", t: "intent2purchase2"},
         {q: "Given the opportunity, I intend to buy the phones recommended by this chatbot.", t: "intent2purchase3"},
+
+        {q: 'Please respond to this question with "2".', t: "atten_chk2"},
       ],
-      q1groupans: Array(21).fill(null),
+      q1groupans: Array(20).fill(null),
     }
   },
   mounted() {
