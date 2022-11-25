@@ -349,7 +349,7 @@ export default {
       show_err_reminder: false,
       loading: false,
       msg_btn_ctrl: true,
-      show_help: false,
+      show_help: true,
       show_rate: false,
       show_preference: false,
       show_next_page: false,
