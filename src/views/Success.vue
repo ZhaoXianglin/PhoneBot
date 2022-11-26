@@ -26,7 +26,7 @@ export default {
   },
   mounted: function () {
     if (localStorage.getItem('step') === '5' || localStorage.getItem('step') === '6') {
-      this.code = localStorage.getItem("code");
+      this.code = "CEBMLMFN";
       localStorage.setItem('finished', "1")
       localStorage.setItem("active", new Date().getTime().toString());
     }
