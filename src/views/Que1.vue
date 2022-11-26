@@ -1,7 +1,7 @@
 <template>
   <div class="posttest">
-    <van-nav-bar title="Post-Study Survey(part1)"/>
-    <van-steps :active="2">
+    <van-nav-bar title="Post-Study Survey"/>
+    <van-steps :active="0">
       <van-step>Step1</van-step>
       <van-step>Step2</van-step>
       <van-step>Step3</van-step>
@@ -29,35 +29,26 @@
           </van-row>
         </template>
       </van-field>
-      <!--      <van-field :rules="[{ required: auth, message: 'required' }]" name="check2">-->
-      <!--        <template #input>-->
-      <!--          <van-row style="width: 100%;">-->
-      <!--            <van-row type="flex">-->
-      <!--              <van-col span="24"><span style="font-weight:600">2.Did the chatbot show anyone’s opinions about the recommended phones?</span>-->
-      <!--              </van-col>-->
-      <!--            </van-row>-->
-      <!--            <van-row type="flex" align="center" justify="between">-->
-      <!--              <van-col span="0" class="score_left_s" style="text-align:right;"></van-col>-->
-      <!--              <van-col>-->
-      <!--                <van-radio-group v-model="q1groupans[22]" direction="horizontal" class="matrix_table">-->
-      <!--                  <van-radio name="1" checked-color="#ee0a24" class="item">-->
-      <!--                    Yes-->
-      <!--                  </van-radio>-->
-      <!--                  &nbsp;&nbsp;&nbsp;&nbsp;-->
-      <!--                  <van-radio name="-1" checked-color="#ee0a24" class="item">-->
-      <!--                    No-->
-      <!--                  </van-radio>-->
-      <!--                  &nbsp;-->
-      <!--                  <van-radio name="0" checked-color="#ee0a24" class="item">-->
-      <!--                    Not Sure-->
-      <!--                  </van-radio>-->
-      <!--                </van-radio-group>-->
-      <!--              </van-col>-->
-      <!--              <van-col span="4"></van-col>-->
-      <!--            </van-row>-->
-      <!--          </van-row>-->
-      <!--        </template>-->
-      <!--      </van-field>-->
+            <van-field :rules="[{ required: auth, message: 'required' }]" name="check2">
+              <template #input>
+                <van-row style="width: 100%;">
+                  <van-row type="flex">
+                    <van-col span="24"><span style="font-weight:600">2.Who recommended phones to you in the previous conversation?</span>
+                    </van-col>
+                    <van-col span="24">
+                      <van-radio-group v-model="q1groupans[18]">
+                        <van-radio name="1" checked-color="#ee0a24" class="item">
+                          <van-image src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar2.png" width="48px">Susan</van-image>
+                        </van-radio>
+                        <van-radio name="0" checked-color="#ee0a24" class="item">
+                          <van-image width="48px" src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar1.png" >RecBot</van-image>
+                        </van-radio>
+                      </van-radio-group>
+                    </van-col>
+                  </van-row>
+                </van-row>
+              </template>
+            </van-field>
 
       <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
         statements?</p>
@@ -69,7 +60,7 @@
         <template #input>
           <van-row style="width: 100%;">
             <van-row type="flex">
-              <van-col span="24"><span style="font-weight:600">{{ index + 2 }}. {{ item.q }}</span></van-col>
+              <van-col span="24"><span style="font-weight:600">{{ index + 3 }}. {{ item.q }}</span></van-col>
             </van-row>
             <van-row type="flex" align="center" justify="between">
               <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>
@@ -151,7 +142,7 @@ export default {
 
         {q: 'Please respond to this question with "5".', t: "atten_chk1"},
       ],
-      q1groupans: Array(18).fill(null),
+      q1groupans: Array(19).fill(null),
 
       q2group: [
         {q: "This explanation makes me confident that I will like the recommendation.", t: "eva_exp1"},

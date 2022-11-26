@@ -1,6 +1,6 @@
 <template>
   <div class="chatbot">
-    <van-nav-bar title='PhoneBot' @click-left="clickHelp" @click-right="clickCart" left-text=""
+    <van-nav-bar title='' @click-left="clickHelp" @click-right="clickCart" left-text=""
                  right-text="Cart" class="chatbot-header">
       <template #left>
         <van-icon name="info-o" size="16"><span
@@ -98,7 +98,7 @@
     <van-popup
         v-model="show_help"
         :style="{ height: '520px',width:'90%',overflow:'hidden'}"
-        @close="greeting"
+        @close="show_help=false"
         :close-on-click-overlay="true"
         round
     >
@@ -113,7 +113,8 @@
         <!--        </div>-->
         <div
             style="width:100%; box-sizing: border-box; margin-top: 36px; position: absolute; top:0; left: 0;padding: 0 10px 10px 10px; overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 480px">
-          <h4>You may refer to the following examples when you chat with the agent to adjust the recommendation results.</h4>
+          <h4>You may refer to the following examples when you chat with the agent to adjust the recommendation
+            results.</h4>
 
           <h4>By price:</h4>
           <ul>
@@ -349,7 +350,7 @@ export default {
       show_err_reminder: false,
       loading: false,
       msg_btn_ctrl: true,
-      show_help: true,
+      show_help: false,
       show_rate: false,
       show_preference: false,
       show_next_page: false,
@@ -392,6 +393,7 @@ export default {
   mounted() {
     this.explanation_style = localStorage.getItem("explanation_style")
     this.identity_cue = localStorage.getItem("identity_cue")
+    this.greeting()
   },
   methods: {
     //从卡片组件里面获得点击事件的url
@@ -704,15 +706,15 @@ export default {
     },
 
 //初始化引导语的入口
+
     greeting: function () {
-      if (this.help_showed_count === 1) {
-        // 初始状态
-        let msg = "Hey! I’m RecBot, an <b>automated chatbot</b> at Phoneshop."
-        if (this.identity_cue === '1') msg = "Hello! I’m Susan, <b> a sales assistant</b> working at Phoneshop."
-        this.bot(msg).then(() => {
-          this.ask_name()
-        })
-      }
+      // 初始状态
+      let msg = "Hey! I’m RecBot, an <b>automated chatbot</b> at Phoneshop."
+      if (this.identity_cue === '1') msg = "Hello! I’m Susan, <b> a sales assistant</b> working at Phoneshop."
+      this.bot(msg).then(() => {
+        this.ask_name()
+      })
+
     },
     ask_prefer: function () {
       this.last_action = 'ask_prefer'

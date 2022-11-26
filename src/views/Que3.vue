@@ -1,6 +1,6 @@
 <template>
   <div class="posttest">
-    <van-nav-bar title="Additional Post-Study Survey"/>
+    <van-nav-bar title="Post-Study Survey"/>
     <van-steps :active="2">
       <van-step>Step1</van-step>
       <van-step>Step2</van-step>
