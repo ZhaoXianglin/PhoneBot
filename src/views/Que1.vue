@@ -13,15 +13,15 @@
           <van-row style="width: 100%;">
             <van-row type="flex">
               <van-col span="24"><span
-                  style="font-weight:600">1. How did the chatbot explain the recommended phones?</span>
+                  style="font-weight:600">1. What did the chatbot say before recommending a phone?</span>
               </van-col>
               <van-col span="24">
                 <van-radio-group v-model="q1groupans[17]">
                   <van-radio name="1" checked-color="#ee0a24" class="item">
-                    Based on phone features (e.g., battery life, screen size).
+                    Showing the ranking of the phone (e.g., top 20.1%) by some features (e.g., screen size) or the comparison with the previous recommendation.
                   </van-radio>
                   <van-radio name="0" checked-color="#ee0a24" class="item">
-                    I didn't see any explanations.
+                    General utterances, e.g., "You may like this phone" or "I find this phone for you"
                   </van-radio>
                 </van-radio-group>
               </van-col>
