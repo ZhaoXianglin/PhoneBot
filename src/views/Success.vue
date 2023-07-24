@@ -6,8 +6,8 @@
           width="200px"
           :src="require('../assets/imgs/finish.png')"
       />
-      <h2 style="background-color: #c8c9cc;border: 2px solid cadetblue; margin: 10px 20px;padding: 10px 10px">CODE:
-        {{ code }}</h2>
+<!--      <h2 style="background-color: #c8c9cc;border: 2px solid cadetblue; margin: 10px 20px;padding: 10px 10px">CODE:-->
+<!--        {{ code }}</h2>-->
       <h3>Thank you for completing this survey.</h3>
       <h3>Now you can close this page.</h3>
       <p>Part of the content about mobile phones is fictitious for experimental purposes. Please do not buy mobile phones based on the results of this experiment.</p>

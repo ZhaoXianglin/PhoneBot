@@ -623,10 +623,23 @@ export default {
 
 //手机评分
     submitPhoneRate() {
+      console.log(this.current_phone);
       //console.log(this.crit_phone_point);
       this.show_rate = false;
       this.$store.commit('selectedPhone', this.current_phone);
-      console.log(this.$store.state.selected_phone)
+      //console.log(this.$store.state.selected_phone)
+      instance.post('/api/first_select', {
+        'first_select': this.current_phone.id,
+        'uuid': localStorage.getItem("uuid"),
+      }).then((res) => {
+        if (res.data.status === 1) {
+          this.$router.replace('/list').catch((err) => {
+            console.log(err.message)
+          });
+        } else {
+          this.$toast("Network error, please try again later.")
+        }
+      })
       //this.$router.push({path: '/questionnaire'});
     },
 
