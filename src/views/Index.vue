@@ -55,7 +55,7 @@
       </ul>
 
       <h4>Duration:</h4>
-      <p>Approximately 10 minutes.</p>
+      <p>Approximately 5 minutes.</p>
 <!--      <h4>Task steps:</h4>-->
 <!--      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the-->
 <!--        task steps below. (using the arrow buttons to view the previous or next step)</p>-->
@@ -282,7 +282,7 @@ export default {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');
           localStorage.setItem("active", new Date().getTime().toString());
-          this.$router.replace('/prestudy').catch((err) => {
+          this.$router.replace('/scenario').catch((err) => {
             console.log(err.message)
           });
           this.loading1 = false;

@@ -3,7 +3,7 @@
     <van-nav-bar title="User scenario"/>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
-        Now she seeks help from you. Please pick <b>three mobile phones</b> according to her basic preferences below.
+        Now she seeks help from you. Please pick <b>a mobile phones</b> according to her basic preferences below.
       </p>
       <van-image
           v-animate-css.once="animationInfinite1"

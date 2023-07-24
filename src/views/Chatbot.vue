@@ -319,8 +319,8 @@ export default {
       show_phone_page: false,
       phone_buttons: [
         {
-          text: 'Add to cart',
-          value: 'Add to cart'
+          text: 'Select this one',
+          value: 'Select this one'
         },
         {
           text: 'Next item',
@@ -388,7 +388,7 @@ export default {
           action: this.phone_buttons
         }).then((res) => {
           //判断点了什么按钮
-          if (res.text === 'Add to cart') {
+          if (res.text === 'Select this one') {
             this.addToCart(this.current_phone);
           }
           if (res.text === 'Next item') {
@@ -704,8 +704,8 @@ export default {
           addMessage: false,
           human: false,
           action: [{
-            text: 'Add to cart',
-            value: 'Add to cart'
+            text: 'Select this one',
+            value: 'Select this one'
           },
             {
               text: 'Next item',
@@ -713,7 +713,7 @@ export default {
             }]
         }).then((res) => {
           //判断点了什么按钮
-          if (res.text === 'Add to cart') {
+          if (res.text === 'Select this one') {
             this.addToCart(this.current_phone);
           }
           if (res.text === 'Next item') {

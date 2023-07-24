@@ -62,8 +62,7 @@
                   <div style="display: flex;justify-content: end;margin-top: 10px"
                        v-if="!showed_phones[msg.content.id].add_to_cart">
                     <a target="view_window" @click="card_add_to_cart(msg.content.id)"
-                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Add
-                      to cart</a>
+                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Select this phone</a>
                   </div>
                 </div>
               </div>

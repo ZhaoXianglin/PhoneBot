@@ -24,7 +24,8 @@ const store = new Vuex.Store({
         //展示过的手机的id列表
         showed_phones_list: [],
         //购物车里的手机id列表
-        cart_phones: []
+        cart_phones: [],
+        selected_phone: {},
     },
     mutations: {
         addToCart(state, phone_id) {
@@ -49,6 +50,9 @@ const store = new Vuex.Store({
         },
         setWarning(state, phone_id) {
             state.showed_phones[phone_id].warning = true;
+        },
+        selectedPhone(state, phone) {
+            state.selected_phone = phone
         }
     }
 })

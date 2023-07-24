@@ -13,6 +13,7 @@ import Success from "@/views/Success";
 import Scenario from "@/views/Scenario";
 import ChatHumanHigh from "@/views/ChatHumanHigh";
 import Assistant from "@/views/Assistant";
+import List from "@/views/List";
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [
         path: '/assistant',
         name: 'assistant',
         component: Assistant
+    },
+    {
+        path: '/list',
+        name: 'list',
+        component: List
     },
     {
         path: '/chathh',

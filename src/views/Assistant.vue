@@ -1,16 +1,10 @@
 <template>
   <div class="chatbot">
-    <van-nav-bar title='' @click-left="clickHelp" @click-right="clickCart" left-text=""
-                 right-text="Cart" class="chatbot-header">
+    <van-nav-bar title='' @click-left="clickHelp" left-text=""
+                 class="chatbot-header">
       <template #left>
         <van-icon name="info-o" size="16"><span
             style="color: #1989fa;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC',miui,'Hiragino Sans GB','Microsoft Yahei',sans-serif ">Tips</span>
-        </van-icon>
-
-      </template>
-      <template #right>
-        <van-icon name="cart-o" size="16" :badge="cart_item_count"><span
-            style="color: #1989fa;font-size: 16px;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC',miui,'Hiragino Sans GB','Microsoft Yahei',sans-serif ">Cart</span>
         </van-icon>
       </template>
     </van-nav-bar>
@@ -219,7 +213,8 @@
         round
     >
       <div class="rate">
-        <van-nav-bar title='Please rate this phone'/>
+        <van-nav-bar title='Confirm'/>
+        <p style="padding:0 8px">Are your sure to select this phone for Lily?</p>
         <van-card
             :thumb="current_phone.img">
           <template #title>
@@ -242,10 +237,8 @@
             </div>
           </template>
         </van-card>
-        <div style="display: flex;justify-content: center;margin: 24px 0;">
-          <van-rate v-model="current_phone.rate"/>
-        </div>
-        <van-button type="info" block @click="submitPhoneRate">Submit</van-button>
+        <van-button type="danger" block @click="submitPhoneRate">Confirm</van-button>
+        <van-button type="info" block @click="show_rate=false">Cancel</van-button>
       </div>
     </van-popup>
 
@@ -270,7 +263,7 @@
           <van-button type="info" @click="tryAnother"> Check other phones</van-button>
           <br>
           <br>
-          <a style="color: #1989fa" @click="addToCart"> Still add to cart</a>
+          <a style="color: #1989fa" @click="addToCart">Keep current selection </a>
         </p>
       </div>
 
@@ -381,6 +374,7 @@ export default {
       phone_in_cart: [],
       current_phone: {},
       latest_dialog: [],
+      recommended_phones: [],
       //log
       log: [],
       //最后一次的动作
@@ -442,6 +436,7 @@ export default {
         delay: 100,
         content: phone,
       }
+      console.log(this.$store.state.showed_phones)
       if (this.identity_cue === '1') {
         config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
         config.delay = 1600
@@ -454,7 +449,7 @@ export default {
           action: this.phone_buttons
         }).then((res) => {
           //判断点了什么按钮
-          if (res.text === 'Add to cart') {
+          if (res.text === 'Select this phone') {
             this.checkBeforeToCart(phone.id)
           }
           if (res.text === 'Next item') {
@@ -492,6 +487,7 @@ export default {
             //再也不显示这个提示了
             this.can_show_enter_tips = false;
             if (res.value === 'next') {
+              botui.action.hide();
               this.tryAnother()
             } else {
               this.human("Modify my requirement").then(() => {
@@ -599,7 +595,7 @@ export default {
 
 //加入购物车前的检查
     checkBeforeToCart: function (phone_id) {
-      botui.action.hide();
+      //botui.action.hide();
       if (phone_id !== this.current_phone.id) {
         this.current_phone = this.$store.state.showed_phones[phone_id]
       }
@@ -611,13 +607,12 @@ export default {
         this.show_err_reminder = true;
       }
     },
+
 //加入购物车
     addToCart() {
       this.show_err_reminder = false;
       this.last_action = "addToCart";
-      this.bot("Please rate your liked phone.").then(() => {
-        this.show_rate = true
-      })
+      this.show_rate = true;
       this.latest_dialog.push({
         "agent": "you",
         "action": "Accept_Item",
@@ -629,37 +624,10 @@ export default {
 //手机评分
     submitPhoneRate() {
       //console.log(this.crit_phone_point);
-      this.last_action = 'submitPhoneRate';
-      if (this.current_phone.rate) {
-        this.phone_in_cart.push(this.current_phone);
-        this.$store.commit('addToCart', this.current_phone.id)
-        this.show_rate = false;
-        if (this.phone_in_cart.length === 3) {
-          this.show_next_page = true;
-        } else {
-          this.try_another_count += 1
-          instance.post("/chat/updatemodel", {
-            uuid: this.uuid,
-            logger: this.latest_dialog,
-            try_another_count: this.try_another_count,
-            explanation_style: this.explanation_style,
-            phone: this.current_phone,
-            lTime: new Date().getTime(),
-          }).then((res) => {
-            this.latest_dialog = [];
-            this.current_phone = res.data.phone;
-            let seed = Math.round(Math.random());
-            let temp_msg = ["Here are some other phones you may want to check.", "I find these phones also worth checking."]
-            this.bot(temp_msg[seed]).then(() => {
-              this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                this.botPhoneCard(this.current_phone);
-              });
-            })
-          })
-        }
-      } else {
-        this.$toast("Please rate this phone first.")
-      }
+      this.show_rate = false;
+      this.$store.commit('selectedPhone', this.current_phone);
+      console.log(this.$store.state.selected_phone)
+      //this.$router.push({path: '/questionnaire'});
     },
 
 //再来一个推荐
