@@ -1,19 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
-import Chatbot from '../views/Chatbot.vue'
-import ChatbotwithExp from '@/views/ChatbotwithExp.vue'
 import Pretest from '../views/Pretest.vue'
-import Tutorial from '../views/Tutorial.vue'
-import Que1 from "@/views/Que1";
-import Que2 from "@/views/Que2";
-import Que3 from "@/views/Que3";
-import Que4 from "@/views/Que4";
 import Success from "@/views/Success";
 import Scenario from "@/views/Scenario";
-import ChatHumanHigh from "@/views/ChatHumanHigh";
 import Assistant from "@/views/Assistant";
 import List from "@/views/List";
+
 
 Vue.use(VueRouter)
 
@@ -29,21 +22,6 @@ const routes = [
         component: Index
     },
     {
-        path: '/tutorial',
-        name: 'Tutorial',
-        component: Tutorial
-    },
-    {
-        path: '/chatbl',
-        name: 'Chatbot',
-        component: Chatbot
-    },
-    {
-        path: '/chatbh',
-        name: 'chatbot with exp',
-        component: ChatbotwithExp
-    },
-    {
         path: '/assistant',
         name: 'assistant',
         component: Assistant
@@ -52,11 +30,6 @@ const routes = [
         path: '/list',
         name: 'list',
         component: List
-    },
-    {
-        path: '/chathh',
-        name: 'human high high message interactivity',
-        component: ChatHumanHigh
     },
     {
         path: '/scenario',
@@ -69,30 +42,20 @@ const routes = [
         component: Pretest
     },
     {
-        path: '/que1',
-        name: 'PostStudy1',
-        component: Que1
-    },
-    {
-        path: '/que2',
-        name: 'PostStudy2',
-        component: Que2
-    },
-    {
-        path: '/que3',
-        name: 'PostStudy3',
-        component: Que3
-    },
-    {
-        path: '/que4',
-        name: 'PostStudy4',
-        component: Que4
-    },
-    {
         path: '/success',
         name: 'Thanks',
         component: Success
     },
+    {
+        path: '/beforetable',
+        name: 'BeforeTable',
+        component: () => import('../views/BeforeTable.vue')
+    },
+    {
+        path: '/game',
+        name: 'Game',
+        component: () => import('../views/Game.vue')
+    }
 ]
 
 const router = new VueRouter({

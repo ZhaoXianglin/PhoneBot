@@ -282,7 +282,7 @@ export default {
         if (res.data.status === 1) {
           localStorage.setItem('step', '0');
           localStorage.setItem("active", new Date().getTime().toString());
-          this.$router.replace('/scenario').catch((err) => {
+          this.$router.replace('/prestudy').catch((err) => {
             console.log(err.message)
           });
           this.loading1 = false;

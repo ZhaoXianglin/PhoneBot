@@ -633,7 +633,7 @@ export default {
         'uuid': localStorage.getItem("uuid"),
       }).then((res) => {
         if (res.data.status === 1) {
-          this.$router.replace('/list').catch((err) => {
+          this.$router.replace('/beforetable').catch((err) => {
             console.log(err.message)
           });
         } else {

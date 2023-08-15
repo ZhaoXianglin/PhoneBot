@@ -9,6 +9,7 @@ import Vuex from 'vuex'
 import 'vant/lib/index.css';
 import '@vant/touch-emulator';
 
+
 Vue.config.productionTip = false
 Vue.use(Vant);
 Vue.use(VueYouTubeEmbed);

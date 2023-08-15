@@ -42,32 +42,32 @@
                  placeholder="nationality"
                  :rules="[{ required: auth, message: 'Please enter this item.' }]"/>
 
-<!--      <p style="padding-left: 10px;font-weight:bolder">How much do you agree or disagree with the following statements?-->
-<!--        Please rate the following statements based on your personal characteristics and opinions.</p>-->
-<!--      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2),-->
-<!--        Somewhat-->
-<!--        disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>-->
-<!--      <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"-->
-<!--                 :rules="[{ required: auth, message: 'required' }]">-->
-<!--        <template #input>-->
-<!--          <van-row style="width: 100%;">-->
-<!--            <van-row type="flex">-->
-<!--              <van-col span="24"><span style="font-weight:600">{{ index + 1 }}. {{ item.q }}</span></van-col>-->
-<!--            </van-row>-->
-<!--            <van-row type="flex" align="center" justify="between">-->
-<!--              <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>-->
-<!--              <van-col>-->
-<!--                <van-radio-group v-model="q1groupans[index]" direction="horizontal" class="matrix_table">-->
-<!--                  <van-radio :name="val" v-for="val in 7" :key="val" checked-color="#ee0a24" class="item">-->
-<!--                    {{ val }}-->
-<!--                  </van-radio>-->
-<!--                </van-radio-group>-->
-<!--              </van-col>-->
-<!--              <van-col span="4">Strongly agree</van-col>-->
-<!--            </van-row>-->
-<!--          </van-row>-->
-<!--        </template>-->
-<!--      </van-field>-->
+      <p style="padding-left: 10px;font-weight:bolder">How much do you agree or disagree with the following statements?
+        Please rate the following statements based on your personal characteristics and opinions.</p>
+      <p style="padding:0 10px;font-weight:normal; text-align: left;font-size: 14px">Strongly disagree(1), Disagree(2),
+        Somewhat
+        disagree(3), Neutral(4), Somewhat agree(5), Agree(6), Strongly agree(7)</p>
+      <van-field v-for="(item, index) in q1group" :key="item.t" :name="item.t"
+                 :rules="[{ required: auth, message: 'required' }]">
+        <template #input>
+          <van-row style="width: 100%;">
+            <van-row type="flex">
+              <van-col span="24"><span style="font-weight:600">{{ index + 1 }}. {{ item.q }}</span></van-col>
+            </van-row>
+            <van-row type="flex" align="center" justify="between">
+              <van-col span="4" class="score_left_s" style="text-align:right;">Strongly disagree</van-col>
+              <van-col>
+                <van-radio-group v-model="q1groupans[index]" direction="horizontal" class="matrix_table">
+                  <van-radio :name="val" v-for="val in 7" :key="val" checked-color="#ee0a24" class="item">
+                    {{ val }}
+                  </van-radio>
+                </van-radio-group>
+              </van-col>
+              <van-col span="4">Strongly agree</van-col>
+            </van-row>
+          </van-row>
+        </template>
+      </van-field>
 
       <div style="margin: 36px;">
         <van-button round block type="info" native-type="submit" :loading="loading">Continue</van-button>
@@ -94,12 +94,29 @@ export default {
       showPicker1: false,
       showPicker2: false,
       q1group: [
-        {q: "I usually trust people until they give me a reason not to trust them.", t: "trust_propensity1"},
-        {q: "Trusting another person is not difficult for me.", t: "trust_propensity2"},
-        {q: "My tendency to trust others is high.", t: "trust_propensity3"},
-        {q: "I am familiar with service chatbots (e.g., customer service chatbots).", t: "ce1"},
-        {q: "In general, I feel comfortable when chatting with service chatbots.", t: "ce2"},
-        {q: "I tend to trust the information provided by service chatbots.", t: "ce3"},
+        {
+          q: "When I am in the car listening to the radio, I often check other stations to see if something better is playing, even if I’m relatively satisfied with what I’m listening to.",
+          t: "maximizer1"
+        },
+        {q: "I often find it difficult to shop for a gift for a friend.", t: "maximizer2"},
+        {q: "No matter what I do, I have the highest standards for myself.", t: "maximizer3"},
+
+        {q: "I understand technical specifications of mobile phones.", t: "domain1"},
+        {q: "I know how to choose a mobile based on my preference.", t: "domain2"},
+        {q: "I can easily make a purchase choice based on technical specifications of mobile phones.", t: "domain3"},
+
+        {q: "I procrastinate when it comes to making important decisions.", t: "decision1"},
+        {q: "I need the assistance of other people when making important decisions.", t: "decision2"},
+        {q: "I feel confident about my ability to make decisions.", t: "decision3"},
+        {q: "I feel as if I’m under tremendous time pressure when making decisions.", t: "decision4"},
+        {q: "When making decisions I like to collect lots of information.", t: "decision5"},
+        {q: "I make impulsive decisions.", t: "decision6"},
+        {q: "When making decisions, I rely upon my instincts.", t: "decision7"},
+        {q: "My friends or family seek my advice when they have to make important decisions.", t: "decision8"},
+        {
+          q: "Whenever I make a choice, I try to get information about how the other alternatives turned out.",
+          t: "decision9"
+        },
       ],
       q1groupans: Array(6).fill(null),
     }
@@ -115,7 +132,7 @@ export default {
           localStorage.setItem('step', '1');
           localStorage.setItem("active", new Date().getTime().toString());
           this.loading = false;
-          this.$router.replace('/scenario')
+          this.$router.replace('/game')
         } else {
           this.loading = false;
           this.$toast("Please read and accept the informed consent first.")
