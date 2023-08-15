@@ -206,12 +206,12 @@ export default {
       }
     },
     test_start: function () {
-      this.nTrials = 1
+      this.nTrials = 3
       this.nTrials_count = 0
       this.start()
     },
     formal_start: function () {
-      this.nTrials = 4
+      this.nTrials = 14
       this.nTrials_count = 0
       this.minSetSize = 3
       this.nError = 0

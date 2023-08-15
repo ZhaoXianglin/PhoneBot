@@ -42,6 +42,15 @@
           </van-radio-group>
         </table>
       </p>
+      <van-field
+          v-model="reason"
+          rows="3"
+          autosize
+          label="Comment"
+          v-show="show_textarea"
+          type="textarea"
+          placeholder="Please explain your reason for changing your final choice."
+      />
       <van-button type="primary" block @click="confirm_btn">Confirm</van-button>
     </div>
   </div>
@@ -61,7 +70,9 @@ export default {
       showed_phones: this.$store.state.showed_phones,
       current_phone: this.$store.state.selected_phone,
       final_select: this.$store.state.selected_phone.id,
-      recommended_phones: ''
+      recommended_phones: '',
+      show_textarea: false,
+      reason: '',
     }
   },
   mounted() {
@@ -71,10 +82,28 @@ export default {
     }
     console.log(this.recommended_phones)
   },
+  watch: {
+    final_select: function (newVal) {
+      if (newVal !== this.$store.state.selected_phone.id) {
+        this.show_textarea = true
+      } else {
+        this.show_textarea = false
+      }
+    }
+  },
   methods: {
     confirm_btn() {
+      if (this.show_textarea === true) {
+        this.reason = this.reason.trim()
+        if (this.reason === '') {
+          this.$toast("Please explain your reason for changing your final choice.")
+          return
+        }
+      }
       instance.post('/api/final_select', {
         'final_select': this.final_select,
+        'reason': this.reason,
+        'tableT': new Date().getTime(),
         'uuid': localStorage.getItem("uuid"),
         'recommended_phone': this.recommended_phones,
       }).then((res) => {

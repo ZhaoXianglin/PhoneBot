@@ -430,6 +430,7 @@ export default {
     botPhoneCard: function (phone) {
       //把当前手机加入显示过的手机列表
       this.$store.commit('addShowedPhone', phone)
+      this.recommended_phones.push(phone.id)
       let config = {
         type: 'phone',
         loading: true,
@@ -623,6 +624,10 @@ export default {
 
 //手机评分
     submitPhoneRate() {
+      if (this.recommended_phones.length < 5) {
+        this.$toast("Please view at least 5 phones.")
+        return
+      }
       console.log(this.current_phone);
       //console.log(this.crit_phone_point);
       this.show_rate = false;
@@ -952,5 +957,172 @@ export default {
 
 .explanation .botui-message-content.html {
   background-color: #FFF0C5 !important;
+}
+
+.van-checkbox--horizontal {
+  margin-bottom: 6px;
+}
+
+.chatbot-header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  height: 46px;
+}
+
+.chatbot-send {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.chatbot-content {
+  position: absolute;
+  top: 46px;
+  bottom: 54px;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
+.help {
+  box-sizing: border-box;
+}
+
+.help p {
+  font-size: 18px;
+  text-align: justify;
+}
+
+.botui-container {
+  background: #F1F1F1;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', miui, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}
+
+.botui-messages-container {
+  padding: 10px;
+}
+
+.botui-message-content {
+  background-color: #FFF;
+  color: #000;
+  width: auto;
+  max-width: 77%;
+  display: inline-block;
+  padding: 13px 10px;
+}
+
+.botui-message-content.loading {
+  background-color: #fff;
+}
+
+.botui-message-content.text {
+  line-height: 1.4
+}
+
+.botui-message-content.human {
+  background-color: #1989fa;
+  color: white;
+}
+
+.error-card .botui-message-content.html {
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .1);
+  font-weight: 500;
+  max-width: 87.5%;
+}
+
+.error-card .botui-message-content.html span {
+  display: flex;
+  align-items: center;
+}
+
+.summary-card .botui-message-content.html {
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .1);
+  max-width: 87.5%;
+}
+
+.botui-message-content.html span div.icon {
+  flex: 0 0 32px;
+  height: 32px;
+  margin-right: 6px;
+}
+
+button.botui-actions-buttons-button {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  border: 1px solid #1989fa;
+  font-weight: normal;
+  text-align: left;
+  background-color: transparent;
+  transition-duration: .28s;
+  transition-property: box-shadow, transform, opacity;
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  color: #1989fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', miui, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 25%)
+}
+
+.botui-actions-container {
+  margin-top: -20px;
+  padding: 9px 10px 9px 19px;
+}
+
+.v-bottom-sheet.v-dialog {
+  overflow: auto !important;
+}
+
+.profil.agent {
+  float: left;
+  margin-right: 4px;
+}
+
+.profil {
+  width: 43px;
+  height: 43px;
+  position: relative;
+  background-repeat: no-repeat;
+}
+
+.profil > img.agent {
+  border-radius: 0;
+}
+
+.profil > img {
+  width: 43px;
+  height: 43px;
+  /*border: 2px solid #e8e8e8;*/
+}
+
+
+.html span p {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.html span p:last-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@keyframes avatar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -688px, 0;
+  }
+}
+
+.van-popup__close-icon {
+  color: #1989fa !important;
 }
 </style>
