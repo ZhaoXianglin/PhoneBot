@@ -1,6 +1,13 @@
 <template>
   <div class="demographic">
     <van-nav-bar title="Questionnaire"/>
+    <van-steps :active="0">
+      <van-step>Step1</van-step>
+      <van-step>Step2</van-step>
+      <van-step>Step3</van-step>
+      <van-step>Step4</van-step>
+    </van-steps>
+    <h3>Step 1: We will ask you to fill out a questionnaire about your personal characteristics related to decision making.</h3>
     <p style="padding-left: 10px;font-weight:bolder">Personal Information：</p>
     <van-form @submit="onSubmit" @failed="onFailed" scroll-to-error validate-trigger="onSubmit">
 
