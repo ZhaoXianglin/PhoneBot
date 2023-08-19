@@ -198,7 +198,7 @@
 </template>
 
 <script>
-import {instance} from '../request';
+import {instance} from '@/request';
 
 export default {
   name: "Index",
