@@ -1,6 +1,19 @@
 <template>
   <div id="scenario">
     <van-nav-bar title="User scenario"/>
+    <van-steps :active="2">
+      <van-step>Step1</van-step>
+      <van-step>Step2</van-step>
+      <van-step>Step3</van-step>
+      <van-step>Step4</van-step>
+    </van-steps>
+    <h3>Step 3: We will ask you to use a chatbot to view at least 5 recommended mobile phones and then choose one that can meet the requirements shown in a given scenario.</h3>
+    <p style="padding:0 10px ">
+      Task:<br>
+      •	Read a user scenario about purchasing mobile phones and finish a simple quiz about your understanding of scenario.<br>
+      •	view at least 5 recommended mobile phones and then choose one that can meet the requirements shown in a scenario.<br>
+      •	Fill out a questionnaire to evaluate the chatbot based on your experience.<br>
+    </p>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
         Now she seeks help from you. Please pick <b>a mobile phones</b> according to her basic preferences below.

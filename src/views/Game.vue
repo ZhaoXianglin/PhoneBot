@@ -2,8 +2,15 @@
   <div>
     <van-nav-bar title="Digit Span Task"/>
     <div class="content">
+      <van-steps :active="1">
+        <van-step>Step1</van-step>
+        <van-step>Step2</van-step>
+        <van-step>Step3</van-step>
+        <van-step>Step4</van-step>
+      </van-steps>
+      <h3>Step 2: We will ask you to finish a digit span test to gauge your working memory capacity.</h3>
       <div v-if="step===0">
-        <h1>INSTRUCTIONS {{ display_num }}</h1>
+        <h1>INSTRUCTIONS</h1>
         <p>This is the digit span task.<br><br>In this task, you will
           have to remember a sequence of numbers presented on the screen one after the other.<br>At the end of each
           trial,
@@ -25,11 +32,10 @@
         </van-button>
       </div>
       <div v-if="step===2">
+        <h1>Result</h1>
         You have completed the task.
-        <br>Thank you for your participation in this task.
+        <br>The maximum number of digits recalled correctly was <span style="font-size: 24px;color: #B24040">{{ highest_span_score }}</span>.
         <br><br>
-        Maximum number of digits recalled correctly was {{ highest_span_score }}<br><br>
-        Maximum number of digits reached before making two consecutive errors was {{ consec_error_score }}.<br><br>
         Please click "Next" to complete other tasks.
         <br>
         <br>
@@ -60,8 +66,8 @@
               @touchstart.native.stop="keyboard_show = true"
           />
           <br>
-          <h1 v-show="acc===0" style="color: #B24040">Incurrent</h1>
-          <h1 v-show="acc===1" style="color: darkgreen">Current</h1>
+          <h1 v-show="acc===0" style="color: #B24040">False</h1>
+          <h1 v-show="acc===1" style="color: darkgreen">True</h1>
           <van-button round block type="info" :disabled="click_next_disable"
                       native-type="submit" @click="on_next">Next
           </van-button>
@@ -69,7 +75,6 @@
               v-model="response"
               :show="keyboard_show"
               :maxlength="minSetSize"
-              @blur="keyboard_show = false"
           />
         </van-col>
       </van-row>

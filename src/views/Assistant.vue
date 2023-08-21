@@ -388,6 +388,7 @@ export default {
     this.explanation_style = localStorage.getItem("explanation_style")
     this.identity_cue = localStorage.getItem("identity_cue")
     this.greeting()
+
   },
   methods: {
     //从卡片组件里面获得点击事件的url
@@ -408,7 +409,7 @@ export default {
         type: 'html',
         cssClass: style,
         loading: true,
-        delay: 10,
+        delay: 600,
         photo: "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar1.png",
         content: msg
       };
@@ -698,7 +699,7 @@ export default {
       let msg = "Hey! I’m RecBot, an <b>automated chatbot</b> at Phoneshop."
       if (this.identity_cue === '1') msg = "Hello! I’m Susan, <b> a sales assistant</b> working at Phoneshop."
       this.bot(msg).then(() => {
-        this.ask_name()
+        this.ask_prefer()
       })
 
     },
