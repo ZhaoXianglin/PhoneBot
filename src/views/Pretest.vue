@@ -118,7 +118,7 @@ export default {
           t: "decision9"
         },
       ],
-      q1groupans: Array(6).fill(null),
+      q1groupans: Array(15).fill(null),
     }
   },
   methods: {
