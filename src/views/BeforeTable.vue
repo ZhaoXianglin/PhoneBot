@@ -1,13 +1,6 @@
 <template>
   <div class="posttest">
     <van-nav-bar title="Post-Study Survey"/>
-    <van-steps :active="4">
-      <van-step>Step1</van-step>
-      <van-step>Step2</van-step>
-      <van-step>Step3</van-step>
-      <van-step>Step4</van-step>
-    </van-steps>
-    <h3>Step 4: We will ask you to fill out a questionnaire about your experience with the chatbot and your purchase decision.</h3>
     <van-form @submit="onSubmit" scroll-to-error @failed="onFailed" validate-trigger="onSubmit">
       <p style="padding:0 10px;font-weight:bold;text-align: left">How much do you agree or disagree with the following
         statements?</p>
@@ -65,9 +58,11 @@ export default {
         {q: "How successful were you in accomplishing what you were asked to do?", t: "cognitive4"},
         {q: "How hard did you have to work to accomplish your level of performance?", t: "cognitive5"},
         {q: "How insecure, discouraged, irritated, stressed, and annoyed were you?", t: "cognitive6"},
-
+        {q: "Using the system, I could identify appropriate options.", t: "confidence1"},
+        {q: "I feel sure about the decision I made.", t: "confidence2"},
+        {q: "My choice, from the moment I've used the system and now, have not changed.", t: "confidence3"},
       ],
-      q1groupans: Array(6).fill(null),
+      q1groupans: Array(9).fill(null),
     }
   },
   mounted() {

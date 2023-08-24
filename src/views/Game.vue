@@ -2,13 +2,6 @@
   <div>
     <van-nav-bar title="Digit Span Task"/>
     <div class="content">
-      <van-steps :active="1">
-        <van-step>Step1</van-step>
-        <van-step>Step2</van-step>
-        <van-step>Step3</van-step>
-        <van-step>Step4</van-step>
-      </van-steps>
-      <h3>Step 2: We will ask you to finish a digit span test to gauge your working memory capacity.</h3>
       <div v-if="step===0">
         <h1>INSTRUCTIONS</h1>
         <p>This is the digit span task.<br><br>In this task, you will
@@ -233,7 +226,7 @@ export default {
         gameT: new Date().getTime(),
       }).then((res) => {
         console.log(res)
-        this.$router.replace('/scenario')
+        this.$router.replace('/step3')
       })
 
     }
@@ -244,6 +237,9 @@ export default {
 
 <style scoped>
 .content {
-  padding: 0 16px;
+  margin: 10px 10px;
+  padding: 10px 10px 36px 10px;
+  background-color: white;
+  border-radius: 10px;
 }
 </style>

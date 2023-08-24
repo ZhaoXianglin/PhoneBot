@@ -1,19 +1,6 @@
 <template>
   <div id="scenario">
-    <van-nav-bar title="User scenario"/>
-    <van-steps :active="2">
-      <van-step>Step1</van-step>
-      <van-step>Step2</van-step>
-      <van-step>Step3</van-step>
-      <van-step>Step4</van-step>
-    </van-steps>
-    <h3>Step 3: We will ask you to use a chatbot to view at least 5 recommended mobile phones and then choose one that can meet the requirements shown in a given scenario.</h3>
-    <p style="padding:0 10px ">
-      Task:<br>
-      •	Read a user scenario about purchasing mobile phones and finish a simple quiz about your understanding of scenario.<br>
-      •	view at least 5 recommended mobile phones and then choose one that can meet the requirements shown in a scenario.<br>
-      •	Fill out a questionnaire to evaluate the chatbot based on your experience.<br>
-    </p>
+    <van-nav-bar title="Scenario"/>
     <div id="main">
       <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
         Now she seeks help from you. Please pick <b>a mobile phones</b> according to her basic preferences below.
@@ -26,7 +13,8 @@
       />
       <br/>
 
-      <p v-animate-css.once="animationInfinite2">1. She prefers phones that have a <strong>a large display</strong> for watching videos.</p>
+      <p v-animate-css.once="animationInfinite2">1. She prefers phones that have a <strong>a large display</strong> for
+        watching videos.</p>
       <van-image
           v-animate-css.once="animationInfinite3"
           width="80%"
@@ -34,7 +22,8 @@
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
       />
 
-      <p v-animate-css.once="animationInfinite4">2. She prefers phones that have a <strong>long battery life</strong> for traveling.</p>
+      <p v-animate-css.once="animationInfinite4">2. She prefers phones that have a <strong>long battery life</strong>
+        for traveling.</p>
       <van-image
           v-animate-css.once="animationInfinite5"
           width="80%"
@@ -52,7 +41,8 @@
       />
       <br>
       <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones
-        by visiting a website called <b>Phoneshop</b>, where a chatbot can recommend mobile phones based on your requirements.</p>
+        by visiting a website called <b>Phoneshop</b>, where a chatbot can recommend mobile phones based on your
+        requirements.</p>
 
       <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
         <van-button round block type="info"
@@ -84,6 +74,13 @@
             <van-radio name="2">Battery</van-radio>
             <van-radio name="3">Camera</van-radio>
           </van-radio-group>
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">3. You should view <b>at least ____</b> recommended
+            mobile phones?</p>
+          <van-radio-group v-model="test3">
+            <van-radio name="1">4</van-radio>
+            <van-radio name="2">5</van-radio>
+            <van-radio name="3">6</van-radio>
+          </van-radio-group>
           <div style="margin: 16px;">
             <van-button round block type="info" native-type="submit" :loading="loading" @click="next">Submit
             </van-button>
@@ -103,6 +100,7 @@ export default {
     return {
       test1: '',
       test2: '',
+      test3: '',
       show_preference: false,
       lang: localStorage.getItem("lang"),
       loading: false,
@@ -172,11 +170,12 @@ export default {
     start: function () {
       this.test1 = '';
       this.test2 = '';
+      this.test3 = '';
       this.show_preference = true;
     },
     next: function () {
       this.loading = true;
-      if (this.test1 === '1' && this.test2 === '3') {
+      if (this.test1 === '1' && this.test2 === '3' && this.test3 === '2') {
         instance.post('/que/scenario', {
           'uuid': localStorage.getItem("uuid"),
           'ScenarioT': new Date().getTime(),
@@ -215,6 +214,7 @@ export default {
   color: #2c3e50;
   background-color: white;
   padding: 10px 10px 20px 10px;
+  margin: 10px;
 }
 
 .card {

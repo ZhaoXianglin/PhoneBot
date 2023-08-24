@@ -1,7 +1,6 @@
 <template>
   <div class="index">
-    <van-nav-bar title="Study Introduction"/>
-    <van-popup v-model="show" round :close-on-click-overlay="false" :style="{ height: '90%', width:'90%' }">
+    <van-nav-bar title="Introduction"/>
       <div class="consent">
         <header style="text-align:center;">
           <h4>User Study<br/>
@@ -12,10 +11,10 @@
         <p>This study aims to investigate the influence of using chatbot on make a purchase decision based on recommended mobile phones.</p>
         <h5>Procedure:</h5>
         <ol>
-          <li>1. Fill out pre-study questionnaire about your personal characteristics</li>
-          <li>2. Finished a working memory test</li>
-          <li>3. Use the chatbot to find three mobile phones based on a scenario.</li>
-          <li>4. Fill out post-study questionnaire</li>
+          <li>1. Fill out pre-study questionnaire about your personal characteristics.</li>
+          <li>2. Finished a working memory test.</li>
+          <li>3. Use the chatbot to find a mobile phone based on a scenario.</li>
+          <li>4. Fill out post-study questionnaire.</li>
         </ol>
         <h5>Duration:</h5>
         <p>This whole study will take about 15 minutes to complete (including time for filling out questionnaires).</p>
@@ -42,157 +41,7 @@
           </van-button>
         </div>
       </div>
-    </van-popup>
-    <div class="content">
-      <h3>Welcome to participate in our study!</h3>
 
-      <p><b>Dear participants,</b></p>
-      <p>Thank you very much for participating in this experiment, which aims to evaluate a chatbot that can <b>recommend mobile phones</b> based on your requirements.</p>
-      <h4>Task:</h4>
-      <ul>
-        <li>Read a user scenario about purchasing mobile phones and finish a simple quiz about your understanding of scenario.</li>
-        <li>Find <b>a mobile phone</b> that can meet the requirements shown in the user scenario.</li>
-        <li>Fill out a questionnaire to evaluate the chatbot based on your experience.</li>
-      </ul>
-
-      <h4>Duration:</h4>
-      <p>Approximately 15 minutes.</p>
-      <h4>Notes:</h4>
-      <p>•	You can chat with the bot by typing your requirements.</p>
-      <p>•	You are suggested to test this chatbot on a mobile phone.</p>
-      <p>•	You are suggested to use Chrome browser (version > 33.0) or Safari on iPhones.</p>
-
-      <!--      <h4>Task steps:</h4>-->
-<!--      <p style="color: #B24040">You will be allowed to proceed to the next step only when you finish reading all the-->
-<!--        task steps below. (using the arrow buttons to view the previous or next step)</p>-->
-<!--      <van-swipe style="width: 90%;margin: 0 auto; max-width: 480px" ref="tutorial_img" @change="imgChange"-->
-<!--                 :touchable="false">-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              style="margin: 10px"-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step1.png')"-->
-<!--          />-->
-<!--          <p><b>Step 1:</b> Fill out your personal background.</p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step2.png')"-->
-<!--          />-->
-
-<!--          <p><b>Step 2:</b> Read some tips for modifying recommendations through conversation.-->
-<!--          </p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              v-if="condition < 3"-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step3_base.png')"-->
-<!--          />-->
-<!--          <van-image-->
-<!--              v-else-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step3.png')"-->
-<!--          />-->
-
-<!--          <p><b>Step 3:</b> Click OK to specify your preference for mobile phones. Please select at most three brands-->
-<!--            you like-->
-<!--          </p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              v-if="condition<3"-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step4_base.png')"-->
-<!--          />-->
-<!--          <van-image-->
-<!--              v-else-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step4.png')"-->
-<!--          />-->
-<!--          <p><b>Step 4:</b> Specify your preference regarding the brand, budget, and camera resolution.</p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step5.png')"-->
-<!--          />-->
-<!--          <p><b>Step 5:</b> Chat with the chatbot when you want to modify recommended phones.-->
-<!--          </p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step6.png')"-->
-<!--          />-->
-<!--          <p><b>Step 6:</b> View the detail of a recommended phone if you wish. Accept or decline a recommended phone by-->
-<!--            clicking the “Add to cart” or “Try another” button.-->
-<!--          </p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              v-if="condition<3"-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step7_base.png')"-->
-<!--          />-->
-<!--          <van-image-->
-<!--              v-else-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step7.png')"-->
-<!--          />-->
-<!--          <p><b>Step 7:</b> Rate the phone you add to the shopping cart.</p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step8.png')"-->
-<!--          />-->
-<!--          <p><b>Step 8:</b> Fill out a post-study questionnaire after finishing the task.-->
-<!--          </p>-->
-<!--        </van-swipe-item>-->
-<!--        <van-swipe-item>-->
-<!--          <van-image-->
-<!--              width="90%"-->
-<!--              fit="contain"-->
-<!--              :src="require('../assets/imgs/step9.png')"-->
-<!--          />-->
-<!--          <p><b>Step 9:</b> Copy the code to the Mechanical Turk to verify the finished task and get a reward.</p>-->
-<!--        </van-swipe-item>-->
-<!--        <template #indicator>-->
-<!--          <div class="custom-indicator"></div>-->
-<!--        </template>-->
-<!--      </van-swipe>-->
-<!--      <van-row justify="space-around" type="flex">-->
-<!--        <van-col span="6">-->
-<!--          <van-button @click="stepPrev" type="info" round style="width: 80%; font-size: 20px"> &lt;</van-button>-->
-<!--        </van-col>-->
-<!--        <van-col span="6" style="text-align: center">-->
-<!--          <span style="font-weight: bold;line-height: 36px;">Step {{ current_img + 1 }} / 9</span>-->
-<!--        </van-col>-->
-<!--        <van-col span="6">-->
-<!--          <van-button @click="stepNext" type="info" round style="width: 80%; font-size: 20px"> &gt;</van-button>-->
-<!--        </van-col>-->
-<!--      </van-row>-->
-      <br>
-      <p>We greatly appreciate your efforts and time in advance.</p>
-      <div style="margin: 24px 16px;padding-bottom:48px">
-        <van-button round block type="info" :disabled="startStatus" native-type="submit" :loading="loading1"
-                    @click="next">Continue
-        </van-button>
-      </div>
-    </div>
 
   </div>
 </template>
@@ -220,22 +69,6 @@ export default {
     }
   },
   methods: {
-    imgChange: function (index) {
-      this.current_img = index;
-      if (this.current_img === 8) {
-        this.startStatus = false;
-      }
-    },
-    stepPrev: function () {
-      if (this.current_img > 0) {
-        this.$refs.tutorial_img.prev()
-      }
-    },
-    stepNext: function () {
-      if (this.current_img < 8) {
-        this.$refs.tutorial_img.next()
-      }
-    },
     tapAccept: function () {
       this.loading = true;
       if (this.uuid) {
@@ -246,6 +79,9 @@ export default {
         } else {
           this.show = false;
           this.loading = false;
+          this.$router.replace('/prestudy').catch((err) => {
+            console.log(err.message)
+          });
         }
       } else {
         instance.post('/api/accept', {
@@ -262,6 +98,9 @@ export default {
             this.loading = false;
             this.show = false;
             this.condition = res.data.condition;
+            this.$router.replace('/step1').catch((err) => {
+              console.log(err.message)
+            });
           } else {
             console.log(res.data);
             this.loading = false;
@@ -372,7 +211,7 @@ export default {
   list-style-type: upper-roman;
 }
 
-.van-count-down {
+22.van-count-down {
   display: inline;
   color: white;
 }
