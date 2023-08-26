@@ -3,7 +3,7 @@
     <van-nav-bar title="Comparison"></van-nav-bar>
     <div class="content">
       <p>You current selected phone is <span style="color: #B24040;font-weight: bold">{{ current_phone.modelname}}</span>.  You can review all the phones recommended by the chatbot in the following table.</p>
-      <p>If you want to change your purchase decision,  you can choose another phone in the table and explain why you changed your decision.</p>
+      <p>If you want to change your purchase decision,  you can choose another phone in the table and explain why you change your decision.</p>
       <p style="overflow: auto;width: 100%">
         <table class="table">
           <van-radio-group v-model="final_select">

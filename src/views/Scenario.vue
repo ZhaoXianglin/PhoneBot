@@ -61,7 +61,7 @@
       <van-nav-bar title='Quiz'/>
       <div class="phone_preference">
         <van-form>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. Who do you need to pick three mobile phones for?</p>
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. Who do you need to pick a mobile phones for?</p>
           <van-radio-group v-model="test1">
             <van-radio name="1">Lily</van-radio>
             <van-radio name="2">Myself</van-radio>

@@ -12,7 +12,7 @@
         <h5>Procedure:</h5>
         <ol>
           <li>1. Fill out pre-study questionnaire about your personal characteristics.</li>
-          <li>2. Finished a working memory test.</li>
+          <li>2. Finish a working memory test.</li>
           <li>3. Use the chatbot to find a mobile phone based on a scenario.</li>
           <li>4. Fill out post-study questionnaire.</li>
         </ol>
