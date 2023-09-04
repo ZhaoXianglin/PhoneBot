@@ -19,7 +19,7 @@
         • Fill out a questionnaire to evaluate the chatbot based on your experience.<br>
       </p>
       <van-image
-          src="https://obsidian-1251052535.cos.ap-hongkong.myqcloud.com/step3_shop.png?q-sign-algorithm=sha1&q-ak=AKID4E3ePQLC0VM8_4ng-0MBYkn2oEGYp1XX6TX4amjA5lzkkZh5Z5M6V9v2Py-3xUpP&q-sign-time=1692891952;1692895552&q-key-time=1692891952;1692895552&q-header-list=host&q-url-param-list=ci-process&q-signature=29aa72366160277c9d5add44cb9f692c1af9b1bc&x-cos-security-token=WgVJ7Fnp0jHH3qE1FBGiVKku3URcDFvab6b31dba38d70dbbb7c857eb1e4ae14aCQegaxua3kFmU7JKMExq6-SFF3ol_XO3DkKzEzxmLmyOekONG37ZnHFP_DKKfhycFkrZzjZ6sZYLZIPht40mczQDPZlRjNuUWB2sUdAcS7AgoTZOrtwF-STnl4EbLuLAitDq2i5a3Sl070bsC3WtGfio4s_RcVipuYo9qyBcm6PjwXjglG9n2aK4LxP1bQIo&ci-process=originImage"></van-image>
+          src="https://obsidian-1251052535.cos.ap-hongkong.myqcloud.com/step3_shop.png" width="100%" style="max-width: 640px"></van-image>
       <van-button round block type="info" native-type="submit" :loading="loading" @click="onSubmit">Continue
       </van-button>
     </div>

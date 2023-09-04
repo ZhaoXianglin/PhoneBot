@@ -2,52 +2,27 @@
   <div id="scenario">
     <van-nav-bar title="Scenario"/>
     <div id="main">
-      <p v-animate-css.once="animationInfinite0">Lily recently broke her mobile phone, and she planned to buy a new one.
-        Now she seeks help from you. Please pick <b>a mobile phones</b> according to her basic preferences below.
+      <p v-animate-css.once="animationInfinite0">Imagine that your mobile phone was recently broken, and you are now contemplating the purchase of a replacement.
       </p>
-      <van-image
-          v-animate-css.once="animationInfinite1"
-          width="80%"
-          style="max-width: 960px; margin: 10px"
-          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/scenario_1.png "
-      />
-      <br/>
 
-      <p v-animate-css.once="animationInfinite2">1. She prefers phones that have a <strong>a large display</strong> for
-        watching videos.</p>
-      <van-image
-          v-animate-css.once="animationInfinite3"
-          width="80%"
-          style="max-width: 960px; margin: 10px"
-          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/watch_video.png"
-      />
-
-      <p v-animate-css.once="animationInfinite4">2. She prefers phones that have a <strong>long battery life</strong>
-        for traveling.</p>
-      <van-image
-          v-animate-css.once="animationInfinite5"
-          width="80%"
-          style="max-width: 960px; margin: 10px"
-          src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/charging.png"
-      />
-      <p v-animate-css.once="animationInfinite6">3. Her budget for purchasing a new mobile phone is <strong>300
+      <p v-animate-css.once="animationInfinite1">Your budget for purchasing a new mobile phone is <strong>300
         US </strong> dollars.
       </p>
       <van-image
-          v-animate-css.once="animationInfinite7"
+          v-animate-css.once="animationInfinite2"
           width="80%"
           style="max-width: 960px; margin: 10px"
           src="https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/budget.png"
       />
       <br>
-      <p v-animate-css.once="animationInfinite8">With these preferences in mind, you begin your search for mobile phones
+      <p v-animate-css.once="animationInfinite3">With the preferences in mind, you begin your search for mobile phones
         by visiting a website called <b>Phoneshop</b>, where a chatbot can recommend mobile phones based on your
-        requirements.</p>
+        requirements. Please take a look at at least five mobile phones. </p>
 
-      <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite9">
+      <div style="margin: 24px 16px;padding-bottom:48px" v-animate-css.once="animationInfinite4">
         <van-button round block type="info"
                     native-type="submit" @click="start"
-        > I got Lily's requirements.
+        > I am ready to start
         </van-button>
       </div>
     </div>
@@ -61,20 +36,7 @@
       <van-nav-bar title='Quiz'/>
       <div class="phone_preference">
         <van-form>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. Who do you need to pick a mobile phones for?</p>
-          <van-radio-group v-model="test1">
-            <van-radio name="1">Lily</van-radio>
-            <van-radio name="2">Myself</van-radio>
-            <van-radio name="3">One of my friends</van-radio>
-          </van-radio-group>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">2. Which of the following items does not need to be
-            considered while picking mobile phones?</p>
-          <van-radio-group v-model="test2">
-            <van-radio name="1">Budget</van-radio>
-            <van-radio name="2">Battery</van-radio>
-            <van-radio name="3">Camera</van-radio>
-          </van-radio-group>
-          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">3. You should view <b>at least ____</b> recommended
+          <p style="padding:0 10px 0 16px; margin-bottom: 5px;">1. You should view <b>at least ____</b> recommended
             mobile phones?</p>
           <van-radio-group v-model="test3">
             <van-radio name="1">4</van-radio>
@@ -175,7 +137,7 @@ export default {
     },
     next: function () {
       this.loading = true;
-      if (this.test1 === '1' && this.test2 === '3' && this.test3 === '2') {
+      if (this.test3 === '2') {
         instance.post('/que/scenario', {
           'uuid': localStorage.getItem("uuid"),
           'ScenarioT': new Date().getTime(),

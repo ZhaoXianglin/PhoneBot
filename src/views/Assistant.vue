@@ -214,7 +214,7 @@
     >
       <div class="rate">
         <van-nav-bar title='Confirm'/>
-        <p style="padding:0 8px">Are your sure to select this phone for Lily?</p>
+        <p style="padding:0 8px">Are your sure to select this phone?</p>
         <van-card
             :thumb="current_phone.img">
           <template #title>
@@ -251,14 +251,8 @@
     >
       <van-nav-bar title='A kind reminder'/>
       <div style="padding: 12px">
-        <h4 style="color: #B24040">It seems this phone cannot meet Lily’s requirements.</h4>
-
-        <p>Please keep Lily’s preferences in mind when you pick mobile phones for her.</p>
-        <ul>
-          <li>1. She often uses her mobile phone to watch videos.</li>
-          <li>2. She hates frequently charging her mobile phone.</li>
-          <li>3. Her budget for purchasing a new mobile phone is 300 US dollars.</li>
-        </ul>
+        <h4 style="color: #B24040">It seems this phone cannot meet the requirement.</h4>
+        <p>Please keep in mind that your budget is 300 US dollars.</p>
         <p style="text-align: center">
           <van-button type="info" @click="tryAnother"> Check other phones</van-button>
           <br>
@@ -306,11 +300,11 @@
           </van-card>
         </div>
         <p v-if="identity_cue==='0'" style="padding:0 16px;color: black">I am glad you found these good phones for
-          Lily. Now, you
+          you. Now, you
           will be asked to complete a questionnaire regarding your experience of chatting with <b> RecBot (an automated
             sales chatbot)</b></p>
         <p v-if="identity_cue==='1'" style="padding:0 16px;color: black;">I am glad you found these good phones for
-          Lily. Now, you
+          you. Now, you
           will be asked to complete a questionnaire regarding your experience of chatting with <b>Susan (a sales
             assistant).</b></p>
         <van-button type="primary" block @click="nextPage">Next</van-button>
@@ -601,7 +595,7 @@ export default {
       if (phone_id !== this.current_phone.id) {
         this.current_phone = this.$store.state.showed_phones[phone_id]
       }
-      if (this.current_phone.battery >= 4050 && this.current_phone.price <= 300 && this.current_phone.displaysize >= 6.4) {
+      if (this.current_phone.price <= 300) {
         this.addToCart(phone_id);
       } else {
         //提示当前的手机是有过提醒的

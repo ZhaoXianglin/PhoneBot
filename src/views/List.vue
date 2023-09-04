@@ -1,44 +1,85 @@
 <template>
   <div class="index">
+    <van-popup
+        v-model="show_phone_page"
+        closeable
+        close-icon="close"
+        position="left"
+        round
+        :style="{ height: '100%',width:'100%' }"
+    >
+      <div class="cart" style="margin-top:3em;height: 100%">
+        <iframe style="width: 100%;height: 100%" :src="clicked_trans_url"/>
+      </div>
+    </van-popup>
     <van-nav-bar title="Comparison"></van-nav-bar>
     <div class="content">
-      <p>You current selected phone is <span style="color: #B24040;font-weight: bold">{{ current_phone.modelname}}</span>.  You can review all the phones recommended by the chatbot in the following table.</p>
-      <p>If you want to change your purchase decision,  you can choose another phone in the table and explain why you change your decision.</p>
-      <p style="overflow: auto;width: 100%">
+      <p>You current selected phone is <span
+          style="color: #B24040;font-weight: bold">{{ current_phone.modelname }}</span>. You can review all the phones
+        recommended by the chatbot in the following table.</p>
+      <p>If you want to change your purchase decision, you can choose another phone in the table and explain why you
+        change your decision.</p>
+      <p style="overflow: auto;width: 100%;">
         <table class="table">
           <van-radio-group v-model="final_select">
             <tr>
               <th>&nbsp;</th>
               <th>Phone</th>
-              <th>Price</th>
-              <th>Storage</th>
-              <th>Memory</th>
-              <th>OS</th>
-              <th>Weight</th>
-              <th>Screen</th>
-              <th>Resolution</th>
-              <th>Battery</th>
             </tr>
             <tr v-for="phone in showed_phones" :key="phone.id">
               <td>
                 <van-radio :name="phone.id">&nbsp;</van-radio>
               </td>
-              <td>
-                <van-image
-                    fit="contain"
-                    width="100"
-                    height="100" :src="phone.img"
-                />
-                <p style="text-align: center;font-weight: bold">{{ phone.modelname }}</p>
+              <td style="">
+                <div style="min-width: 240px;padding: 13px 10px;background-color: white;border-radius: 10px">
+                  <div style="width: 100%; text-align:center;background-color: #f5f5f5">
+                    <img style="max-height: 360px" :src="phone.img" alt=""/>
+                  </div>
+                  <div style="margin-top: 1em; display: flex; justify-content: space-between;">
+                    <span style="display:block;font-size: 20px;font-weight: bold">{{
+                        phone.modelname
+                      }}</span>
+                  </div>
+                  <table
+                      style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555;border-collapse: collapse;">
+                    <tr>
+                      <td style="width: 96px"> Storage:</td>
+                      <td>{{ phone.storage }}GB</td>
+                    </tr>
+                    <tr>
+                      <td>Memory:</td>
+                      <td>{{ phone.ram }}GB</td>
+                    </tr>
+                    <tr>
+                      <td>OS:</td>
+                      <td>{{ phone.os1 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Weight:</td>
+                      <td>{{ phone.weight }} g</td>
+                    </tr>
+                    <tr>
+                      <td>Screen:</td>
+                      <td>{{ phone.displaysize }}inches</td>
+                    </tr>
+                    <tr>
+                      <td>Resolution:</td>
+                      <td>{{ phone.resolution1 }}*{{ phone.resolution2 }}</td>
+                    </tr>
+                    <tr>
+                      <td>Battery:</td>
+                      <td>{{ phone.battery }}mAh</td>
+                    </tr>
+                  </table>
+                  <span style="display: block; font-size: 20px;font-weight: bold;color: #B24040;align-self: center;">${{
+                      phone.price
+                    }}</span><br/>
+                  <div style="display: flex;justify-content: end">
+                    <a target="view_window" @click="clicked_url(phone.url)"
+                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a>
+                  </div>
+                </div>
               </td>
-              <td>${{ phone.price }}</td>
-              <td>{{ phone.storage }}GB</td>
-              <td>{{ phone.ram }}GB</td>
-              <td>{{ phone.os1 }}</td>
-              <td>{{ phone.weight }}g</td>
-              <td>{{ phone.displaysize }} inch</td>
-              <td>{{ phone.resolution1 }} * {{ phone.resolution2 }}</td>
-              <td>{{ phone.battery }}mAh</td>
             </tr>
           </van-radio-group>
         </table>
@@ -74,6 +115,8 @@ export default {
       recommended_phones: '',
       show_textarea: false,
       reason: '',
+      show_phone_page: false,
+      clicked_trans_url: '',
     }
   },
   mounted() {
@@ -93,6 +136,10 @@ export default {
     }
   },
   methods: {
+    clicked_url: function (childValue) {
+      this.clicked_trans_url = "https://www.chatbot.fans:3000/?url=" + childValue
+      this.show_phone_page = true;
+    },
     confirm_btn() {
       if (this.show_textarea === true) {
         this.reason = this.reason.trim()
@@ -134,14 +181,15 @@ export default {
 
 .table {
   width: 100%;
-  border: 1px solid #000;
   font-size: 14px;
   border-collapse: collapse;
+  border: none;
+  background-color: #F1F1F1;
 }
 
 .table th, td {
   padding: 6px;
-  border: 1px solid #000;
+  border: none;
   border-collapse: collapse;
 }
 

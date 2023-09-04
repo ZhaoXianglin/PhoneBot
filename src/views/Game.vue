@@ -226,7 +226,7 @@ export default {
         gameT: new Date().getTime(),
       }).then((res) => {
         console.log(res)
-        this.$router.replace('/step3')
+        this.$router.replace('/exp1')
       })
 
     }
