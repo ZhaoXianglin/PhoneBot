@@ -56,16 +56,24 @@
                       msg.content.price
                     }}</span><br/>
                   <div style="display: flex;justify-content: end">
-                    <a target="view_window" @click="click_detail(msg.content.url)"
+                    <a target="view_window" @click="check_detail(msg.content.url)"
                        style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Detail</a>
                   </div>
                   <div style="display: flex;justify-content: end;margin-top: 10px"
                        v-if="!showed_phones[msg.content.id].add_to_cart">
-                    <a target="view_window" @click="card_add_to_cart(msg.content.id)"
-                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Select this phone</a>
+                    <a target="view_window" @click="add_to_cart(msg.content.id)"
+                       style="text-align:center; width:100%;display: inline-block;padding: 5px 10px;border-radius: 4px;border: 1px solid #1989fa;background-color: white;color: #1989fa">Select
+                      this phone</a>
                   </div>
                 </div>
               </div>
+              <CardCarousel v-if="msg.type==='carousel'" :phone_list="msg.content" :showed_phones="showed_phones"
+                            @phone_url="check_detail" @phone_id="add_to_cart">
+              </CardCarousel>
+              <PhoneList v-if="msg.type==='list'" :phone_list="msg.content" :showed_phones="showed_phones"
+                         @phone_url="check_detail" @phone_id="add_to_cart">
+              </PhoneList>
+
               <iframe v-if="msg.type==='embed'" :src="msg.content" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
@@ -169,6 +177,9 @@
 
 <script>
 /*eslint no-useless-escape: "off"*/
+import CardCarousel from "@/components/CardCarousel";
+import PhoneList from "@/components/PhoneList";
+
 var _instance, // current vue instance.
     _options = {
       debug: false,
@@ -224,6 +235,7 @@ function _handleAction(text) {
 
 export default {
   name: 'BotUi',
+  components: {PhoneList, CardCarousel},
   data: function () {
     return {
       action: {
@@ -246,11 +258,13 @@ export default {
     }
   },
   methods: {
-    click_detail: function (url) {
+    check_detail: function (url) {
+      console.log(url)
       this.$emit('clicked_url', url);
     },
-    card_add_to_cart: function (id) {
+    add_to_cart: function (id) {
       this.$emit('card_add_to_cart', id);
+
       //this.$store.commit('addToCart', id);
     },
     handle_action_button: function (button) {

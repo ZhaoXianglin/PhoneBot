@@ -319,6 +319,7 @@ import BotUi from "../components/BotUi";
 import {botui} from '@/components/BotUi';
 import {instance} from "@/request";
 
+
 export default {
   name: "Assistant",
   components: {
@@ -427,10 +428,10 @@ export default {
       this.$store.commit('addShowedPhone', phone)
       this.recommended_phones.push(phone.id)
       let config = {
-        type: 'phone',
+        type: 'carousel',
         loading: true,
         delay: 100,
-        content: phone,
+        content: [phone]
       }
       console.log(this.$store.state.showed_phones)
       if (this.identity_cue === '1') {
