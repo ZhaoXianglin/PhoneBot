@@ -546,7 +546,7 @@ export default {
             instance.post('/chat/userMessage', {
               msgT: new Date().getTime(),
               message: this.message,
-              explanation_style: this.explanation_style,
+              explanation_style: 0,
               logger: this.latest_dialog,
               phone: this.$store.state.current_phone,
               uuid: localStorage.getItem('uuid'),
@@ -651,7 +651,7 @@ export default {
             uuid: this.uuid,
             logger: this.latest_dialog,
             try_another_count: this.try_another_count,
-            explanation_style: this.explanation_style,
+            explanation_style: 0,
             phone: this.current_recommended_phones[0],
             lTime: new Date().getTime(),
           }).then((res) => {
