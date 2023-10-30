@@ -1,30 +1,31 @@
 <template>
   <div class="list">
-    <div class="item" v-for="phone in phonelist" :key="phone.id" @click="open_news(phone.id)">
-      <van-card v-for="item in phone_in_cart" :key="item.id"
-                :thumb="item.img">
-        <template #title>
-          <div style="font-size: 16px;font-weight: bolder;">{{ item.modelname }}</div>
-        </template>
-        <template #price>
-          <div style="font-weight:bold;font-size:16px;color: #B24040">${{ item.price }}</div>
-        </template>
-        <template #num>
-          <div>Rating:{{ item.rate }}</div>
-        </template>
-        <template #tags>
-          <div>
-            <van-tag plain type="primary" style="margin:2px">Storage:{{ item.storage }}GB</van-tag>
-            <van-tag plain type="primary" style="margin:2px">RAM:{{ item.ram }}GB</van-tag>
-            <van-tag plain type="primary" style="margin:2px">{{ item.os1 }}</van-tag>
-            <van-tag plain type="primary" style="margin: 2px">{{ item.cam1 }}MP</van-tag>
-            <van-tag plain type="primary" style="margin: 2px">{{ item.displaysize }}inches</van-tag>
-            <van-tag plain type="primary" style="margin: 2px">{{ item.resolution1 }}*{{ item.resolution2 }}</van-tag>
-            <van-tag plain type="primary" style="margin: 2px">{{ item.battery }}mAh</van-tag>
-          </div>
-        </template>
-      </van-card>
-    </div>
+    <van-card v-for="item in phone_list" :key="item.id"
+              :thumb="item.img">
+      <template #title>
+        <div style="font-size: 16px;font-weight: bolder;">{{ item.modelname }}</div>
+      </template>
+      <template #price>
+        <div style="font-weight:bold;font-size:16px;color: #B24040">${{ item.price }}</div>
+      </template>
+      <template #tags>
+        <div>
+          <van-tag plain type="primary" style="margin:2px">Storage:{{ item.storage }}GB</van-tag>
+          <van-tag plain type="primary" style="margin:2px">RAM:{{ item.ram }}GB</van-tag>
+          <van-tag plain type="primary" style="margin:2px">{{ item.os1 }}</van-tag>
+          <van-tag plain type="primary" style="margin: 2px">{{ item.cam1 }}MP</van-tag>
+          <van-tag plain type="primary" style="margin: 2px">{{ item.displaysize }}inches</van-tag>
+          <van-tag plain type="primary" style="margin: 2px">{{ item.resolution1 }}*{{ item.resolution2 }}</van-tag>
+          <van-tag plain type="primary" style="margin: 2px">{{ item.battery }}mAh</van-tag>
+        </div>
+      </template>
+      <template #footer>
+        <van-button size="small" type="info" @click="check_detail_btn(item.url)">Detail</van-button>
+        <van-button size="small" type="info" @click="add_to_cart_btn(item.id)">Select
+          this phone
+        </van-button>
+      </template>
+    </van-card>
   </div>
 </template>
 
@@ -33,9 +34,15 @@ export default {
   name: "PhoneList",
   props: ["phone_list", 'showed_phones'],
   methods: {
-    open_news: function (news_id) {
-      this.$emit('news_id', news_id)
-    }
+    check_detail_btn: function (url) {
+      console.log(url)
+      this.$emit('phone_url', url);
+    },
+    add_to_cart_btn: function (id) {
+      console.log(id)
+      this.$emit('phone_id', id);
+      //this.$store.commit('addToCart', id);
+    },
   }
 }
 </script>

@@ -208,7 +208,7 @@
     <!--    评分框-->
     <van-popup
         v-model="show_rate"
-        :style="{width:'300px' }"
+        :style="{width:'300px'}"
         :close-on-click-overlay="false"
         round
     >
@@ -428,10 +428,10 @@ export default {
       this.$store.commit('addShowedPhone', phone)
       this.recommended_phones.push(phone.id)
       let config = {
-        type: 'carousel',
+        type: 'list',
         loading: true,
         delay: 100,
-        content: [phone]
+        content: [phone, phone, phone]
       }
       console.log(this.$store.state.showed_phones)
       if (this.identity_cue === '1') {
