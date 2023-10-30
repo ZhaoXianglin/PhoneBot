@@ -299,14 +299,11 @@
             </template>
           </van-card>
         </div>
-        <p v-if="identity_cue==='0'" style="padding:0 16px;color: black">I am glad you found these good phones for
+        <p>I am glad you found these good phones for
           you. Now, you
-          will be asked to complete a questionnaire regarding your experience of chatting with <b> RecBot (an automated
+          will be asked to complete a questionnaire regarding your experience of chatting with <b> PhoneBot (an
+            automated
             sales chatbot)</b></p>
-        <p v-if="identity_cue==='1'" style="padding:0 16px;color: black;">I am glad you found these good phones for
-          you. Now, you
-          will be asked to complete a questionnaire regarding your experience of chatting with <b>Susan (a sales
-            assistant).</b></p>
         <van-button type="primary" block @click="nextPage">Next</van-button>
       </div>
     </van-popup>
@@ -368,6 +365,7 @@ export default {
       },
       phone_in_cart: [],
       current_phone: {},
+      current_recommended_phones: [],
       latest_dialog: [],
       recommended_phones: [],
       //log
@@ -376,14 +374,13 @@ export default {
       last_action: "",
       //用户的名字
       username: "",
-      bot_msg: ['I find this phone for you.', 'You may like this phone.', 'Please check this phone.']
+      bot_msg: ['I find these phones for you.', 'You may like these phones.', 'Please check these phones.']
     }
   },
   mounted() {
     this.explanation_style = localStorage.getItem("explanation_style")
     this.identity_cue = localStorage.getItem("identity_cue")
     this.greeting()
-
   },
   methods: {
     //从卡片组件里面获得点击事件的url
@@ -408,10 +405,6 @@ export default {
         photo: "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar1.png",
         content: msg
       };
-      if (this.identity_cue === '1') {
-        config.photo = "https://musicbot-1251052535.cos.accelerate.myqcloud.com/phonebot/avatar2.png";
-        config.delay = msg.length * 40
-      }
       this.addLog('bot', this.last_action, msg)
       return botui.message.bot(config)
     },
@@ -423,37 +416,32 @@ export default {
     },
 
     //商品卡片
-    botPhoneCard: function (phone) {
+    botPhoneCard: function (phones) {
       //把当前手机加入显示过的手机列表
-      this.$store.commit('addShowedPhone', phone)
-      this.recommended_phones.push(phone.id)
+      this.$store.commit('addShowedPhone', phones[0])
+      this.$store.commit('addShowedPhone', phones[1])
+      this.$store.commit('addShowedPhone', phones[2])
+      this.recommended_phones.push(phones[0].id, phones[1].id, phones[2].id)
       let config = {
         type: 'list',
         loading: true,
         delay: 100,
-        content: [phone, phone, phone]
+        content: phones
       }
-      console.log(this.$store.state.showed_phones)
-      if (this.identity_cue === '1') {
-        config.photo = "https://musicbot-1251052535.cos.ap-shanghai.myqcloud.com/phonebot/avatar2.png";
-        config.delay = 1600
+      if (this.explanation_style === '1') {
+        config['type'] = 'carousel'
       }
-      this.addLog('bot', 'phonecard', phone.id + '|' + phone.modelname)
+      this.addLog('bot', 'phonecard', phones[0].id + '|' + phones[0].modelname)
+      this.addLog('bot', 'phonecard', phones[1].id + '|' + phones[1].modelname)
+      this.addLog('bot', 'phonecard', phones[2].id + '|' + phones[2].modelname)
       botui.message.bot(config).then(() => {
         botui.action.button({
           addMessage: false,
           human: false,
           action: this.phone_buttons
         }).then((res) => {
-          //判断点了什么按钮
-          if (res.text === 'Select this phone') {
-            this.checkBeforeToCart(phone.id)
-          }
           if (res.text === 'Next item') {
             this.tryAnother();
-          }
-          if (res.text === 'Let bot suggest') {
-            this.letBotSuggest()
           }
         })
       })
@@ -513,12 +501,10 @@ export default {
             "action": "Initialize",
             "timestamp": new Date().getTime()
           })
-          this.bot("Ok, I see it!").then(() => {
-            this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-              this.current_phone = res.data.phone;
-              this.botPhoneCard(res.data.phone);
-              this.msg_btn_ctrl = false;
-            })
+          this.bot(res.data.msg, this.explanation_styple_control).then(() => {
+            this.current_recommended_phones = res.data.phone;
+            this.botPhoneCard(res.data.phone);
+            this.msg_btn_ctrl = false;
           });
         } else {
           this.loading = false;
@@ -554,7 +540,7 @@ export default {
               "modality": "typing",
               "action": "User_Critique",
               "critique": [],
-              "critiqued_item": this.current_phone.id,
+              "critiqued_item": this.current_recommended_phones[0].id,
               "timestamp": new Date().getTime()
             })
             instance.post('/chat/userMessage', {
@@ -566,12 +552,12 @@ export default {
               uuid: localStorage.getItem('uuid'),
             }).then((res) => {
               //console.log(res);
-              this.current_phone = res.data.phone;
+              this.current_recommended_phones = res.data.phone;
               this.latest_dialog = [];
 
               this.bot("Ok, I see it!").then(() => {
                 this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                  this.botPhoneCard(this.current_phone);
+                  this.botPhoneCard(this.current_recommended_phones);
                 })
               });
 
@@ -595,6 +581,7 @@ export default {
       //botui.action.hide();
       if (phone_id !== this.current_phone.id) {
         this.current_phone = this.$store.state.showed_phones[phone_id]
+        console.log(this.current_phone)
       }
       if (this.current_phone.price <= 300) {
         this.addToCart(phone_id);
@@ -659,21 +646,22 @@ export default {
             "action": "Next",
             "timestamp": new Date().getTime()
           })
+          console.log(this.current_phone);
           instance.post("/chat/updatemodel", {
             uuid: this.uuid,
             logger: this.latest_dialog,
             try_another_count: this.try_another_count,
             explanation_style: this.explanation_style,
-            phone: this.current_phone,
+            phone: this.current_recommended_phones[0],
             lTime: new Date().getTime(),
           }).then((res) => {
             this.latest_dialog = [];
-            this.current_phone = res.data.phone;
+            this.current_recommended_phones = res.data.phone;
             let seed = this.try_another_count % 4;
             let res_temp = ["OK, this could also be a good choice.", 'Sure, you may also want to try this.', "OK, maybe you can check this.", "Sure, this phone is worth a try."]
             this.bot(res_temp[seed]).then(() => {
               this.bot(res.data.msg, this.explanation_styple_control).then(() => {
-                this.botPhoneCard(this.current_phone);
+                this.botPhoneCard(this.current_recommended_phones);
               });
             })
           })
@@ -691,10 +679,14 @@ export default {
 
     greeting: function () {
       // 初始状态
-      let msg = "Hey! I’m RecBot, an <b>automated chatbot</b> at Phoneshop."
-      if (this.identity_cue === '1') msg = "Hello! I’m Susan, <b> a sales assistant</b> working at Phoneshop."
+      let msg = "Hey! I’m RecBot, an <b>automated chatbot</b>working at Phoneshop."
       this.bot(msg).then(() => {
-        this.ask_prefer()
+        this.bot("I can help you find the most suitable phone. ").then(() => {
+          this.bot("Please wait a moment, I am working on generating recommendations for you.").then(() => {
+            this.user_prefer.budget = 500;
+            this.submitPreference()
+          })
+        })
       })
 
     },
@@ -702,9 +694,6 @@ export default {
       this.last_action = 'ask_prefer'
       this.msg_btn_ctrl = true;
       let username = "Participant.";
-      if (this.identity_cue === '1') {
-        username = this.username + '.';
-      }
       let msg = username + " I’m happy to help you with your purchase. We have different types of mobile phones."
       this.bot(msg).then(() => {
         return this.bot("To ensure that I make the most suitable recommendations for you, I’d like to ask you some questions.")
@@ -728,11 +717,10 @@ export default {
             },
           ]
         }).then(res => {
-          this.user_prefer.budget = res.value;
+          this.user_prefer.budget = 400;
           return this.human(res.text)
         }).then(() => {
           let msg = "Okay."
-          if (this.identity_cue === '1') msg = "Okay. I know your budget is $" + this.user_prefer.budget + '.'
           return this.bot(msg)
         }).then(() => {
           this.bot("By the way, do you have any specific requirements in the following aspects?").then(() => {
@@ -794,7 +782,6 @@ export default {
     ask_size: function () {
       let msg = "Okay."
       this.last_action = 'ask_size'
-      if (this.identity_cue === '1') msg = "Okay. I see the display size of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which display size are you looking for?").then(() => {
           botui.action.button({
@@ -824,7 +811,6 @@ export default {
     ask_battery: function () {
       this.last_action = 'ask_battery'
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. I see the battery of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which battery capacity are you looking for?").then(() => {
           botui.action.button({
@@ -855,7 +841,6 @@ export default {
     ask_brand: function () {
       this.last_action = 'ask_brand'
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. I see the brand of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which brand are you looking for?").then(() => {
           botui.action.button({
@@ -890,7 +875,6 @@ export default {
     ask_weight: function () {
       this.last_action = this.ask_weight
       let msg = "Okay."
-      if (this.identity_cue === '1') msg = "Okay. I see the weight of the mobile phone is important to you."
       this.bot(msg).then(() => {
         this.bot(" Which weight range are you looking for?").then(() => {
           botui.action.button({

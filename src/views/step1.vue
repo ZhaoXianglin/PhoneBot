@@ -11,7 +11,7 @@
       <h3>Step 1: We will ask you to fill out a questionnaire about your personal characteristics related to decision
         making.</h3>
       <van-image width="100%" style="max-width: 640px"
-          src="https://obsidian-1251052535.cos.ap-hongkong.myqcloud.com/step1_form.png"></van-image>
+                 src="https://obsidian-1251052535.cos.ap-hongkong.myqcloud.com/step1_form.png"></van-image>
       <van-button round block type="info" native-type="submit" :loading="loading" @click="onSubmit">Continue
       </van-button>
     </div>
@@ -20,9 +20,9 @@
 </template>
 
 <style scoped>
-.content{
+.content {
   margin: 14px 6px;
-  padding:10px 10px 48px 10px;
+  padding: 10px 10px 48px 10px;
 
   background-color: #ffffff;
 }
@@ -30,6 +30,11 @@
 <script>
 export default {
   name: "Step1",
+  data() {
+    return {
+      loading: false,
+    }
+  },
   methods: {
     onSubmit() {
       this.$router.replace('/prestudy').catch((err) => {

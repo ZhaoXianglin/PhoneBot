@@ -30,15 +30,41 @@
               <td>
                 <van-radio :name="phone.id">&nbsp;</van-radio>
               </td>
-              <td style="">
-                <div style="min-width: 240px;padding: 13px 10px;background-color: white;border-radius: 10px">
+              <td>
+                <van-card :thumb="phone.img" v-if="identity_cue==='0'">
+                  <template #title>
+                    <div style="font-size: 16px;font-weight: bolder;">{{ phone.modelname }}</div>
+                  </template>
+                  <template #price>
+                    <div style="font-weight:bold;font-size:16px;color: #B24040">${{ phone.price }}</div>
+                  </template>
+                  <template #tags>
+                    <div>
+                      <van-tag plain type="primary" style="margin:2px">Storage:{{ phone.storage }}GB</van-tag>
+                      <van-tag plain type="primary" style="margin:2px">RAM:{{ phone.ram }}GB</van-tag>
+                      <van-tag plain type="primary" style="margin:2px">{{ phone.os1 }}</van-tag>
+                      <van-tag plain type="primary" style="margin: 2px">{{ phone.cam1 }}MP</van-tag>
+                      <van-tag plain type="primary" style="margin: 2px">{{ phone.displaysize }}inches</van-tag>
+                      <van-tag plain type="primary" style="margin: 2px">{{ phone.resolution1 }}*{{
+                          phone.resolution2
+                        }}
+                      </van-tag>
+                      <van-tag plain type="primary" style="margin: 2px">{{ phone.battery }}mAh</van-tag>
+                    </div>
+                  </template>
+                  <template #footer>
+                    <van-button size="small" type="info" @click="check_detail_btn(item.url)">Detail</van-button>
+                  </template>
+                </van-card>
+                <div style="min-width: 240px;padding: 13px 10px;background-color: white;border-radius: 10px"
+                     v-if="identity_cue==='1'">
                   <div style="width: 100%; text-align:center;background-color: #f5f5f5">
                     <img style="max-height: 360px" :src="phone.img" alt=""/>
                   </div>
                   <div style="margin-top: 1em; display: flex; justify-content: space-between;">
-                    <span style="display:block;font-size: 20px;font-weight: bold">{{
-                        phone.modelname
-                      }}</span>
+                                    <span style="display:block;font-size: 20px;font-weight: bold">{{
+                                        phone.modelname
+                                      }}</span>
                   </div>
                   <table
                       style="margin-top: 0.5em;word-break: break-word; font-size:18px; color: #555555;border-collapse: collapse;">
@@ -80,6 +106,7 @@
                   </div>
                 </div>
               </td>
+
             </tr>
           </van-radio-group>
         </table>
@@ -109,6 +136,10 @@ export default {
 
   data: function () {
     return {
+      //实验条件
+      identity_cue: "",
+      explanation_style: "",
+
       showed_phones: this.$store.state.showed_phones,
       current_phone: this.$store.state.selected_phone,
       final_select: this.$store.state.selected_phone.id,
@@ -120,6 +151,9 @@ export default {
     }
   },
   mounted() {
+    this.explanation_style = localStorage.getItem("explanation_style")
+    this.identity_cue = localStorage.getItem("identity_cue")
+
     for (let item in this.showed_phones) {
       console.log(item)
       this.recommended_phones += item + ','
