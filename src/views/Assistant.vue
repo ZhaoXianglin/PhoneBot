@@ -679,7 +679,7 @@ export default {
 
     greeting: function () {
       // 初始状态
-      let msg = "Hey! I’m RecBot, an <b>automated chatbot</b>working at Phoneshop."
+      let msg = "Hey! I’m RecBot, an <b>automated chatbot</b> working at Phoneshop."
       this.bot(msg).then(() => {
         this.bot("I can help you find the most suitable phone. ").then(() => {
           this.bot("Please wait a moment, I am working on generating recommendations for you.").then(() => {
