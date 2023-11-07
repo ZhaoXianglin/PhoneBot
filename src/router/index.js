@@ -6,6 +6,7 @@ import Success from "@/views/Success";
 import Scenario from "@/views/Scenario";
 import Assistant from "@/views/Assistant";
 import List from "@/views/List";
+import Assistant_single from "@/views/Assistant_single.vue";
 
 
 Vue.use(VueRouter)
@@ -22,9 +23,14 @@ const routes = [
         component: Index
     },
     {
-        path: '/assistant',
+        path: '/massistant',
         name: 'assistant',
         component: Assistant
+    },
+    {
+        path: '/sassistant',
+        name: 'singel_assistant',
+        component: Assistant_single
     },
     {
         path: '/list',

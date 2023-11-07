@@ -2,7 +2,8 @@
   <div id="scenario">
     <van-nav-bar title="Scenario"/>
     <div id="main">
-      <p v-animate-css.once="animationInfinite0">Imagine that your mobile phone was recently broken, and you are now contemplating the purchase of a replacement.
+      <p v-animate-css.once="animationInfinite0">Imagine that your mobile phone was recently broken, and you are now
+        contemplating the purchase of a replacement.
       </p>
 
       <p v-animate-css.once="animationInfinite1">Your budget for purchasing a new mobile phone is <strong>300
@@ -142,17 +143,24 @@ export default {
           'uuid': localStorage.getItem("uuid"),
           'ScenarioT': new Date().getTime(),
         }).then((res) => {
-          if (res.data.status === 1) {
-            localStorage.setItem("active", new Date().getTime().toString());
-            this.$router.replace('/assistant').catch((err) => {
-              console.log(err.message)
-            });
-            this.loading = false;
-          } else {
-            this.loading = false;
-            this.$toast("Please refresh this page or accept the informed consent statement first.")
-          }
-        }).catch((err) => {
+              if (res.data.status === 1) {
+                localStorage.setItem("active", new Date().getTime().toString());
+                if (self.localStorage.getItem('explanation_style') === '1') {
+                  this.$router.replace('/massistant').catch((err) => {
+                    console.log(err.message)
+                  });
+                } else {
+                  this.$router.replace('/sassistant').catch((err) => {
+                    console.log(err.message)
+                  });
+                }
+                this.loading = false;
+              } else {
+                this.loading = false;
+                this.$toast("Please refresh this page or accept the informed consent statement first.")
+              }
+            }
+        ).catch((err) => {
           this.loading = false;
           console.log(err.message);
           this.$toast("Network error, please try again later.");
@@ -162,7 +170,8 @@ export default {
         this.show_preference = false
         this.loading = false
       }
-    },
+    }
+    ,
   }
 };
 </script>
