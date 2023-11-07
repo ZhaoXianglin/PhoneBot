@@ -683,7 +683,7 @@ export default {
       this.bot(msg).then(() => {
         this.bot("I can help you find the most suitable phone.").then(() => {
           this.bot("Please wait a moment, I am working on generating recommendations for you.").then(() => {
-            this.user_prefer.budget = 500;
+            this.user_prefer.budget = 300;
             this.submitPreference()
           })
         })

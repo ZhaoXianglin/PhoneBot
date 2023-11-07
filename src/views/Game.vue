@@ -128,7 +128,7 @@ export default {
           res.push(tmp)
         }
       }
-      console.log(res)
+      //console.log(res)
       return res
     },
 
@@ -149,7 +149,7 @@ export default {
     check_accuracy: function () {
       let acc = 1
       for (let i = 0; i < this.selection.length; i++) {
-        console.log(this.selection[i], parseInt(this.response[i]))
+        //console.log(this.selection[i], parseInt(this.response[i]))
         if (this.selection[i] !== parseInt(this.response[i])) {
           acc = 0
           break
@@ -200,7 +200,7 @@ export default {
         this.render_num()
       } else {
         this.step += 1
-        console.log(this.highest_span_score, this.consec_error_score)
+        //console.log(this.highest_span_score, this.consec_error_score)
       }
     },
     test_start: function () {
