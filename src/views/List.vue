@@ -77,7 +77,7 @@
                     </div>
                   </template>
                   <template #footer>
-                    <van-button size="small" type="info" plain @click="check_detail_btn(item.url)">Detail</van-button>
+                    <van-button style="min-width: 96px; font-size: 14px" size="small" type="info" plain @click="check_detail_btn(item.url)">&nbsp;&nbsp;&nbsp; Detail &nbsp;&nbsp;&nbsp;</van-button>
                   </template>
                 </van-card>
               </td>
